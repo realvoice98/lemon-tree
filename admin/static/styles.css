@@ -1,0 +1,68 @@
+@media all and (min-width:1024px) { 
+    .desktop_tablet{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        min-height: 1024px;        
+        min-width: 1024px;
+        align-items: center;
+      }
+      .desktop_tablet .sidebar{
+        display: flex;
+        width: 195px;
+        padding: 30px 16px 0px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        flex-shrink: 0;
+        align-self: stretch;
+        background: #FFFED8;
+        /* Shadow */
+        box-shadow: 4px 0px 10px 0px rgba(42, 46, 52, 0.20);
+      }
+      .sidebar .sidebar_box{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+        align-self: stretch;
+      }
+      .sidebar .sidebar_box .sidebar_title{
+        display: flex;
+        padding: 18px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        align-self: stretch;
+      }
+      .sidebar .sidebar_box .sidebar_title .sidebar_title_text{
+        color: #222;
+        font-family: DM Sans;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 32px; /* 128% */
+      }
+      .sidebar_box .sidebar_menu{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+        align-self: stretch;
+      }
+      .sidebar_box .sidebar_menu .menu_box{
+        display: flex;
+        padding: 18px 16px;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+      }
+      .sidebar_box .sidebar_menu .menu_box .menu_text{
+        color: #222;
+        /* Font Medium */
+        font-family: DM Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px; /* 150% */
+      }
+  }
