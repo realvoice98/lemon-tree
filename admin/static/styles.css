@@ -1,5 +1,6 @@
+/*PC*/
 @media all and (min-width:1024px) { 
-    .desktop_tablet{
+    .desktop{
         display: flex;
         width: 100%;
         height: 100%;
@@ -7,9 +8,12 @@
         min-width: 1024px;
         align-items: center;
       }
-      .desktop_tablet .sidebar{
+      .tablet{
+        display: none;
+      }
+      .desktop .sidebar{
         display: flex;
-        width: 195px;
+        width: 200px;
         padding: 30px 16px 0px 16px;
         flex-direction: column;
         align-items: flex-start;
@@ -72,20 +76,18 @@
         font-weight: 600;
         line-height: 24px; /* 150% */
       }
-      .desktop_tablet .main{
+      .desktop .main{
         display: flex;
         min-width: 824px;
-        min-height: 720px;
-        padding-top: 10px;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
         flex: 1 0 0;
         align-self: stretch;
+        background: #FFF;
       }
-      .desktop_tablet .main .table{
+      .desktop .main .table{
         display: flex;
-        min-height: 420px;
         flex-direction: column;
         align-items: flex-start;
         flex: 1 0 0;
@@ -109,7 +111,6 @@
       }
       .table .table_content{
         display: flex;
-        min-height: 420px;
         flex-direction: column;
         align-items: center;
         flex: 1 0 0;
@@ -117,13 +118,13 @@
       }
       .table .table_content .row_top{
         display: flex;
-        min-height: 45px;
-        max-height: 50px;
+        height: 40px;
         padding: 12px 8px;
         align-items: center;
         gap: 24px;
         flex: 1 0 0;
         align-self: stretch;
+        background: #FFFED8;
       }
       .row_top .row_text{
         color: #000;
@@ -134,14 +135,14 @@
         text-transform: capitalize;
       }
       .row_top .row_text.name{
-        width: 49px;
+        width: 50px;
       }
       .row_top .row_text.number{
         flex: 1 0 0;
         min-width: 50px;
       }
       .row_top .row_text.sex{
-        width: 38px;
+        width: 40px;
       }
       .row_top .row_text.std{
         flex: 1 0 0;
@@ -151,7 +152,7 @@
         flex: 1 0 0;
       }
       .row_top .row_text.count{
-        width: 38px;
+        width: 40px;
       }
       .row_top .row_text.note{
         min-width: 150px;
@@ -165,7 +166,7 @@
       }
       .table_content .row_time{
         display: flex;
-        height: 20px;
+        height: 15px;
         padding: 0px 8px;
         align-items: center;
         align-self: stretch;
@@ -188,31 +189,89 @@
       }
       .table_content .row_box{
         display: flex;
-        min-height: 80px;
-        max-height: 100px;
+        max-height: 110px;
         flex-direction: column;
         align-items: center;
+        flex: 1 0 0;
         align-self: stretch;
       }
-      .row_box .row1{
+      .row1{
         display: flex;
         min-height: 40px;
-        max-height: 50px;
-        padding: 5px 5px;
+        max-height: 45px;
+        padding: 5px 8px;
         align-items: center;
         gap: 24px;
+        flex: 1 0 0;
         align-self: stretch;
         background: #FFF;
       }
       .row_box .row2{
         display: flex;
         min-height: 40px;
-        height: 50px;
-        padding: 5px 5px;
+        max-height: 45px;
+        padding: 5px 8px;
         align-items: center;
         gap: 24px;
+        flex: 1 0 0;
         align-self: stretch;
         background: #E9EAEC;
       }
+      .row1 .row_text,.row2 .row_text{
+        color: #000;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%; /* 16.8px */
+        text-transform: capitalize;
+      }
+      .row1 .row_text.name, .row2 .row_text.name{
+        width: 50px;
+      }
+      .row1 .row_text.number, .row2 .row_text.number{
+        flex: 1 0 0;
+        min-width: 50px;
+      }
+      .row1 .row_text.sex, .row2 .row_text.sex{
+        width: 40px;
+      }
+      .row1 .row_text.std, .row2 .row_text.std{
+        flex: 1 0 0;
+        min-width: 50px;
+      }
+      .row1 .row_text.prog, .row2 .row_text.prog{
+        flex: 1 0 0;
+      }
+      .row1 .row_text.count, .row2 .row_text.count{
+        width: 40px;
+      }
+      .row1 .row_text.note, .row2 .row_text.note{
+        min-width: 150px;
+        flex: 1 0 0;
+        overflow: hidden;
+      }
+      .row1 .row_text.date, .row2 .row_text.date{
+        flex: 1 0 0;
+      }
+      .row1 .row_text.time, .row2 .row_text.time{
+        width: 100px;
+      }
+  }
+  /*테블릿*/
+  @media all and (min-width:768px) and (max-width:1023px) {
+    .desktop{
+      display: none;
+    }
+    .tablet{
+      display: flex;
+      max-width:1023px;
+      min-width: 480px;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  /*모바일*/
+  @media all and (max-width:767px) {
+
   }
   
