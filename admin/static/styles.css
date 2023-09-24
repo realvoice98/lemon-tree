@@ -38,7 +38,7 @@ body{
 }
 /*PC*/
 @media all and (min-width:1024px) { 
-    .desktop{
+    .manage_main{
         display: flex;
         width: 100%;
         height: 100%;
@@ -46,13 +46,13 @@ body{
         min-width: 1024px;
         align-items: center;
       }
-      .tablet{
+      .header{
         display: none;
       }
-      .mobile{
+      .menu_bar{
         display: none;
       }
-      .desktop .sidebar{
+      .manage_main .sidebar{
         display: flex;
         width: 200px;
         padding: 30px 16px 0px 16px;
@@ -109,7 +109,7 @@ body{
         font-weight: 600;
         line-height: 24px; /* 150% */
       }
-      .desktop .main{
+      .manage_main > .main{
         display: flex;
         min-width: 824px;
         flex-direction: column;
@@ -119,7 +119,7 @@ body{
         align-self: stretch;
         background: #FFF;
       }
-      .desktop .main .table{
+      .manage_main .main .table{
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -149,56 +149,56 @@ body{
         font-size: 16px;
       }
       .row_top .row_text.name, 
-      .row1 .row_text.name, 
-      .row2 .row_text.name{
+      .row.a .row_text.name, 
+      .row.b .row_text.name{
         width: 50px;
       }
       .row_top .row_text.number,
-      .row1 .row_text.number, 
-      .row2 .row_text.number{
+      .row.a .row_text.number, 
+      .row.b .row_text.number{
         flex: 1 0 0;
         min-width: 50px;
         text-align: center;
       }
       .row_top .row_text.sex,
-      .row1 .row_text.sex, 
-      .row2 .row_text.sex{
+      .row.a .row_text.sex, 
+      .row.b .row_text.sex{
         width: 40px;
       }
       .row_top .row_text.std,
-      .row1 .row_text.std, 
-      .row2 .row_text.std{
+      .row.a .row_text.std, 
+      .row.b .row_text.std{
         flex: 1 0 0;
         min-width: 50px;
         text-align: center;
       }
       .row_top .row_text.prog,
-      .row1 .row_text.prog, 
-      .row2 .row_text.prog{
+      .row.a .row_text.prog, 
+      .row.b .row_text.prog{
         flex: 1 0 0;
       }
       .row_top .row_text.count,
-      .row1 .row_text.count, 
-      .row2 .row_text.count{
+      .row.a .row_text.count, 
+      .row.b .row_text.count{
         width: 40px;
         text-align: center;
       }
       .row_top .row_text.note,
-      .row1 .row_text.note, 
-      .row2 .row_text.note{
+      .row.a .row_text.note, 
+      .row.b .row_text.note{
         min-width: 150px;
         flex: 1 0 0;
         text-align: center;
       }
       .row_top .row_text.date,
-      .row1 .row_text.date, 
-      .row2 .row_text.date{
+      .row.a .row_text.date, 
+      .row.b .row_text.date{
         flex: 1 0 0;
         text-align: center;
       }
       .row_top .row_text.time,
-      .row1 .row_text.time, 
-      .row2 .row_text.time{
+      .row.a .row_text.time, 
+      .row.b .row_text.time{
         width: 100px;
         text-align: center;
       }
@@ -225,7 +225,7 @@ body{
         max-height: 110px;
         flex: 1 0 0;
       }
-      .row1{
+      .row.a{
         display: flex;
         min-height: 40px;
         max-height: 45px;
@@ -237,7 +237,7 @@ body{
         background: #FFF;
         border-bottom: 1px solid #000;
       }
-      .row_box .row2{
+      .row_box .row.b{
         display: flex;
         min-height: 40px;
         max-height: 45px;
@@ -248,7 +248,7 @@ body{
         align-self: stretch;
         background: #E9EAEC;
       }
-      .row1 .row_text,.row2 .row_text{
+      .row.a .row_text,.row.b .row_text{
         color: #000;
         font-size: 13px;
         font-style: normal;
@@ -256,17 +256,14 @@ body{
         line-height: 140%; /* 16.8px */
         text-transform: capitalize;
       }
-      .row1 .row_text.note, .row2 .row_text.note{
+      .row.a .row_text.note, .row.b .row_text.note{
         overflow: hidden;
       }
   }
   /*-----------------------------PC end------------------------------*/
   /*-----------------------------테블릿------------------------------*/
   @media all and (min-width:768px) and (max-width:1023px) {
-    .desktop{
-      display: none;
-    }
-    .tablet{
+    .manage_main{
       display: flex;
       width: 100%;
       height: 100%;
@@ -275,10 +272,16 @@ body{
       flex-direction: column;
       align-items: center;
     }
-    .mobile{
+    .sidebar{
       display: none;
     }
-    .tablet .header{
+    .table_content.b{
+      display: none;
+    }
+    .table_title{
+      display: none;
+    }
+    .header{
       display: flex;
       height: 60px;
       padding: 5px 0px 5px 20px;
@@ -287,13 +290,13 @@ body{
       align-self: stretch;
       background: #FFFED8;
     }
-    .tablet .header_text{
+    .header_text{
       font-size: 30px;
       font-style: normal;
       font-weight: 700;
       line-height: 24px; /* 80% */
     }
-    .tablet .menu_bar{
+    .menu_bar{
       display: flex;
       height: 60px;
       padding: 5px;
@@ -303,7 +306,7 @@ body{
       border-top: 1px solid #9A9A9A;
       background: #FFFED8;
     }
-    .main, .client_list, 
+    .main_page, .client_list, 
     .reserv_manage, .prog_manage{
       display: flex;
       padding: 5px 10px;
@@ -327,6 +330,13 @@ body{
     }
     .menu_text.focus{
       color: #FFCA1E;
+    }
+    .main{
+      display: flex;
+      min-width: 768px;
+      align-items: center;
+      flex: 1 0 0;
+      align-self: stretch;
     }
     .table{
       display: flex;
@@ -416,19 +426,19 @@ body{
     .row .row_text{
       font-size: 15px;
     }
+    .row_text.sex{
+      display: none;
+    }
+    .row_text.std{
+      display: none;
+    }
+    .row_text.note{
+      display: none;
+    }
   }
   /*-----------------------------테블릿 end------------------------------*/
   /*------------------------------모바일------------------------------*/
   @media all and (max-width:767px) {
-    .desktop{
-      display: none;
-    }
-    .tablet{
-      display: none;
-    }
-    .mobile{
-      display: flex;
-      max-width:767px;
-    }
+
   }
   
