@@ -1,3 +1,41 @@
+body{
+  font-family: DM Sans;
+  margin: 0;
+}
+.table_content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+.row_top{
+  display: flex;
+  padding: 12px 8px;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+  background: #FFFED8;
+}
+.row_top .row_text{
+  color: #000;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+  text-transform: capitalize;
+}
+.table_content .row_time{
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  background: #FFF;
+}
+.table_content .row_box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+}
 /*PC*/
 @media all and (min-width:1024px) { 
     .desktop{
@@ -9,6 +47,9 @@
         align-items: center;
       }
       .tablet{
+        display: none;
+      }
+      .mobile{
         display: none;
       }
       .desktop .sidebar{
@@ -38,7 +79,6 @@
       }
       .sidebar .sidebar_box .sidebar_title .sidebar_title_text{
         color: #222;
-        font-family: DM Sans;
         font-size: 25px;
         font-style: normal;
         font-weight: 500;
@@ -58,19 +98,12 @@
         gap: 16px;
         align-self: stretch;
       }
-      .sidebar_box .sidebar_menu .menu_box .menu_text_focus{
+      .sidebar_box .sidebar_menu .menu_box .menu_text.focus{
         color: #222;
-        /* Font Medium */
-        font-family: DM Sans;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 24px; /* 150% */
       }
       .sidebar_box .sidebar_menu .menu_box .menu_text{
         color: #9A9A9A;
         /* Font Medium */
-        font-family: DM Sans;
         font-size: 16px;
         font-style: normal;
         font-weight: 600;
@@ -109,70 +142,71 @@
         letter-spacing: 2.1px;
         text-transform: uppercase;
       }
-      .table .table_content{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex: 1 0 0;
-        align-self: stretch;
-      }
       .table .table_content .row_top{
-        display: flex;
         height: 40px;
-        padding: 12px 8px;
-        align-items: center;
-        gap: 24px;
-        flex: 1 0 0;
-        align-self: stretch;
-        background: #FFFED8;
       }
       .row_top .row_text{
-        color: #000;
         font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 140%; /* 22.4px */
-        text-transform: capitalize;
       }
-      .row_top .row_text.name{
+      .row_top .row_text.name, 
+      .row1 .row_text.name, 
+      .row2 .row_text.name{
         width: 50px;
       }
-      .row_top .row_text.number{
+      .row_top .row_text.number,
+      .row1 .row_text.number, 
+      .row2 .row_text.number{
         flex: 1 0 0;
         min-width: 50px;
+        text-align: center;
       }
-      .row_top .row_text.sex{
+      .row_top .row_text.sex,
+      .row1 .row_text.sex, 
+      .row2 .row_text.sex{
         width: 40px;
       }
-      .row_top .row_text.std{
+      .row_top .row_text.std,
+      .row1 .row_text.std, 
+      .row2 .row_text.std{
         flex: 1 0 0;
         min-width: 50px;
+        text-align: center;
       }
-      .row_top .row_text.prog{
+      .row_top .row_text.prog,
+      .row1 .row_text.prog, 
+      .row2 .row_text.prog{
         flex: 1 0 0;
       }
-      .row_top .row_text.count{
+      .row_top .row_text.count,
+      .row1 .row_text.count, 
+      .row2 .row_text.count{
         width: 40px;
+        text-align: center;
       }
-      .row_top .row_text.note{
+      .row_top .row_text.note,
+      .row1 .row_text.note, 
+      .row2 .row_text.note{
         min-width: 150px;
         flex: 1 0 0;
+        text-align: center;
       }
-      .row_top .row_text.date{
+      .row_top .row_text.date,
+      .row1 .row_text.date, 
+      .row2 .row_text.date{
         flex: 1 0 0;
+        text-align: center;
       }
-      .row_top .row_text.time{
+      .row_top .row_text.time,
+      .row1 .row_text.time, 
+      .row2 .row_text.time{
         width: 100px;
+        text-align: center;
       }
       .table_content .row_time{
-        display: flex;
         height: 15px;
         padding: 0px 8px;
-        align-items: center;
-        align-self: stretch;
-        border: 1px solid #000;
-        background: #FFF;
-        box-shadow: 0px -1px 0px 0px #E5E5E5 inset;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
       }
       .table_content .row_time .row_time_text{
         display: flex;
@@ -188,12 +222,8 @@
         text-transform: capitalize;
       }
       .table_content .row_box{
-        display: flex;
         max-height: 110px;
-        flex-direction: column;
-        align-items: center;
         flex: 1 0 0;
-        align-self: stretch;
       }
       .row1{
         display: flex;
@@ -205,6 +235,7 @@
         flex: 1 0 0;
         align-self: stretch;
         background: #FFF;
+        border-bottom: 1px solid #000;
       }
       .row_box .row2{
         display: flex;
@@ -225,53 +256,179 @@
         line-height: 140%; /* 16.8px */
         text-transform: capitalize;
       }
-      .row1 .row_text.name, .row2 .row_text.name{
-        width: 50px;
-      }
-      .row1 .row_text.number, .row2 .row_text.number{
-        flex: 1 0 0;
-        min-width: 50px;
-      }
-      .row1 .row_text.sex, .row2 .row_text.sex{
-        width: 40px;
-      }
-      .row1 .row_text.std, .row2 .row_text.std{
-        flex: 1 0 0;
-        min-width: 50px;
-      }
-      .row1 .row_text.prog, .row2 .row_text.prog{
-        flex: 1 0 0;
-      }
-      .row1 .row_text.count, .row2 .row_text.count{
-        width: 40px;
-      }
       .row1 .row_text.note, .row2 .row_text.note{
-        min-width: 150px;
-        flex: 1 0 0;
         overflow: hidden;
       }
-      .row1 .row_text.date, .row2 .row_text.date{
-        flex: 1 0 0;
-      }
-      .row1 .row_text.time, .row2 .row_text.time{
-        width: 100px;
-      }
   }
-  /*테블릿*/
+  /*-----------------------------PC end------------------------------*/
+  /*-----------------------------테블릿------------------------------*/
   @media all and (min-width:768px) and (max-width:1023px) {
     .desktop{
       display: none;
     }
     .tablet{
       display: flex;
+      width: 100%;
+      height: 100%;
       max-width:1023px;
-      min-width: 480px;
+      min-width: 768px;
       flex-direction: column;
       align-items: center;
     }
+    .mobile{
+      display: none;
+    }
+    .tablet .header{
+      display: flex;
+      height: 60px;
+      padding: 5px 0px 5px 20px;
+      align-items: center;
+      flex-shrink: 0;
+      align-self: stretch;
+      background: #FFFED8;
+    }
+    .tablet .header_text{
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; /* 80% */
+    }
+    .tablet .menu_bar{
+      display: flex;
+      height: 60px;
+      padding: 5px;
+      align-items: center;
+      flex-shrink: 0;
+      align-self: stretch;
+      border-top: 1px solid #9A9A9A;
+      background: #FFFED8;
+    }
+    .main, .client_list, 
+    .reserv_manage, .prog_manage{
+      display: flex;
+      padding: 5px 10px;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+      align-self: stretch;
+    }
+    .menu_text{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1 0 0;
+      align-self: stretch;
+      color: #000;
+      text-align: center;
+      font-size: 25px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; /* 96% */
+    }
+    .menu_text.focus{
+      color: #FFCA1E;
+    }
+    .table{
+      display: flex;
+      min-width: 768px;
+      flex-direction: column;
+      align-items: center;
+      flex: 1 0 0;
+      align-self: stretch;
+    }
+    .row_top{
+      border-top: 2px solid #000;
+    }
+    .row_top .row_text{
+      text-align: center;
+      font-size: 20px;
+    }
+    .row_top .row_text.name, 
+    .row.a .row_text.name, 
+    .row.b .row_text.name{
+      width: 50px;
+    }
+    .row_top .row_text.number,
+    .row.a .row_text.number, 
+    .row.b .row_text.number{
+      flex: 1 0 0;
+      min-width: 130px;
+      text-align: center;
+    }
+    .row_top .row_text.prog,
+    .row.a .row_text.prog, 
+    .row.b .row_text.prog{
+      min-width: 130px;
+      flex: 1 0 0;
+    }
+    .row_top .row_text.count,
+    .row.a .row_text.count, 
+    .row.b .row_text.count{
+      width: 55px;
+      text-align: center;
+    }
+    .row_top .row_text.date,
+    .row.a .row_text.date, 
+    .row.b .row_text.date{
+      min-width: 130px;
+      flex: 1 0 0;
+      text-align: center;
+    }
+    .row_top .row_text.time,
+    .row.a .row_text.time, 
+    .row.b .row_text.time{
+      width: 130px;
+      text-align: center;
+    }
+    .table_content .row_time{
+      border-top: 1px solid #9A9A9A;
+      border-bottom: 1px solid #9A9A9A;
+      height: 30px;
+      padding: 12px 8px;
+      flex: 1 0 0;
+    }
+    .table_content{
+      display: flex;
+      min-width: 768px;
+      flex-direction: column;
+      align-items: center;
+      flex: 1 0 0;
+      align-self: stretch;
+    }
+    .table_content .row_box{
+      min-height: 140px;
+    }
+    .row{
+      display: flex;
+      min-height: 70px;
+      padding: 12px 8px;
+      align-items: center;
+      gap: 24px;
+      align-self: stretch;
+    }
+    .row.a{
+      border-bottom: 1px solid #9A9A9A;
+      background: #FFF;
+    }
+    .row.b{
+      background: #E9EAEC;
+    }
+    .row .row_text{
+      font-size: 15px;
+    }
   }
-  /*모바일*/
+  /*-----------------------------테블릿 end------------------------------*/
+  /*------------------------------모바일------------------------------*/
   @media all and (max-width:767px) {
-
+    .desktop{
+      display: none;
+    }
+    .tablet{
+      display: none;
+    }
+    .mobile{
+      display: flex;
+      max-width:767px;
+    }
   }
   
