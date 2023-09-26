@@ -1,6 +1,7 @@
 body{
   font-family: DM Sans;
   margin: 0;
+  width: 100%;
 }
 a{
   text-decoration-line: none;
@@ -16,6 +17,7 @@ input[type="text"] {
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
+
 }
 .row_top{
   display: flex;
@@ -32,6 +34,7 @@ input[type="text"] {
   font-weight: 700;
   line-height: 140%; /* 22.4px */
   text-transform: capitalize;
+  white-space : nowrap;
 }
 .table_content .row_time{
   display: flex;
@@ -49,10 +52,8 @@ input[type="text"] {
 @media all and (min-width:1024px) { 
     .manage_main{
         display: flex;
-        width: 100%;
         height: 100%;
         min-height: 1024px;        
-        min-width: 1024px;
         align-items: center;
       }
       .header{
@@ -63,7 +64,8 @@ input[type="text"] {
       }
       .manage_main .sidebar{
         display: flex;
-        width: 200px;
+        min-width: 150px;
+        max-width: 200px;
         padding: 30px 16px 0px 16px;
         flex-direction: column;
         align-items: flex-start;
@@ -112,7 +114,6 @@ input[type="text"] {
       }
       .sidebar_box .sidebar_menu .menu_box .menu_text{
         color: #9A9A9A;
-        /* Font Medium */
         font-size: 16px;
         font-style: normal;
         font-weight: 600;
@@ -134,6 +135,7 @@ input[type="text"] {
         align-items: flex-start;
         flex: 1 0 0;
         align-self: stretch;
+        min-width: 824px;
       }
       .table_title{
         display: flex;
@@ -173,58 +175,54 @@ input[type="text"] {
       .row_top .row_text{
         font-size: 16px;
       }
-      .row_top .row_text.name, 
-      .row.a .row_text.name, 
-      .row.b .row_text.name{
-        width: 50px;
-      }
-      .row_top .row_text.number,
-      .row.a .row_text.number, 
-      .row.b .row_text.number{
-        flex: 1 0 0;
-        min-width: 50px;
+      .row_top .row_text.name,  
+      .row .row_text.name{
+        min-width: 40px;
         text-align: center;
       }
-      .row_top .row_text.sex,
-      .row.a .row_text.sex, 
-      .row.b .row_text.sex{
-        width: 40px;
-      }
-      .row_top .row_text.std,
-      .row.a .row_text.std, 
-      .row.b .row_text.std{
+      .row_top .row_text.number, 
+      .row .row_text.number{
         flex: 1 0 0;
-        min-width: 50px;
+        min-width: 90px;
         text-align: center;
       }
-      .row_top .row_text.prog,
-      .row.a .row_text.prog, 
-      .row.b .row_text.prog{
-        flex: 1 0 0;
+      .row_top .row_text.sex, 
+      .row .row_text.sex{
+        min-width: 30px;
+        text-align: center;
       }
-      .row_top .row_text.count,
-      .row.a .row_text.count, 
-      .row.b .row_text.count{
-        width: 40px;
+      .row_top .row_text.std, 
+      .row .row_text.std{
+        flex: 1 0 0;
+        min-width: 45px;
+        text-align: center;
+      }
+      .row_top .row_text.prog, 
+      .row .row_text.prog{
+        min-width: 105px;
+        flex: 1 0 0;
+        text-align: center;
+      }
+      .row_top .row_text.count, 
+      .row .row_text.count{
+        min-width: 30px;
         text-align: center;
       }
       .row_top .row_text.note,
-      .row.a .row_text.note, 
-      .row.b .row_text.note{
-        min-width: 150px;
+      .row .row_text.note{
+        min-width: 100px;
         flex: 1 0 0;
         text-align: center;
       }
-      .row_top .row_text.date,
-      .row.a .row_text.date, 
-      .row.b .row_text.date{
+      .row_top .row_text.date, 
+      .row .row_text.date{
         flex: 1 0 0;
         text-align: center;
+        min-width: 100px;
       }
-      .row_top .row_text.time,
-      .row.a .row_text.time, 
-      .row.b .row_text.time{
-        width: 100px;
+      .row_top .row_text.time, 
+      .row .row_text.time{
+        min-width: 80px;
         text-align: center;
       }
       .name_client,.number_client,
@@ -232,15 +230,45 @@ input[type="text"] {
         flex: 1 0 0;
         text-align: center;
       }
-      .row_top .row_text.dob,
-      .row.a .row_text.dob, 
-      .row.b .row_text.dob{
+      .row_top .row_text.dob, 
+      .row .row_text.dob{
         flex: 1 0 0;
         text-align: center;
       }
       .row_top .row_text.agree,
-      .row.a .row_text.agree, 
-      .row.b .row_text.agree{
+      .row .row_text.agree {
+        flex: 1 0 0;
+        text-align: center;
+      }
+      .del_btn{
+        display: flex;
+        height: 30px;
+        max-width: 40px;
+        padding: 1px 9px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex: 1 0 0;
+      }
+      .row .del_btn{
+        border-radius: 5px;
+        background: #EE4C69;
+        cursor: pointer;
+      }
+      .row_top.prog .count,
+      .row.prog .count{
+        max-width: 75px;
+        flex: 1 0 0;
+      }
+      .row_top.prog .row_text.prog, 
+      .row.prog .row_text.prog{
+        max-width: 150px;
+      }
+      .row_top.prog .row_text.price, 
+      .row.prog .row_text.price,
+      .row_top.prog .row_text.discount, 
+      .row.prog .row_text.discount{
+        max-width: 75px;
         flex: 1 0 0;
         text-align: center;
       }
@@ -267,7 +295,7 @@ input[type="text"] {
         max-height: 110px;
         flex: 1 0 0;
       }
-      .row.a{
+      .row{
         display: flex;
         min-height: 40px;
         max-height: 45px;
@@ -276,20 +304,14 @@ input[type="text"] {
         gap: 24px;
         flex: 1 0 0;
         align-self: stretch;
+      }
+      .row.a{       
         background: #FFF;
       }
       .row.b{
-        display: flex;
-        min-height: 40px;
-        max-height: 45px;
-        padding: 5px 8px;
-        align-items: center;
-        gap: 24px;
-        flex: 1 0 0;
-        align-self: stretch;
         background: #E9EAEC;
       }
-      .row.a .row_text,.row.b .row_text{
+      .row .row_text{
         color: #000;
         font-size: 13px;
         font-style: normal;
@@ -299,6 +321,30 @@ input[type="text"] {
       }
       .row.a .row_text.note, .row.b .row_text.note{
         overflow: hidden;
+      }
+      .row_top.prog, .row.a.prog, .row.b.prog{
+        gap: 100px;
+      }
+      .manage_box{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        align-self: stretch;
+      }
+      .management_date, .prog_add{
+        display: flex;
+        padding: 1px 9px;
+        align-items: center;
+        gap: 10px;
+        border-radius: 5px;
+        background: #848383;
+        color: #FFF;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%; /* 28px */
+        text-transform: capitalize;
+        cursor: pointer;
       }
   }
   /*-----------------------------PC end------------------------------*/
@@ -334,11 +380,29 @@ input[type="text"] {
     .header{
       display: flex;
       height: 60px;
-      padding: 5px 0px 5px 20px;
+      padding: 5px 10px 5px 20px;
       align-items: center;
       flex-shrink: 0;
       align-self: stretch;
       background: #FFFED8;
+      justify-content: space-between;
+    }
+    .search-box {
+      display: flex;
+      width: 200px;
+      padding: 10px 14px;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      border-radius: 8px;
+      border: 1px solid var(--gray-300, #D0D5DD);
+      background-color: #fff;
+    }
+    #searchInput{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1 0 0;
     }
     .header_text{
       font-size: 30px;
@@ -403,40 +467,35 @@ input[type="text"] {
       text-align: center;
       font-size: 20px;
     }
-    .row_top .row_text.name, 
-    .row.a .row_text.name, 
-    .row.b .row_text.name{
+    .row_top .row_text.name,  
+    .row .row_text.name{
       width: 50px;
     }
-    .row_top .row_text.number,
-    .row.a .row_text.number, 
-    .row.b .row_text.number{
+    .row_top .row_text.number, 
+    .row .row_text.number{
       flex: 1 0 0;
       min-width: 130px;
       text-align: center;
     }
-    .row_top .row_text.prog,
-    .row.a .row_text.prog, 
-    .row.b .row_text.prog{
+    .row_top .row_text.prog, 
+    .row .row_text.prog{
       min-width: 130px;
       flex: 1 0 0;
+      text-align: center;
     }
-    .row_top .row_text.count,
-    .row.a .row_text.count, 
-    .row.b .row_text.count{
+    .row_top .row_text.count, 
+    .row .row_text.count{
       width: 55px;
       text-align: center;
     }
-    .row_top .row_text.date,
-    .row.a .row_text.date, 
-    .row.b .row_text.date{
+    .row_top .row_text.date, 
+    .row .row_text.date{
       min-width: 130px;
       flex: 1 0 0;
       text-align: center;
     }
-    .row_top .row_text.time,
-    .row.a .row_text.time, 
-    .row.b .row_text.time{
+    .row_top .row_text.time, 
+    .row .row_text.time{
       width: 130px;
       text-align: center;
     }
@@ -445,15 +504,39 @@ input[type="text"] {
       flex: 1 0 0;
       text-align: center;
     }
-    .row_top .row_text.dob,
-    .row.a .row_text.dob, 
-    .row.b .row_text.dob{
+    .row_top .row_text.dob, 
+    .row .row_text.dob{
       flex: 1 0 0;
       text-align: center;
     }
-    .row_top .row_text.agree,
-    .row.a .row_text.agree, 
-    .row.b .row_text.agree{
+    .row_top .row_text.agree, 
+    .row .row_text.agree{
+      flex: 1 0 0;
+      text-align: center;
+    }
+    .del_btn{
+      display: flex;
+      height: 30px;
+      max-width: 40px;
+      padding: 1px 9px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+    }
+    .row .del_btn{
+      border-radius: 5px;
+      background: #EE4C69;
+      cursor: pointer;
+    }
+    .row_top.prog .count,
+    .row.prog .count{
+      flex: 1 0 0;
+    }
+    .row_top.prog .row_text.price, 
+    .row.prog .row_text.price,
+    .row_top.prog .row_text.discount, 
+    .row.prog .row_text.discount{
       flex: 1 0 0;
       text-align: center;
     }
@@ -491,6 +574,27 @@ input[type="text"] {
     }
     .row .row_text{
       font-size: 15px;
+    }
+    .manage_box{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      align-self: stretch;
+    }
+    .management_date, .prog_add{
+      display: flex;
+      padding: 1px 9px;
+      align-items: center;
+      gap: 10px;
+      border-radius: 5px;
+      background: #848383;
+      color: #FFF;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%; /* 28px */
+      text-transform: capitalize;
+      cursor: pointer;
     }
   }
   /*-----------------------------테블릿 end------------------------------*/
