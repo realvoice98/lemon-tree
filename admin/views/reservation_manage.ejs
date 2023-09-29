@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약 관리</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
-    <script src="/script.js"></script>
+    
 </head>
 <body>
+
     <div class="manage_main">
         <div class="sidebar">
           <div class="sidebar_box">
@@ -111,9 +112,70 @@
           </div>
         </div>
     </div>
-    <script>
-
-
-    </script>
+    <div class="modal_back">
+      <div class="modal">
+        <form method="POST" class="reservationForm">
+        <div class="detail_info_modal">
+          <div class="modal_header">
+            <span class="modal_header_title">예약 상세정보</span>
+            <div class="confirm_btn" data-action="">
+              <span class="confirm_btn_text">확정</span>
+            </div>
+          </div>
+          <div class="modal_main">
+            <div class="client info">
+              <span class="client info_title">예약자 정보</span>
+              <div class="info_box name">
+                <span class="box_name">이름</span>
+                <input type="text" name="" class="inputbox">
+              </div>
+              <div class="info_box number">
+                <span class="box_name">번호</span>
+                <input type="text" name="" class="inputbox">
+              </div>
+              <div class="info_box sex">
+                <span class="box_name">성별</span>
+                <input type="text" name="" class="inputbox">
+              </div>
+              <div class="info_box note">
+                <span class="box_name">비고</span>
+                <textarea name="" class="inputbox note"></textarea>
+              </div>
+            </div>
+            <div class="reserv info">
+              <span class="reserv info_title">예약 정보</span>
+              <div class="info_box date">
+                <span class="box_name">예약날짜</span>
+                <input type="text" name="" class="inputbox">
+              </div>
+              <div class="info_box prog">
+                <span class="box_name">프로그램</span>
+                <input type="text" name="" class="inputbox">
+              </div>
+              <span class="fare info_title">요금 정보</span>
+              <div class="info_box fare">
+                <div class="fare_content">
+                  <span class="fare_box">횟수</span>
+                </div>
+                <div class="fare_content">
+                  <span class="fare_box">재학생</span>
+                </div>
+                <div class="fare_content">
+                  <span class="fare_box">정상가</span>
+                </div>
+                <div class="fare_content">
+                  <span class="fare_box">할인가</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal_footer">
+            
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+    <script src="/script.js"></script>
 </body>
 </html>
