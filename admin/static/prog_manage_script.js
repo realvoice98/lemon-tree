@@ -51,13 +51,13 @@ modifyButtons.forEach(button => {
         const price = row.querySelector('.row_text.price').textContent;
         const discount = row.querySelector('.row_text.discount').textContent;
         
-        // 모달 내의 인풋 상자를 선택합니다.
+        // 모달 내의 인풋 상자를 선택
         const modalProgramInput = document.querySelector('.progForm .inputbox.prog');
         const modalCountInput = document.querySelector('.progForm .inputbox.number');
         const modalPriceInput = document.querySelector('.progForm .inputbox.price');
         const modalDiscountInput = document.querySelector('.progForm .inputbox.discount');
 
-        // 모달 내의 인풋 상자에 값을 설정합니다.
+        // 모달 내의 인풋 상자에 값을 설정
         modalProgramInput.value = serviceName;
         modalCountInput.value = count;
         modalPriceInput.value = price;
