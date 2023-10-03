@@ -37,8 +37,25 @@ rows.forEach(row => {
       time: time
     };
 
-    // 추출한 데이터를 콘솔에 출력합니다.
-    console.log('클릭된 행 데이터:', rowData);
+    // 인풋 태그를 선택합니다.
+    const nameInput = modal.querySelector('.inputbox.name');
+    const numberInput = modal.querySelector('.inputbox.number');
+    const sexInput = modal.querySelector('.inputbox.sex');
+    const noteInput = modal.querySelector('.inputbox.note');
+    const dateInput = modal.querySelector('.inputbox.date');
+    const progInput = modal.querySelector('.inputbox.prog');
+    const countInput = modal.querySelector('.inputbox.count');
+    const stdInput = modal.querySelector('.inputbox.std');
+
+    // 추출한 데이터를 인풋 태그에 설정합니다.
+    nameInput.value = name;
+    numberInput.value = number;
+    sexInput.value = sex;
+    noteInput.value = note;
+    countInput.value = count;
+    stdInput.value =std;
+    progInput.value = prog;
+    dateInput.value = date;
 
     // 클릭된 로우의 데이터를 저장합니다.
     clickedRowData = rowData;
@@ -46,6 +63,10 @@ rows.forEach(row => {
     // 백그라운드를 보이게 합니다.
     modalBack.style.display = 'block';
   });
+});
+// 모달 내부의 클릭 이벤트가 상위로 전파되지 않도록 설정합니다.
+modal.addEventListener('click', function(event) {
+  event.stopPropagation();
 });
 
 // 백그라운드 클릭 시 모달을 닫습니다.

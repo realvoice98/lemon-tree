@@ -262,5 +262,76 @@
           </div>
         </div>
     </div>
+    <!--모달-->
+    <div class="modal_back">
+      <div class="modal">
+        <form method="POST" class="reservationForm">
+        <div class="detail_info_modal">
+          <div class="modal_header">
+            <span class="modal_header_title">예약 상세정보</span>
+            <div class="confirm_btn" data-action="">
+              <span class="confirm_btn_text">확정</span>
+            </div>
+          </div>
+          <div class="modal_main">
+            <div class="client info">
+              <span class="client info_title">예약자 정보</span>
+              <div class="info_box name">
+                <span class="box_name">이름</span>
+                <input type="text" name="" class="inputbox name">
+              </div>
+              <div class="info_box number">
+                <span class="box_name">번호</span>
+                <input type="text" name="" class="inputbox number">
+              </div>
+              <div class="info_box sex">
+                <span class="box_name">성별</span>
+                <input type="text" name="" class="inputbox sex">
+              </div>
+              <div class="info_box note">
+                <span class="box_name">비고</span>
+                <textarea name="" class="inputbox note"></textarea>
+              </div>
+            </div>
+            <div class="reserv info">
+              <span class="reserv info_title">예약 정보</span>
+              <div class="info_box date">
+                <span class="box_name">예약날짜</span>
+                <input type="text" name="" class="inputbox date">
+              </div>
+              <div class="info_box prog">
+                <span class="box_name">프로그램</span>
+                <input type="text" name="" class="inputbox prog">
+              </div>
+              <span class="fare info_title">요금 정보</span>
+              <div class="info_box fare">
+                <div class="fare_content">
+                  <span class="fare_box">횟수</span>
+                  <input type="text" name="" class="inputbox count" readonly>
+                </div>
+                <div class="fare_content">
+                  <span class="fare_box">재학생</span>
+                  <input type="text" name="" class="inputbox std">
+                </div>
+                <div class="fare_content">
+                  <span class="fare_box">정상가</span>
+                </div>
+                <div class="fare_content">
+                  <span class="fare_box">할인가</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal_footer">
+            <span class="btn modify" data-action="">수정</span>
+            <span class="btn pay" data-action="">결제</span>
+            <span class="btn cancel" data-action="">예약 취소</span>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+    <!--모달-->
+    <script src="/reserv_manage_script.js"></script>
 </body>
 </html>

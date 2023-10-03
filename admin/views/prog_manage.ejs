@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로그램 관리</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css">   
 </head>
 <body>
     <div class="manage_main">
@@ -47,11 +47,7 @@
           </div>
         </div>
         <div class="header">
-          <span class="header_text">Lemon Tree</span>
-          <div class="manage_box">
-            <div class="management_date">운영날짜 관리</div>
-            <div class="prog_add">프로그램 추가</div>
-          </div>        
+          <span class="header_text">Lemon Tree</span>        
         </div>
         <div class="menu_bar">
           <div class="main_page"><a href="/" class="menu_text">메인</a></div>
@@ -66,6 +62,16 @@
                     <span class="table_title_text">프로그램 관리</span>
                     <div class="manage_box">
                       <div class="management_date">운영날짜 관리</div>
+                      <div class="date_container">
+                        <div class="management_date_box">
+                          <div class="management_date_text">운영날짜 관리</div>
+                          <div class="date_select">
+                            <input type="date" class="startDate" id="startDateInput" required>
+                            <input type="date" class="endDate" id="endDateInput" required>
+                            <button onclick="extractDates()">확인</button>
+                          </div>
+                        </div>
+                      </div>
                       <div class="prog_add">프로그램 추가</div>
                     </div>
                 </div>
@@ -74,25 +80,68 @@
                     <span  class="row_text count">횟수</span>
                     <span  class="row_text price">정상가</span>
                     <span  class="row_text discount">할인가</span>
-                    <div class="del_btn"><span  class="row_text del"></span></div>
+                    <div class="btn_box">
+                      <span  class="row_text modify"></span>
+                      <span  class="row_text del"></span>
+                    </div>
                 </div>
                 <div class="row a prog">
                     <span  class="row_text prog">얼굴&데콜테관리(60min)</span>
                     <span  class="row_text count">1회</span>
                     <span  class="row_text price">13,000</span>
                     <span  class="row_text discount">11,000</span>
-                    <div class="del_btn"><span  class="row_text del">삭제</span></div>
+                    <div class="btn_box">
+                      <span  class="row_text modify">수정</span>
+                      <span  class="row_text del">삭제</span>
+                    </div>
                 </div>
                 <div class="row b prog">
                     <span  class="row_text prog"></span>
                     <span  class="row_text count"></span>
                     <span  class="row_text price"></span>
                     <span  class="row_text discount"></span>
-                    <div class="del_btn"><span  class="row_text del">삭제</span></div>
+                    <div class="btn_box">
+                      <span  class="row_text modify">수정</span>
+                      <span  class="row_text del">삭제</span>
+                    </div>
                 </div>
             </div>
           </div>
         </div>
     </div>
+    <!--모달-->
+    <div class="modal_back">
+      <div class="modal">
+        <form method="POST" class="progForm">
+          <div class="modal_header">
+            <span class="modal_header_title">프로그램 추가/수정</span>
+          </div>
+            <div class="prog info">
+              <div class="info_box prog">
+                <span class="box_name prog">프로그램</span>
+                <input type="text" name="" class="inputbox prog">
+              </div>
+              <div class="info_box number">
+                <span class="box_name prog">횟수</span>
+                <input type="text" name="" class="inputbox number">
+              </div>
+              <div class="info_box price">
+                <span class="box_name prog">정상가</span>
+                <input type="text" name="" class="inputbox price">
+              </div>
+              <div class="info_box discount">
+                <span class="box_name prog">할인가</span>
+                <input type="text" name="" class="inputbox discount">
+              </div>
+            </div>
+          <div class="modal_footer">
+            <span class="btn check">확인</span>
+            <span class="btn cancel">취소</span>
+          </div>
+      </form>
+      </div>
+    </div>
+    <!--모달-->
+    <script src="/prog_manage_script.js"></script>
 </body>
 </html>
