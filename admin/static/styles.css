@@ -1010,7 +1010,7 @@ textarea{
       align-items: center;
       gap: 10px;
       color: #FFF;
-       cursor: pointer;
+      cursor: pointer;
     }
     .btn.modify, .btn.check{
       background: #5A6FC9;
