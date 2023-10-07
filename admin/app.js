@@ -7,21 +7,19 @@ app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/static'))
 
-app.get('/', (req, res) => {
-    res.render('main');
-  })
+// 라우트 모듈 가져오기
+const clientListRoutes = require('./route/client_list');
+const loginRoutes = require('./route/login');
+const mainRoutes = require('./route/main');
+const progManageRoutes = require('./route/prog_manage');
+const reservManageRoutes = require('./route/reserv_manage');
 
-app.get('/reservation_manage', (req, res) => {
-    res.render('reservation_manage');
-  })
-
-app.get('/client_list', (req, res) => {
-    res.render('client_list');
-  })
-
-app.get('/prog_manage', (req, res) => {
-    res.render('prog_manage');
-  })
+// 라우트 등록
+app.use('/', clientListRoutes);
+app.use('/', loginRoutes);
+app.use('/', mainRoutes);
+app.use('/', progManageRoutes);
+app.use('/', reservManageRoutes);
 
 app.listen(port, () => {
     console.log("server open", port);

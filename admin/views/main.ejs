@@ -19,13 +19,13 @@
                     <path d="M12 2L3 9V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22     20.0391           21.7893     20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V9L12 2Z" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M9 22V12H15V22" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <a href="/" class="menu_text focus">메인</a>
+                <a href="/admin/main" class="menu_text focus">메인</a>
               </div>
               <div class="menu_box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M12 0C8.7 0 6 3.36 6 7.5C6 11.64 8.7 15 12 15C15.3 15 18 11.64 18 7.5C18 3.36 15.3 0 12 0ZM5.73 15C2.55 15.15 0 17.76 0 21V24H24V21C24 17.76 21.48 15.15 18.27 15C16.65 16.83 14.43 18 12 18C9.57 18 7.35 16.83 5.73 15Z" fill="#9A9A9A"/>
                 </svg>
-                <a href="/client_list" class="menu_text">회원목록</a>
+                <a href="/admin/client_list" class="menu_text">회원목록</a>
               </div>
               <div class="menu_box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -35,13 +35,13 @@
                     <path d="M16 17H8" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M10 9H9H8" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <a href="/reservation_manage" class="menu_text">예약관리</a>
+                <a href="/admin/reservation_manage" class="menu_text">예약관리</a>
               </div>
               <div class="menu_box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M21.4142 20.4142C21.7893 20.0391 22 19.5304 22 19V8C22 7.46957 21.7893 6.96086 21.4142 6.58579C21.0391 6.21071 20.5304 6 20 6H11L9 3H4C3.46957 3 2.96086 3.21071 2.58579 3.58579C2.21071 3.96086 2 4.46957 2 5V19C2 19.5304 2.21071 20.0391 2.58579 20.4142C2.96086 20.7893 3.46957 21 4 21H20C20.5304 21 21.0391 20.7893 21.4142 20.4142Z" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                  <a href="/prog_manage" class="menu_text">프로그램 관리</a>
+                  <a href="/admin/prog_manage" class="menu_text">프로그램 관리</a>
               </div>
             </div>
           </div>
@@ -50,10 +50,10 @@
           <span class="header_text">Lemon Tree</span>        
         </div>
         <div class="menu_bar">
-          <div class="main_page"><a href="/" class="menu_text focus">메인</a></div>
-          <div class="client_list"><a href="/client_list" class="menu_text">회원목록</a></div>
-          <div class="reserv_manage"><a href="/reservation_manage" class="menu_text">예약관리</a></div>
-          <div class="prog_manage"><a href="/prog_manage" class="menu_text">프로그램관리</a></div>
+          <div class="main_page"><a href="/admin/main" class="menu_text focus">메인</a></div>
+          <div class="client_list"><a href="/admin/client_list" class="menu_text">회원목록</a></div>
+          <div class="reserv_manage"><a href="/admin/reservation_manage" class="menu_text">예약관리</a></div>
+          <div class="prog_manage"><a href="/admin/prog_manage" class="menu_text">프로그램관리</a></div>
         </div>
         <div class="main">
           <div class="table">
@@ -266,7 +266,7 @@
     <div class="modal_back">
       <div class="modal">
         <form method="POST" class="reservationForm">
-        <div class="detail_info_modal">
+        <div class="info_modal">
           <div class="modal_header">
             <span class="modal_header_title">예약 상세정보</span>
             <div class="confirm_btn" data-action="">
