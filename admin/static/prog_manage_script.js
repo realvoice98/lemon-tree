@@ -18,11 +18,13 @@ function extractDates() {
     if (!startDate || !endDate) {
         alert('시작일과 종료일을 모두 입력해주세요.');
         return; // 값이 없으면 함수를 종료하고 모달 창을 열어둠
+    }else{
+        alert("운영날짜를 " + startDate + " ~ " + endDate + "로 설정합니다.");
     }
 
-    // 하이픈(-) 제거
-    const formattedStartDate = startDate.replace(/-/g, '');
-    const formattedEndDate = endDate.replace(/-/g, '');
+    // 하이픈(-) 제거 후 마침표(.) 추가
+    const formattedStartDate = startDate.replace(/-/g, '.');
+    const formattedEndDate = endDate.replace(/-/g, '.');
 
     console.log('시작일:', formattedStartDate);
     console.log('종료일:', formattedEndDate);
