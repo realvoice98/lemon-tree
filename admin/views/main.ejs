@@ -70,93 +70,80 @@
                 <span  class="row_text date">예약 날짜</span>
                 <span  class="row_text time">시간</span>
               </div>
-              <div class="row_time"><span  class="row_time_text">17:00</span></div>
-              <div class="row_box">
-                <div class="row a">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-                <div class="row b">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-              </div>
-              <div class="row_time"><span  class="row_time_text">17:30</span></div>
-              <div class="row_box">
-                <div class="row a">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-                <div class="row b">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-              </div>      
-              <div class="row_time"><span  class="row_time_text">18:00</span></div>
-              <div class="row_box">
-                <div class="row a">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-                <div class="row b">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"> </span>
-                </div>
-              </div>
-              <div class="row_time"><span  class="row_time_text">18:30</span></div>
-              <div class="row a">
-                <span  class="row_text name">김신희</span>
-                <span  class="row_text number">01022389960</span>
-                <span  class="row_text sex">남성</span>
-                <span  class="row_text std">0</span>
-                <span  class="row_text prog">얼굴&데콜테관리(60min)</span>
-                <span  class="row_text count">2/3회</span>
-                <span  class="row_text note">없음</span>
-                <span  class="row_text date">09.26.18:30</span>
-                <span  class="row_text time">18:30~19:30</span>
-              </div>
+              <% Object.keys(reservationsByTimeToday).forEach((time) => { %>
+                <div class="row_time"><span class="row_time_text"><%= time %></span></div>
+                <% if (reservationsByTimeToday[time].length === 0) { %>
+                  <!-- 시간대에 예약 정보가 없는 경우, 두 개의 빈 껍데기 표시 -->
+                  <div class="row a">
+                    <span class="row_text name"></span>
+                    <span class="row_text number"></span>
+                    <span class="row_text sex"></span>
+                    <span class="row_text std"></span>
+                    <span class="row_text prog"></span>
+                    <span class="row_text count"></span>
+                    <span class="row_text note"></span>
+                    <span class="row_text date"></span>
+                    <span class="row_text time"><%= time %></span>
+                  </div>
+                  <% if (time !== '18:30') { %>
+                    <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
+                    <div class="row b">
+                      <span class="row_text name"></span>
+                      <span class="row_text number"></span>
+                      <span class="row_text sex"></span>
+                      <span class="row_text std"></span>
+                      <span class="row_text prog"></span>
+                      <span class="row_text count"></span>
+                      <span class="row_text note"></span>
+                      <span class="row_text date"></span>
+                      <span class="row_text time"><%= time %></span>
+                    </div>
+                  <% } %>
+                <% } else if (reservationsByTimeToday[time].length === 1) { %>
+                  <!-- 시간대에 예약 정보가 1명만 있는 경우, row a에 정보 표시 -->
+                  <div class="row a">
+                    <span class="row_text name"><%= reservationsByTimeToday[time][0].name %></span>
+                    <span class="row_text number"><%= reservationsByTimeToday[time][0].phone %></span>
+                    <span class="row_text sex"><%= reservationsByTimeToday[time][0].gender %></span>
+                    <span class="row_text std"><%= reservationsByTimeToday[time][0].std %></span>
+                    <span class="row_text prog"><%= reservationsByTimeToday[time][0].prog_name %></span>
+                    <span class="row_text count"><%= reservationsByTimeToday[time][0].prog_count %></span>
+                    <span class="row_text note"><%= reservationsByTimeToday[time][0].note %></span>
+                    <span class="row_text date"><%= reservationsByTimeToday[time][0].reservation_date %></span>
+                    <span class="row_text time"><%= time %></span>
+                  </div>
+                  <% if (time !== '18:30') { %>
+                    <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
+                    <div class="row b">
+                      <span class="row_text name"></span>
+                      <span class="row_text number"></span>
+                      <span class="row_text sex"></span>
+                      <span class="row_text std"></span>
+                      <span class="row_text prog"></span>
+                      <span class="row_text count"></span>
+                      <span class="row_text note"></span>
+                      <span class="row_text date"></span>
+                      <span class="row_text time"><%= time %></span>
+                    </div>
+                  <% } %>
+                <% } else { %>
+                  <!-- 시간대에 여러 예약 정보가 있는 경우, 스트라이프 스타일로 번갈아 가면서 표시 -->
+                  <% reservationsByTimeToday[time].forEach((reservation, index) => { %>
+                    <% const rowClass = index % 2 === 0 ? 'a' : 'b'; %>
+                    <div class="row <%= rowClass %>">
+                      <span class="row_text name"><%= reservation.name %></span>
+                      <span class="row_text number"><%= reservation.phone %></span>
+                      <span class="row_text sex"><%= reservation.gender %></span>
+                      <span class="row_text std"><%= reservation.std %></span>
+                      <span class="row_text prog"><%= reservation.prog_name %></span>
+                      <span class="row_text count"><%= reservation.prog_count %></span>
+                      <span class="row_text note"><%= reservation.note %></span>
+                      <span class="row_text date"><%= reservation.reservation_date %></span>
+                      <span class="row_text time"><%= time %></span>
+                    </div>
+                  <% }); %>
+                <% } %>
+              <% }); %>             
             </div>
             <div class="table_content b">
               <div class="table_title"><span class="table_title_text">익일 예약</span></div>
@@ -171,93 +158,80 @@
                 <span  class="row_text date">예약 날짜</span>
                 <span  class="row_text time">시간</span>
               </div>
-              <div class="row_time"><span  class="row_time_text">17:00</span></div>
-              <div class="row_box">
-                <div class="row a">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-                <div class="row b">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-              </div>
-              <div class="row_time"><span  class="row_time_text">17:30</span></div>
-              <div class="row_box">
-                <div class="row a">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-                <div class="row b">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-              </div>      
-              <div class="row_time"><span  class="row_time_text">18:00</span></div>
-              <div class="row_box">
-                <div class="row a">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-                <div class="row b">
-                  <span  class="row_text name"></span>
-                  <span  class="row_text number"></span>
-                  <span  class="row_text sex"></span>
-                  <span  class="row_text std"></span>
-                  <span  class="row_text prog"></span>
-                  <span  class="row_text count"></span>
-                  <span  class="row_text note"></span>
-                  <span  class="row_text date"></span>
-                  <span  class="row_text time"></span>
-                </div>
-              </div>
-              <div class="row_time"><span  class="row_time_text">18:30</span></div>
-              <div class="row a">
-                <span  class="row_text name">김신희</span>
-                <span  class="row_text number">01022389960</span>
-                <span  class="row_text sex">남성</span>
-                <span  class="row_text std">0</span>
-                <span  class="row_text prog">데콜테</span>
-                <span  class="row_text count">2/3회</span>
-                <span  class="row_text note">없음</span>
-                <span  class="row_text date">09.26.18:30</span>
-                <span  class="row_text time">18:30~19:30</span>
-              </div>
+              <% Object.keys(reservationsByTimeTomorrow).forEach((time) => { %>
+                <div class="row_time"><span class="row_time_text"><%= time %></span></div>
+                <% if (reservationsByTimeTomorrow[time].length === 0) { %>
+                  <!-- 시간대에 예약 정보가 없는 경우, 두 개의 빈 껍데기 표시 -->
+                  <div class="row a">
+                    <span class="row_text name"></span>
+                    <span class="row_text number"></span>
+                    <span class="row_text sex"></span>
+                    <span class="row_text std"></span>
+                    <span class="row_text prog"></span>
+                    <span class="row_text count"></span>
+                    <span class="row_text note"></span>
+                    <span class="row_text date"></span>
+                    <span class="row_text time"><%= time %></span>
+                  </div>
+                  <% if (time !== '18:30') { %>
+                    <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
+                    <div class="row b">
+                      <span class="row_text name"></span>
+                      <span class="row_text number"></span>
+                      <span class="row_text sex"></span>
+                      <span class="row_text std"></span>
+                      <span class="row_text prog"></span>
+                      <span class="row_text count"></span>
+                      <span class="row_text note"></span>
+                      <span class="row_text date"></span>
+                      <span class="row_text time"><%= time %></span>
+                    </div>
+                  <% } %>
+                <% } else if (reservationsByTimeTomorrow[time].length === 1) { %>
+                  <!-- 시간대에 예약 정보가 1명만 있는 경우, row a에 정보 표시 -->
+                  <div class="row a">
+                    <span class="row_text name"><%= reservationsByTimeTomorrow[time][0].name %></span>
+                    <span class="row_text number"><%= reservationsByTimeTomorrow[time][0].phone %></span>
+                    <span class="row_text sex"><%= reservationsByTimeTomorrow[time][0].gender %></span>
+                    <span class="row_text std"><%= reservationsByTimeTomorrow[time][0].std %></span>
+                    <span class="row_text prog"><%= reservationsByTimeTomorrow[time][0].prog_name %></span>
+                    <span class="row_text count"><%= reservationsByTimeTomorrow[time][0].prog_count %></span>
+                    <span class="row_text note"><%= reservationsByTimeTomorrow[time][0].note %></span>
+                    <span class="row_text date"><%= reservationsByTimeTomorrow[time][0].reservation_date %></span>
+                    <span class="row_text time"><%= time %></span>
+                  </div>
+                  <% if (time !== '18:30') { %>
+                    <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
+                    <div class="row b">
+                      <span class="row_text name"></span>
+                      <span class="row_text number"></span>
+                      <span class="row_text sex"></span>
+                      <span class="row_text std"></span>
+                      <span class="row_text prog"></span>
+                      <span class="row_text count"></span>
+                      <span class="row_text note"></span>
+                      <span class="row_text date"></span>
+                      <span class="row_text time"><%= time %></span>
+                    </div>
+                  <% } %>
+                <% } else { %>
+                  <!-- 시간대에 여러 예약 정보가 있는 경우, 스트라이프 스타일로 번갈아 가면서 표시 -->
+                  <% reservationsByTimeTomorrow[time].forEach((reservation, index) => { %>
+                    <% const rowClass = index % 2 === 0 ? 'a' : 'b'; %>
+                    <div class="row <%= rowClass %>">
+                      <span class="row_text name"><%= reservation.name %></span>
+                      <span class="row_text number"><%= reservation.phone %></span>
+                      <span class="row_text sex"><%= reservation.gender %></span>
+                      <span class="row_text std"><%= reservation.std %></span>
+                      <span class="row_text prog"><%= reservation.prog_name %></span>
+                      <span class="row_text count"><%= reservation.prog_count %></span>
+                      <span class="row_text note"><%= reservation.note %></span>
+                      <span class="row_text date"><%= reservation.reservation_date %></span>
+                      <span class="row_text time"><%= time %></span>
+                    </div>
+                  <% }); %>
+                <% } %>
+              <% }); %>
             </div>
           </div>
         </div>

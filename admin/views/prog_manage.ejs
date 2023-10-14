@@ -85,26 +85,18 @@
                       <span  class="row_text del"></span>
                     </div>
                 </div>
-                <div class="row a prog">
-                    <span  class="row_text prog">얼굴&데콜테관리(60min)</span>
-                    <span  class="row_text count">1회</span>
-                    <span  class="row_text price">13,000</span>
-                    <span  class="row_text discount">11,000</span>
+                <% programs.forEach((program, index) => { %>
+                  <div class="row <%= index % 2 === 0 ? 'a' : 'b' %> prog">
+                    <span class="row_text prog"><%= program.prog_name %></span>
+                    <span class="row_text count"><%= program.prog_count %></span>
+                    <span class="row_text price"><%= program.price %></span>
+                    <span class="row_text discount"><%= program.discount %></span>
                     <div class="btn_box">
-                      <span  class="row_text modify">수정</span>
-                      <span  class="row_text del">삭제</span>
+                      <span class="row_text modify">수정</span>
+                      <span class="row_text del">삭제</span>
                     </div>
-                </div>
-                <div class="row b prog">
-                    <span  class="row_text prog"></span>
-                    <span  class="row_text count"></span>
-                    <span  class="row_text price"></span>
-                    <span  class="row_text discount"></span>
-                    <div class="btn_box">
-                      <span  class="row_text modify">수정</span>
-                      <span  class="row_text del">삭제</span>
-                    </div>
-                </div>
+                  </div>
+                <% }); %>
             </div>
           </div>
         </div>
