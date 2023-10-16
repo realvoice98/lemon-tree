@@ -86,28 +86,19 @@
                     <span  class="row_text date">예약 날짜</span>
                     <span  class="row_text time">시간</span>
                 </div>
-                <div class="row a">
-                    <span  class="row_text name">김신희</span>
-                    <span  class="row_text number">01022389960</span>
-                    <span  class="row_text sex">남자</span>
-                    <span  class="row_text std">예</span>
-                    <span  class="row_text prog">등관리(30min)</span>
-                    <span  class="row_text count">1/1회</span>
-                    <span  class="row_text note">없음</span>
-                    <span  class="row_text date">2023.09.30.17:00</span>
-                    <span  class="row_text time">17:00~17:30</span>
+                <% reservations.forEach((reservation, index) => { %>
+                <div class="row <%= index % 2 === 0 ? 'a' : 'b' %>">
+                    <span  class="row_text name"><%=reservation.name %></span>
+                    <span  class="row_text number"><%=reservation.phone %></span>
+                    <span  class="row_text sex"><%=reservation.gender %></span>
+                    <span  class="row_text std"><%=reservation.std %></span>
+                    <span  class="row_text prog"><%=reservation.prog_name %></span>
+                    <span  class="row_text count"><%=reservation.prog_count %></span>
+                    <span  class="row_text note"><%=reservation.note %></span>
+                    <span  class="row_text date"><%=reservation.reservation_date %></span>
+                    <span  class="row_text time"><%=reservation.prog_time %></span>
                 </div>
-                <div class="row b">
-                    <span  class="row_text name">범진성</span>
-                    <span  class="row_text number">01000000000</span>
-                    <span  class="row_text sex">남자</span>
-                    <span  class="row_text std">아니오</span>
-                    <span  class="row_text prog">얼굴&데콜테관리(60min)</span>
-                    <span  class="row_text count">3/3회</span>
-                    <span  class="row_text note">없음</span>
-                    <span  class="row_text date">2023.09.30.17:30</span>
-                    <span  class="row_text time">17:30~18:30</span>
-                </div>
+                <% }); %>
             </div>
           </div>
         </div>

@@ -81,22 +81,16 @@
                     <span  class="row_text std_client">재학생</span>
                     <span  class="row_text agree">마케팅 동의</span>
                 </div>
-                <div class="row a">
-                    <span  class="row_text name_client">김신희</span>
-                    <span  class="row_text number_client">01022389960</span>
-                    <span  class="row_text dob">19990407</span>
-                    <span  class="row_text sex_client">남자</span>
-                    <span  class="row_text std_client">예</span>
-                    <span  class="row_text agree">예</span>
+                <% clients.forEach((client, index) => { %>
+                <div class="row <%= index % 2 === 0 ? 'a' : 'b' %>">
+                    <span  class="row_text name_client"><%=client.name%></span>
+                    <span  class="row_text number_client"><%=client.phone%></span>
+                    <span  class="row_text dob"><%=client.birth%></span>
+                    <span  class="row_text sex_client"><%=client.gender%></span>
+                    <span  class="row_text std_client"><%=client.std%></span>
+                    <span  class="row_text agree"><%=client.consent%></span>
                 </div>
-                <div class="row b">
-                    <span  class="row_text name_client"></span>
-                    <span  class="row_text number_client"></span>
-                    <span  class="row_text dob"></span>
-                    <span  class="row_text sex_client"></span>
-                    <span  class="row_text std_client"></span>
-                    <span  class="row_text agree"></span>
-                </div>
+                <% }); %>
             </div>
           </div>
         </div>
