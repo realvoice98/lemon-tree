@@ -104,7 +104,7 @@
     <!--모달-->
     <div class="modal_back">
       <div class="modal">
-        <form method="POST" class="progForm">
+        <form method="POST" class="progForm" action="./add_prog_post">
           <div class="modal_header">
             <span class="modal_header_title">프로그램 추가/수정</span>
           </div>
@@ -127,8 +127,8 @@
               </div>
             </div>
           <div class="modal_footer">
-            <span class="btn check">확인</span>
-            <span class="btn cancel">취소</span>
+            <span class="btn check" onclick="submitForm()">확인</span>
+            <span class="btn cancel" onclick="cancelModal()">취소</span>
           </div>
       </form>
       </div>

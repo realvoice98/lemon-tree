@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db');
 
+router.use(express.json());
+router.use(express.urlencoded({ extended: false }));
+
 router.get('/admin/prog_manage', (req, res) => {
   db.query('SELECT * FROM programs', (error, results, fields) => {
     if (error) {

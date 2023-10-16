@@ -83,7 +83,7 @@
                     <span class="row_text count"></span>
                     <span class="row_text note"></span>
                     <span class="row_text date"></span>
-                    <span class="row_text time"><%= time %></span>
+                    <span class="row_text time"></span>
                   </div>
                   <% if (time !== '18:30') { %>
                     <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -96,7 +96,7 @@
                       <span class="row_text count"></span>
                       <span class="row_text note"></span>
                       <span class="row_text date"></span>
-                      <span class="row_text time"><%= time %></span>
+                      <span class="row_text time"></span>
                     </div>
                   <% } %>
                 <% } else if (reservationsByTimeToday[time].length === 1) { %>
@@ -110,7 +110,7 @@
                     <span class="row_text count"><%= reservationsByTimeToday[time][0].prog_count %></span>
                     <span class="row_text note"><%= reservationsByTimeToday[time][0].note %></span>
                     <span class="row_text date"><%= reservationsByTimeToday[time][0].reservation_date %></span>
-                    <span class="row_text time"><%= time %></span>
+                    <span class="row_text time"><%= reservationsByTimeToday[time][0].prog_time %></span>
                   </div>
                   <% if (time !== '18:30') { %>
                     <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -123,7 +123,7 @@
                       <span class="row_text count"></span>
                       <span class="row_text note"></span>
                       <span class="row_text date"></span>
-                      <span class="row_text time"><%= time %></span>
+                      <span class="row_text time"></span>
                     </div>
                   <% } %>
                 <% } else { %>
@@ -139,7 +139,7 @@
                       <span class="row_text count"><%= reservation.prog_count %></span>
                       <span class="row_text note"><%= reservation.note %></span>
                       <span class="row_text date"><%= reservation.reservation_date %></span>
-                      <span class="row_text time"><%= time %></span>
+                      <span class="row_text time"><%= reservation.prog_time %></span>
                     </div>
                   <% }); %>
                 <% } %>
@@ -171,7 +171,7 @@
                     <span class="row_text count"></span>
                     <span class="row_text note"></span>
                     <span class="row_text date"></span>
-                    <span class="row_text time"><%= time %></span>
+                    <span class="row_text time"></span>
                   </div>
                   <% if (time !== '18:30') { %>
                     <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -184,7 +184,7 @@
                       <span class="row_text count"></span>
                       <span class="row_text note"></span>
                       <span class="row_text date"></span>
-                      <span class="row_text time"><%= time %></span>
+                      <span class="row_text time"></span>
                     </div>
                   <% } %>
                 <% } else if (reservationsByTimeTomorrow[time].length === 1) { %>
@@ -198,7 +198,7 @@
                     <span class="row_text count"><%= reservationsByTimeTomorrow[time][0].prog_count %></span>
                     <span class="row_text note"><%= reservationsByTimeTomorrow[time][0].note %></span>
                     <span class="row_text date"><%= reservationsByTimeTomorrow[time][0].reservation_date %></span>
-                    <span class="row_text time"><%= time %></span>
+                    <span class="row_text time"><%= reservationsByTimeTomorrow[time][0].prog_time %></span>
                   </div>
                   <% if (time !== '18:30') { %>
                     <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -211,7 +211,7 @@
                       <span class="row_text count"></span>
                       <span class="row_text note"></span>
                       <span class="row_text date"></span>
-                      <span class="row_text time"><%= time %></span>
+                      <span class="row_text time"></span>
                     </div>
                   <% } %>
                 <% } else { %>
@@ -227,7 +227,7 @@
                       <span class="row_text count"><%= reservation.prog_count %></span>
                       <span class="row_text note"><%= reservation.note %></span>
                       <span class="row_text date"><%= reservation.reservation_date %></span>
-                      <span class="row_text time"><%= time %></span>
+                      <span class="row_text time"><%= reservation.prog_time %></span>
                     </div>
                   <% }); %>
                 <% } %>

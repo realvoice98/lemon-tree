@@ -45,8 +45,13 @@ const modifyButtons = document.querySelectorAll('.row_text.modify');
     
 const deleteButtons = document.querySelectorAll('.row_text.del');
 
+const addButtons = document.querySelectorAll('.prog_add');
+
 modifyButtons.forEach(button => {
     button.addEventListener('click', () => {
+        const modalForm = document.querySelector('.progForm');
+        modalForm.action = './modify_prog_post';
+
         const row = button.parentElement.parentElement; // 수정 버튼의 부모 요소의 부모 요소 (행)
         const serviceName = row.querySelector('.row_text.prog').textContent;
         const count = row.querySelector('.row_text.count').textContent;
@@ -65,9 +70,33 @@ modifyButtons.forEach(button => {
         modalPriceInput.value = price;
         modalDiscountInput.value = discount;
 
+        modalProgramInput.readOnly = true;
+
         modalBack.style.display = 'block';
     });
 });
+
+addButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const modalForm = document.querySelector('.progForm');
+        modalForm.action = './add_prog_post';
+        // 모달 내의 입력 상자를 선택하고 값을 초기화
+        const modalProgramInput = document.querySelector('.progForm .inputbox.prog');
+        const modalCountInput = document.querySelector('.progForm .inputbox.number');
+        const modalPriceInput = document.querySelector('.progForm .inputbox.price');
+        const modalDiscountInput = document.querySelector('.progForm .inputbox.discount');
+        
+        modalProgramInput.value = '';
+        modalCountInput.value = '';
+        modalPriceInput.value = '';
+        modalDiscountInput.value = '';
+
+        modalProgramInput.readOnly = false;
+
+        modalBack.style.display = 'block';
+    });
+});
+
 modal.addEventListener('click', function(event) {
     event.stopPropagation();
   });
@@ -90,3 +119,12 @@ deleteButtons.forEach(button => {
         console.log("Discount:", discount);
     });
 });
+
+function submitForm() {
+    // progForm 클래스명을 가진 폼을 JavaScript로 서브밋
+    document.querySelector('.progForm').submit();
+  }
+function cancelModal() {
+    modalBack.style.display = 'none';
+  }
+  
