@@ -49,7 +49,7 @@
         <div class="header">
           <span class="header_text">Lemon Tree</span>
           <div class="search-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20" fill="none">
                 <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <input type="text" placeholder="이름 또는 번호 검색" id="searchInput">
@@ -81,16 +81,22 @@
                     <span  class="row_text std_client">재학생</span>
                     <span  class="row_text agree">마케팅 동의</span>
                 </div>
-                <% clients.forEach((client, index) => { %>
-                <div class="row <%= index % 2 === 0 ? 'a' : 'b' %>">
-                    <span  class="row_text name_client"><%=client.name%></span>
-                    <span  class="row_text number_client"><%=client.phone%></span>
-                    <span  class="row_text dob"><%=client.birth%></span>
-                    <span  class="row_text sex_client"><%=client.gender%></span>
-                    <span  class="row_text std_client"><%=client.std%></span>
-                    <span  class="row_text agree"><%=client.consent%></span>
+                <div class="row a">
+                    <span  class="row_text name_client">김신희</span>
+                    <span  class="row_text number_client">01022389960</span>
+                    <span  class="row_text dob">19990407</span>
+                    <span  class="row_text sex_client">남자</span>
+                    <span  class="row_text std_client">예</span>
+                    <span  class="row_text agree">예</span>
                 </div>
-                <% }); %>
+                <div class="row b">
+                    <span  class="row_text name_client"></span>
+                    <span  class="row_text number_client"></span>
+                    <span  class="row_text dob"></span>
+                    <span  class="row_text sex_client"></span>
+                    <span  class="row_text std_client"></span>
+                    <span  class="row_text agree"></span>
+                </div>
             </div>
           </div>
         </div>
