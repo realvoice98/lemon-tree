@@ -65,27 +65,32 @@ const addButtons = document.querySelectorAll('.prog_add');
 modifyButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modalForm = document.querySelector('.progForm');
-        modalForm.action = './modify_prog_post';
+        modalForm.action = './prog_manage/modify_prog_post';
 
         const row = button.parentElement.parentElement; // 수정 버튼의 부모 요소의 부모 요소 (행)
         const serviceName = row.querySelector('.row_text.prog').textContent;
+        const prog_time = row.querySelector('.row_text.time').textContent;
         const count = row.querySelector('.row_text.count').textContent;
         const price = row.querySelector('.row_text.price').textContent;
         const discount = row.querySelector('.row_text.discount').textContent;
         
         // 모달 내의 인풋 상자를 선택
         const modalProgramInput = document.querySelector('.progForm .inputbox.prog');
+        const modalTimeInput = document.querySelector('.progForm .inputbox.time');
         const modalCountInput = document.querySelector('.progForm .inputbox.number');
         const modalPriceInput = document.querySelector('.progForm .inputbox.price');
         const modalDiscountInput = document.querySelector('.progForm .inputbox.discount');
 
         // 모달 내의 인풋 상자에 값을 설정
         modalProgramInput.value = serviceName;
+        modalTimeInput.value = prog_time; 
         modalCountInput.value = count;
         modalPriceInput.value = price;
         modalDiscountInput.value = discount;
 
         modalProgramInput.readOnly = true;
+        modalTimeInput.readOnly = true;
+        modalCountInput.readOnly = true;
 
         modalBack.style.display = 'block';
     });
@@ -97,11 +102,13 @@ addButtons.forEach(button => {
         modalForm.action = './prog_manage/add_prog_post';
         // 모달 내의 입력 상자를 선택하고 값을 초기화
         const modalProgramInput = document.querySelector('.progForm .inputbox.prog');
+        const modalTimeInput = document.querySelector('.progForm .inputbox.time');
         const modalCountInput = document.querySelector('.progForm .inputbox.number');
         const modalPriceInput = document.querySelector('.progForm .inputbox.price');
         const modalDiscountInput = document.querySelector('.progForm .inputbox.discount');
         
         modalProgramInput.value = '';
+        modalTimeInput.value = '';
         modalCountInput.value = '';
         modalPriceInput.value = '';
         modalDiscountInput.value = '';
@@ -127,11 +134,32 @@ deleteButtons.forEach(button => {
         const count = row.querySelector('.row_text.count').textContent;
         const price = row.querySelector('.row_text.price').textContent;
         const discount = row.querySelector('.row_text.discount').textContent;
-        
-        console.log("Service Name:", serviceName);
-        console.log("Count:", count);
-        console.log("Price:", price);
-        console.log("Discount:", discount);
+
+        alert(serviceName + "를 삭제합니다.")
+
+        // Ajax 요청을 보낼 URL 및 데이터
+        const url = './prog_manage/delete_prog'; // 서버의 API 엔드포인트
+        const data = {
+            serviceName: serviceName,
+            count: count
+        };
+
+        // Ajax 요청을 보내고 응답을 처리
+        fetch(url, {
+            method: 'POST', // 또는 'GET' 등
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('서버 응답:', data);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Ajax 오류:', error);
+        });
     });
 });
 

@@ -33,4 +33,59 @@ router.post('/admin/prog_manage/add_date', (req, res) => {
   });
 });
 
+router.post('/admin/prog_manage/add_prog_post', (req, res) => {
+  // POST 요청의 데이터는 req.body 객체를 통해 접근 가능
+  const prog_name = req.body.prog_name;
+  const prog_time = req.body.prog_time;
+  const prog_count = req.body.prog_count;
+  const price = req.body.price;
+  const discount = req.body.discount;
+
+  db.query(
+    'INSERT INTO programs (prog_name, prog_time, prog_count, price, discount) VALUES (?, ?, ?, ?, ?)',
+    [prog_name, prog_time, prog_count, price, discount], (error, results, fields) => {
+    if (error) {
+      console.error('데이터 추가 오류: ' + error);
+      res.send("<script>alert('프로그램 추가 중 오류가 발생했습니다.');location.href='http://localhost:8001/admin/prog_manage';</script>");
+    } else {
+      res.send( "<script>alert('프로그램이 추가되었습니다.');location.href='http://localhost:8001/admin/prog_manage';</script>" );
+    }
+  });
+});
+
+router.post('/admin/prog_manage/modify_prog_post', (req, res) => {
+  // POST 요청의 데이터는 req.body 객체를 통해 접근 가능
+  const prog_name = req.body.prog_name;
+  const prog_time = req.body.prog_time;
+  const prog_count = req.body.prog_count;
+  const price = req.body.price;
+  const discount = req.body.discount;
+
+  db.query(
+    'UPDATE programs SET price = ?, discount = ?  WHERE prog_name = ? AND prog_count = ?',
+    [price, discount, prog_name, prog_count], (error, results, fields) => {
+    if (error) {
+      console.error('데이터 추가 오류: ' + error);
+      res.send("<script>alert('프로그램 수정 중 오류가 발생했습니다.');location.href='http://localhost:8001/admin/prog_manage';</script>");
+    } else {
+      res.send( "<script>alert('프로그램이 수정되었습니다.');location.href='http://localhost:8001/admin/prog_manage';</script>" );
+    }
+  });
+});
+
+router.post('/admin/prog_manage/delete_prog', (req, res) => {
+  // POST 요청의 데이터는 req.body 객체를 통해 접근 가능
+  const serviceName = req.body.serviceName;
+  const count = req.body.count;
+
+  db.query('delete from programs where prog_name = ? and prog_count = ?', [serviceName, count], (error, results, fields) => {
+    if (error) {
+      console.error('데이터 삭제 오류: ' + error);
+      res.status(500).json({ message: '프로그램 삭제 중 오류 발생' });
+    } else {
+      res.json({ message: '프로그램이 삭제되었습니다.' });
+    }
+  });
+});
+
 module.exports = router;
