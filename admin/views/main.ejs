@@ -68,7 +68,7 @@
                 <span  class="row_text count">횟수</span>
                 <span  class="row_text note">비고</span>
                 <span  class="row_text date">예약 날짜</span>
-                <span  class="row_text time">시간</span>
+                <span  class="row_text time">예약 상태</span>
               </div>
               <% Object.keys(reservationsByTimeToday).forEach((time) => { %>
                 <div class="row_time"><span class="row_time_text"><%= time %></span></div>
@@ -109,8 +109,8 @@
                     <span class="row_text prog"><%= reservationsByTimeToday[time][0].prog_name %></span>
                     <span class="row_text count"><%= reservationsByTimeToday[time][0].prog_count %></span>
                     <span class="row_text note"><%= reservationsByTimeToday[time][0].note %></span>
-                    <span class="row_text date"><%= reservationsByTimeToday[time][0].reservation_date %></span>
-                    <span class="row_text time"><%= reservationsByTimeToday[time][0].prog_time %></span>
+                    <span class="row_text date"><%= reservationsByTimeToday[time][0].reservation_date %>.<%= reservationsByTimeToday[time][0].prog_time %></span>
+                    <span class="row_text time"></span>
                   </div>
                   <% if (time !== '18:30') { %>
                     <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -138,8 +138,8 @@
                       <span class="row_text prog"><%= reservation.prog_name %></span>
                       <span class="row_text count"><%= reservation.prog_count %></span>
                       <span class="row_text note"><%= reservation.note %></span>
-                      <span class="row_text date"><%= reservation.reservation_date %></span>
-                      <span class="row_text time"><%= reservation.prog_time %></span>
+                      <span class="row_text date"><%= reservation.reservation_date %>.<%= reservation.prog_time %></span>
+                      <span class="row_text time"></span>
                     </div>
                   <% }); %>
                 <% } %>
@@ -156,7 +156,7 @@
                 <span  class="row_text count">횟수</span>
                 <span  class="row_text note">비고</span>
                 <span  class="row_text date">예약 날짜</span>
-                <span  class="row_text time">시간</span>
+                <span  class="row_text time">예약 상태</span>
               </div>
               <% Object.keys(reservationsByTimeTomorrow).forEach((time) => { %>
                 <div class="row_time"><span class="row_time_text"><%= time %></span></div>
@@ -197,8 +197,8 @@
                     <span class="row_text prog"><%= reservationsByTimeTomorrow[time][0].prog_name %></span>
                     <span class="row_text count"><%= reservationsByTimeTomorrow[time][0].prog_count %></span>
                     <span class="row_text note"><%= reservationsByTimeTomorrow[time][0].note %></span>
-                    <span class="row_text date"><%= reservationsByTimeTomorrow[time][0].reservation_date %></span>
-                    <span class="row_text time"><%= reservationsByTimeTomorrow[time][0].prog_time %></span>
+                    <span class="row_text date"><%= reservationsByTimeTomorrow[time][0].reservation_date %>.<%= reservationsByTimeTomorrow[time][0].prog_time %></span>
+                    <span class="row_text time"></span>
                   </div>
                   <% if (time !== '18:30') { %>
                     <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -226,8 +226,8 @@
                       <span class="row_text prog"><%= reservation.prog_name %></span>
                       <span class="row_text count"><%= reservation.prog_count %></span>
                       <span class="row_text note"><%= reservation.note %></span>
-                      <span class="row_text date"><%= reservation.reservation_date %></span>
-                      <span class="row_text time"><%= reservation.prog_time %></span>
+                      <span class="row_text date"><%= reservation.reservation_date %>.<%= reservation.prog_time %></span>
+                      <span class="row_text time"></span>
                     </div>
                   <% }); %>
                 <% } %>
