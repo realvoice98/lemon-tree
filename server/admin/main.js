@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./db');
+const db = require('../db');
 
 router.get('/admin/main', (req, res) => {
   // 현재 날짜 생성

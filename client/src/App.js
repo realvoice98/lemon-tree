@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Main from './pages/main/main';
+import Login from './pages/login/login';
+import SignUp from './pages/signup/signUp';
+import PhoneNumChange from './pages/mypage/phoneNumChange';
+import PasswordChange from './pages/mypage/passwordChange';
+import StudentConfirm from './pages/mypage/studentConfirm';
+import MyTree from './pages/reservation/myTree';
+import Reservation from './pages/reservation/reservation';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="MainContainer">
+      <Routes>
+        <Route path='/main' element={<Main />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/signUp' element={<SignUp />} />
+          {/* 내 정보 관리 */}
+          <Route path='/phoneNumChange' element={<PhoneNumChange />} />
+          <Route path='/passwordChange' element={<PasswordChange />} />
+          <Route path='/studentConfirm' element={<StudentConfirm />} />
+          {/* 예약 관리 */}
+          <Route path='/myTree' element={<MyTree />} />
+          <Route path='/reservation' element={<Reservation />} />
+      </Routes>
+      
     </div>
   );
 }
