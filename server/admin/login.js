@@ -18,7 +18,7 @@ router.post('/admin/login', (req, res) => {
         res.redirect('/admin/dashboard'); // 로그인 후 페이지로 리디렉션
     } else {
         // 인증 실패
-        res.render('login', { error: '로그인 실패' });
+        res.render('login', { error: '로그인 실패함' });
     }
 });
 
