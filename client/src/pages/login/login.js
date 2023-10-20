@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate} from 'react-router-dom';
+import { useUser } from '../../userContext';
 
 function Login() {
+
+  const { setUser } = useUser();
 
   const [phoneNum, setPhoneNum] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +34,7 @@ function Login() {
   
       if (response.data.success) {
         // 로그인 성공
-        console.log("로그인 성공");
+        setUser(response.data.userInfo); // 유저 정보를 전역변수에 저장
         navigate('/main');
         // 토큰을 저장하고 사용자를 다음 화면으로 리디렉션하거나 다른 작업 수행
       } else {

@@ -1,20 +1,26 @@
 import React from 'react';
 import Header from '../../component/header';
 import { useState } from 'react';
+import { useUser } from '../../userContext';
+import axios from 'axios';
 
 function PhoneNumChange() {
 
-    const [phoneNum,setPhoneNum] = useState("");
+    const [newPhoneNum,setNewPhoneNum] = useState("");
+    const { user, setUser }  = useUser();
+    const originalPhoneNum = user.phone;
+    // const originalPhoneNum = '01075528601';
+    console.log(user)
 
     const onPhoneNumHandler = (event) => {
-        setPhoneNum(event.currentTarget.value);
+      setNewPhoneNum(event.currentTarget.value);
       };
 
     // 전화번호 유효성 검사 함수
-  const validatePhoneNum = (phoneNumber) => {
-    const phoneNumberPattern = /^010-\d{4}-\d{4}$/
+  const validatePhoneNum = (newPhoneNum) => {
+    const phoneNumberPattern = /^010\d{4}\d{4}$/
 
-    if (phoneNumberPattern.test(phoneNumber)) {
+    if (phoneNumberPattern.test(newPhoneNum)) {
       return true
     } else {
       return false
@@ -25,7 +31,7 @@ function PhoneNumChange() {
   const clearInput = (inputFieldName) => {
     switch (inputFieldName) {
       case 'phoneNum':
-        setPhoneNum('');
+        setNewPhoneNum('');
         break;
       default:
         break;
@@ -34,14 +40,29 @@ function PhoneNumChange() {
 
   const confirmButtonValid = () => {
     return (
-      validatePhoneNum(phoneNum)
+      validatePhoneNum(newPhoneNum)
     );
   };
 
-  const changePhoneNumSubmit = () => {
+  const changePhoneNumSubmit = async() => {
     // 여기에 서버로 데이터 보내는 코드 작성 
     // 폰넘버 변경 
+    // phonenumchange
     
+    
+    const SERVER_URL = 'http://localhost:8001/phonenumchange'
+    try {
+      const response = await axios.post(SERVER_URL, { originalPhoneNum, newPhoneNum });
+      if (response.data.success) {
+        alert('변경완료');
+        const updatedUser = { ...user, phone: newPhoneNum };    
+        setUser(updatedUser);
+      } else {
+        this.setState({ message: response.data.message });
+      }
+    } catch (error) {
+      console.error('로그인 요청 오류:', error);
+    }
   }
     
 
@@ -50,20 +71,21 @@ function PhoneNumChange() {
         <Header/>
             <div class="phoneNumChange-container">
                 
-
-                <div class="signup-subtitle">휴대폰 번호</div>
+                <div class="signup-subtitle">기존 전화번호</div>
+                  <input className='signup-input' type='text' value={originalPhoneNum} disabled={true}/>
+                <div class="signup-subtitle">변경할 휴대폰 번호</div>
                 <div class="input-with-clear">
                     <input
-                        className={`${phoneNum && !validatePhoneNum(phoneNum) ? 'signup-input-error' : 'signup-input'}`}
+                        className={`${newPhoneNum && !validatePhoneNum(newPhoneNum) ? 'signup-input-error' : 'signup-input'}`}
                         id="phoneInput"
-                        value={phoneNum}
+                        value={newPhoneNum}
                         onChange={onPhoneNumHandler} />
-                    {phoneNum && (
+                    {newPhoneNum && (
                         <img alt="" src="/assets/signup_init.png" class="signup-clear-input" onClick={() => clearInput('phoneNum')}>
                         </img>
                     )}
-                    {phoneNum && !validatePhoneNum(phoneNum) ? (
-                        <div class="signup-input-errorMessage">ex) 010-1234-5678</div>
+                    {newPhoneNum && !validatePhoneNum(newPhoneNum) ? (
+                        <div class="signup-input-errorMessage">ex) 01012345678</div>
                     ) : (
                         ''
                     )}

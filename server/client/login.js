@@ -23,7 +23,7 @@ router.post('/login', (req, res) => {
         const user = results[0];
         // 성공적으로 인증되면 세션을 생성하거나 JWT 토큰을 생성하여 반환
         // const token = generateToken(user);
-        res.json({ success: true});
+        res.json({ success: true, userInfo: results[0]});
       } else {
         // 인증 실패
         res.status(401).json({ success: false, message: '인증 실패' });
