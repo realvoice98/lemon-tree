@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db');
 
 router.get('/admin/reservation_manage', (req, res) => {
-    db.query('SELECT * FROM reservations', (error, results, fields) => {
+    db.query('SELECT * FROM reservations ORDER BY id DESC', (error, results, fields) => {
       if (error) {
         console.error('쿼리 실행 오류: ' + error);
         res.status(500).send('서버 오류');
