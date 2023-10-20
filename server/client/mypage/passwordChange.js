@@ -7,19 +7,19 @@ router.use(cors());
 router.use(bodyParser.json()) // for parsing application/json
 router.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-router.post('/phonenumchange', (req, res) => {
-  const newPhone = req.body.newPhoneNum;
-  const originalPhone = req.body.originalPhoneNum;
+router.post('/passwdchange', (req, res) => {
+  const originPasswd = req.body.originPasswd;
+  const password = req.body.password;
   const userId = req.body.userId;
 
   db.query(
-    "UPDATE client SET phone = ? WHERE phone = ? AND id = ?",
-    [newPhone, originalPhone, userId],
+    "UPDATE client SET passwd = ? WHERE passwd = ? AND id = ?",
+    [originPasswd, password, userId],
     (err, result) => {
       if (err) {
           console.log(err);
       } else {
-          res.send("reservation 성공")
+          res.send("비밀번호 변경 완료")
       }
   }
   );

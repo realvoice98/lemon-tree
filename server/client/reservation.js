@@ -16,6 +16,19 @@ router.get('/operatingdate', (req,res) => {
     });
 });
 
+router.post('/ableTime', (req,res) => {
+    const date = req.body.trimmedDate;
+    const reservation_status = '예약대기'; // 추후 예약확정으로 변경해야함
+    db.query(
+      'SELECT prog_time FROM reservations WHERE reservation_date = ? AND reservation_status = ? GROUP BY prog_time HAVING COUNT(*) = 2',
+      [date, reservation_status],
+      (error, rows) => {
+          if (error) throw error;
+          res.send(rows);
+      });
+  });
+
+
 
 router.post('/reservation', (req, res) => {
   const client_id = req.body.client_id;

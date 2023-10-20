@@ -14,7 +14,6 @@ function Main() {
     const [startDate,setStartDate] = useState("");
     const [endDate,setEndDate] = useState("");
     const { user }  = useUser();
-    console.log( user );
 
     useEffect (()=>{
         getPrograms();
@@ -48,7 +47,6 @@ function Main() {
         const SERVER_URL = 'http://localhost:8001/programs'
         await axios.get(SERVER_URL)
         .then(res => {
-            console.log(res)
             setPrograms(res.data)
           })
           .catch(error => console.log(error));

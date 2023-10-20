@@ -8,8 +8,14 @@ function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedCount, 
   const [clickYesNo, setClickYesNo] = useState('');
   const [inputText, setInputText] = useState('');
   const { user }  = useUser();
-  const { birth, consent, gender, id, name, passwd, phone, std } = user;
-  console.log( user );   
+
+  // 예약테이블에 보낼 회원 정보 sessionStorage에서 추출
+  const sessionStorageKeys = Object.keys(sessionStorage);
+  const sessionStorageData = {};
+  sessionStorageKeys.forEach(key => {
+    sessionStorageData[key] = sessionStorage.getItem(key);
+  });
+  const { consent, gender, id, name, passwd, phone, std } = sessionStorageData;
 
   const yesHandleClose = () => {
     onClose?.();

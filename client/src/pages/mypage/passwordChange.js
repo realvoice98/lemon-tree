@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../../component/header';
 import { useState } from 'react';
+import { useUser } from '../../userContext';
+import axios from 'axios';
 
 function PasswordChange() {
 
@@ -10,7 +12,9 @@ function PasswordChange() {
     const [existingPassword,setExistingPassword] = useState("");  // 기존 비밀번호
     const [password,setPassword] = useState(""); // 변경할 비밀번호
     const [reEnterPassword,setReEnterPassword] = useState(""); // 비밀번호 재입력
-    const dbPassword = "12345678";
+    const { user, setUser }  = useUser();
+    const originPasswd = sessionStorage.getItem('passwd');
+    const userId = sessionStorage.getItem('id');
 
     const onExistingPasswordHandler = (event) => {
         setExistingPassword(event.currentTarget.value);
@@ -24,32 +28,39 @@ function PasswordChange() {
         setReEnterPassword(event.currentTarget.value);
       };
 
-    // 비밀번호 유효성 검사 함수
-    const validateExistingPassword = (password) => {
-
-        // 디비에서 가져온 회원의 비번과 비교
-        return password === dbPassword;
+    // 기존 비밀번호 유효성 검사 함수
+    const validateExistingPassword = () => {
+        return existingPassword === originPasswd;
     };
 
-    // 비밀번호 유효성 검사 함수
-    const validatePassword = (password) => {
+    // 변경할 비밀번호 유효성 검사 함수
+    const validatePassword = () => {
         return password.length >= 8;
     };
 
-    // 비밀번호 유효성 검사 함수
+    // 재입력 비밀번호 유효성 검사 함수
     const validateReEnterPassword = () => {
         return password === reEnterPassword;
     };
 
     const confirmButtonValid = () => {
-        return (
-          validatePassword(password)
-        );
+        // 기존비밀번호가 true일때 , 변경할 비밀번호와 비밀번호 재입력 유효성 검사가 true일때
+        return validateExistingPassword() && validatePassword() && validateReEnterPassword()
       };
 
-    const changePasswordSubmit = () => {
+    const changePasswordSubmit = async() => {
         // 디비에 보내고 홈으로 이동시킬지, 모달창을 띄울지는 추후 상의 필요
-        console.log("비밀번호 변경 성공 ~")
+        // 폰넘버 변경 
+        const SERVER_URL = 'http://localhost:8001/passwdchange'
+
+        await axios.post(SERVER_URL, { originPasswd, password,userId })
+            .then(res => {
+                alert(res.data);
+                const updatedUser = { ...user, passwd: password };
+                setUser(updatedUser);
+                sessionStorage.setItem('passwd', password);
+            })
+            .catch(error => console.log(error));
     };
 
       
@@ -62,7 +73,7 @@ function PasswordChange() {
                 <div class="input-with-clear">
                     <input
                         type={showExistingPassword ? "text" : "password"} // 입력 필드의 타입을 조정하여 비밀번호를 숨기거나 표시
-                        className={`${existingPassword && !validateExistingPassword(existingPassword) ? 'signup-input-error' : 'signup-input'}`}
+                        className={`${existingPassword && !validateExistingPassword() ? 'signup-input-error' : 'signup-input'}`}
                         value={existingPassword}
                         onChange={onExistingPasswordHandler}
                     />
@@ -74,7 +85,7 @@ function PasswordChange() {
                             onClick={() => setShowExistingPassword(!showExistingPassword)} // 클릭 시 showPassword 상태를 토글
                         />
                     )}
-                    {existingPassword && !validateExistingPassword(existingPassword) ? (
+                    {existingPassword && !validateExistingPassword() ? (
                         <div class="signup-input-errorMessage">기존 비밀번호와 일치하지 않습니다.</div>
                     ) : (
                         ''
@@ -84,7 +95,7 @@ function PasswordChange() {
             <div class="input-with-clear">
                     <input
                         type={showPassword ? "text" : "password"} // 입력 필드의 타입을 조정하여 비밀번호를 숨기거나 표시
-                        className={`${password && !validatePassword(password) ? 'signup-input-error' : 'signup-input'}`}
+                        className={`${password && !validatePassword() ? 'signup-input-error' : 'signup-input'}`}
                         value={password}
                         onChange={onPasswordHandler}
                     />
@@ -96,7 +107,7 @@ function PasswordChange() {
                             onClick={() => setShowPassword(!showPassword)} // 클릭 시 showPassword 상태를 토글
                         />
                     )}
-                    {password && !validatePassword(password) ? (
+                    {password && !validatePassword() ? (
                         <div class="signup-input-errorMessage">8자 이상</div>
                     ) : (
                         ''

@@ -8,9 +8,8 @@ function PhoneNumChange() {
 
     const [newPhoneNum,setNewPhoneNum] = useState("");
     const { user, setUser }  = useUser();
-    const originalPhoneNum = user.phone;
-    // const originalPhoneNum = '01075528601';
-    console.log(user)
+    const originalPhoneNum = sessionStorage.getItem("phone");
+    const userId = sessionStorage.getItem('id');
 
     const onPhoneNumHandler = (event) => {
       setNewPhoneNum(event.currentTarget.value);
@@ -45,25 +44,19 @@ function PhoneNumChange() {
   };
 
   const changePhoneNumSubmit = async() => {
-    // 여기에 서버로 데이터 보내는 코드 작성 
     // 폰넘버 변경 
-    // phonenumchange
-    
-    
     const SERVER_URL = 'http://localhost:8001/phonenumchange'
-    try {
-      const response = await axios.post(SERVER_URL, { originalPhoneNum, newPhoneNum });
-      if (response.data.success) {
+
+      await axios.post(SERVER_URL, { originalPhoneNum, newPhoneNum, userId })
+      .then(res => {
         alert('변경완료');
         const updatedUser = { ...user, phone: newPhoneNum };    
         setUser(updatedUser);
-      } else {
-        this.setState({ message: response.data.message });
-      }
-    } catch (error) {
-      console.error('로그인 요청 오류:', error);
-    }
+        sessionStorage.setItem('phone',newPhoneNum);
+    })
+    .catch(error => console.log(error));
   }
+
     
 
     return (
