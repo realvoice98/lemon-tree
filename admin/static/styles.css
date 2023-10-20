@@ -15,6 +15,17 @@ textarea{
   resize: none;
   outline: none;
 }
+thead{
+  width: 100%;
+  height: 50px;
+  border-top: solid 2px #E9EAEC;
+}
+tbody{
+  width: 100%;
+  height: 100%;
+  border-top: solid 2px #E9EAEC;
+  border-bottom: solid 2px #E9EAEC;
+}
 .table_content{
   display: flex;
   flex-direction: column;
@@ -26,9 +37,12 @@ textarea{
   display: flex;
   padding: 12px 8px;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
   align-self: stretch;
-  background: #FFFED8;
+  background: #FFF;
+  border-top: 2px solid #E9EAEC;
+  border-right: 2px solid #E9EAEC;
+  border-left: 2px solid #E9EAEC;
 }
 .row_top .row_text{
   font-size: 16px;
@@ -74,7 +88,8 @@ textarea{
         align-items: flex-start;
         flex-shrink: 0;
         align-self: stretch;
-        background: #FFFED8;
+        background: #FFF;
+        border-right: solid 3px #E9EAEC;
       }
       .sidebar .sidebar_box{
         display: flex;
@@ -92,10 +107,10 @@ textarea{
         align-self: stretch;
       }
       .sidebar .sidebar_box .sidebar_title .sidebar_title_text{
-        color: #222;
-        font-size: 25px;
+        color: #FFCA1E;
+        font-size: 35px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 700;
         line-height: 32px; /* 128% */
       }
       .sidebar_box .sidebar_menu{
@@ -124,28 +139,37 @@ textarea{
       }
       .manage_main > .main{
         display: flex;
-        min-width: 824px;
+        width: 100%;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
         flex: 1 0 0;
         align-self: stretch;
-        background: #FFF;
+        background: #F8F8FA;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 10px;
+        padding-top: 10px;
       }
       .manage_main .main .table{
         display: flex;
+        width: 100%;
         flex-direction: column;
         align-items: flex-start;
         flex: 1 0 0;
         align-self: stretch;
-        min-width: 824px;
+        min-width: 804px;
+        padding-bottom: 10px;
       }
       .table_title{
         display: flex;
+        width: 100%;
         height: 50px;
-        padding: 10px 10px;
         align-items: center;
         align-self: stretch;
+        background: #fff;
+        
+        border-bottom: none;
       }
       .table_title .table_title_text{
         flex: 1 0 0;
@@ -156,10 +180,12 @@ textarea{
         line-height: 28px; /* 133.333% */
         letter-spacing: 2.1px;
         text-transform: uppercase;
+        padding-left: 20px;
       }
       .search-box {
         display: flex;
         width: 400px;
+        height: 20px;
         padding: 10px 14px;
         align-items: center;
         gap: 8px;
@@ -181,7 +207,8 @@ textarea{
       }
       .row_top .row_text.name,  
       .row .row_text.name{
-        min-width: 40px;
+        flex: 1 0 0;
+        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.number, 
@@ -192,13 +219,14 @@ textarea{
       }
       .row_top .row_text.sex, 
       .row .row_text.sex{
-        min-width: 30px;
+        flex: 1 0 0;
+        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.std, 
       .row .row_text.std{
         flex: 1 0 0;
-        min-width: 45px;
+        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.prog, 
@@ -209,7 +237,8 @@ textarea{
       }
       .row_top .row_text.count, 
       .row .row_text.count{
-        min-width: 30px;
+        flex: 1 0 0;
+        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.note,
@@ -226,7 +255,8 @@ textarea{
       }
       .row_top .row_text.time, 
       .row .row_text.time{
-        min-width: 80px;
+        flex: 1 0 0;
+        min-width: 100px;
         text-align: center;
       }
       .name_client,.number_client,
@@ -246,26 +276,27 @@ textarea{
       }
       .row_top.prog .count,
       .row.prog .count{
-        max-width: 75px;
+        min-width: 75px;
         flex: 1 0 0;
       }
       .row_top.prog .row_text.prog, 
       .row.prog .row_text.prog{
-        max-width: 150px;
+        min-width: 150px;
+        flex: 1 0 0;
       }
       .row_top.prog .row_text.price, 
       .row.prog .row_text.price,
       .row_top.prog .row_text.discount, 
       .row.prog .row_text.discount{
-        max-width: 75px;
+        min-width: 75px;
         flex: 1 0 0;
         text-align: center;
       }
-      .table_content .row_time{
-        height: 15px;
+      .row_time{
+        display: flex;
         padding: 0px 8px;
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
+        background: #fff;
+        border: 2px solid #E9EAEC;
       }
       .table_content .row_time .row_time_text{
         display: flex;
@@ -290,9 +321,10 @@ textarea{
         max-height: 45px;
         padding: 5px 8px;
         align-items: center;
-        gap: 24px;
+        gap: 10px;
         flex: 1 0 0;
         align-self: stretch;
+        border: 2px solid #E9EAEC;
       }
       .row.a{       
         background: #FFF;
@@ -302,7 +334,7 @@ textarea{
       }
       .row .row_text{
         color: #000;
-        font-size: 13px;
+        font-size: 12px;
         font-style: normal;
         font-weight: 400;
         line-height: 140%; /* 16.8px */
@@ -310,9 +342,6 @@ textarea{
       }
       .row.a .row_text.note, .row.b .row_text.note{
         overflow: hidden;
-      }
-      .row_top.prog, .row.a.prog, .row.b.prog{
-        gap: 100px;
       }
       .btn_box{
         display: flex;
@@ -325,7 +354,7 @@ textarea{
       }
       .row_top .row_text.del,
       .row_top .row_text.modify{
-        background: #FFFED8;
+        background: #FFF;
         display: flex;
         padding: 1px 9px;
         align-items: center;
@@ -591,7 +620,7 @@ textarea{
     .sidebar{
       display: none;
     }
-    .table_content.b{
+    .table.b{
       display: none;
     }
     .table_title{
@@ -613,7 +642,7 @@ textarea{
       align-items: center;
       flex-shrink: 0;
       align-self: stretch;
-      background: #FFFED8;
+      background: #FFf;
       justify-content: space-between;
     }
     .search-box {
@@ -638,6 +667,7 @@ textarea{
       font-style: normal;
       font-weight: 700;
       line-height: 24px; /* 80% */
+      color: #FFCA1E;
     }
     .menu_bar{
       display: flex;
@@ -647,7 +677,7 @@ textarea{
       flex-shrink: 0;
       align-self: stretch;
       border-top: 1px solid #9A9A9A;
-      background: #FFFED8;
+      background: #E9EAEC;
     }
     .main_page, .client_list, 
     .reserv_manage, .prog_manage{
@@ -668,7 +698,7 @@ textarea{
       text-align: center;
       font-size: 25px;
       font-style: normal;
-      font-weight: 700;
+      font-weight: 600;
       line-height: 24px; /* 96% */
     }
     .menu_text.focus{
@@ -690,7 +720,7 @@ textarea{
       align-self: stretch;
     }
     .row_top{
-      border-top: 2px solid #000;
+      border-top: 2px solid #E9EAEC;
     }
     .row_top .row_text{
       text-align: center;
@@ -755,7 +785,7 @@ textarea{
     }
     .row_top .row_text.del,
     .row_top .row_text.modify{
-      background: #FFFED8;
+      background: #FFF;
       display: flex;
       padding: 1px 9px;
       align-items: center;
@@ -789,11 +819,12 @@ textarea{
       flex: 1 0 0;
       text-align: center;
     }
-    .table_content .row_time{
-      border-top: 1px solid #9A9A9A;
-      border-bottom: 1px solid #9A9A9A;
-      height: 30px;
-      padding: 12px 8px;
+    .row_time{
+      display: flex;
+      border-bottom: 2px solid #E9EAEC;
+      align-items: center;
+      height: 10px;
+      padding: 8px;
       flex: 1 0 0;
     }
     .table_content{
@@ -1036,7 +1067,7 @@ textarea{
     .sidebar{
       display: none;
     }
-    .table_content.b{
+    .table.b{
       display: none;
     }
     .table_title{

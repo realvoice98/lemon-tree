@@ -56,10 +56,9 @@ window.onload = function() {
     const day = String(currentDate.getDate()).padStart(2, '0');
     startDateInput.value = `${year}-${month}-${day}`;
 }
-const modifyButtons = document.querySelectorAll('.row_text.modify');
-    
-const deleteButtons = document.querySelectorAll('.row_text.del');
 
+const modifyButtons = document.querySelectorAll('.row_text.modify');
+const deleteButton = document.querySelector('.btn.cancel');
 const addButtons = document.querySelectorAll('.prog_add');
 
 modifyButtons.forEach(button => {
@@ -93,6 +92,7 @@ modifyButtons.forEach(button => {
         modalCountInput.readOnly = true;
 
         modalBack.style.display = 'block';
+        deleteButton.style.display = 'block';
     });
 });
 
@@ -114,8 +114,11 @@ addButtons.forEach(button => {
         modalDiscountInput.value = '';
 
         modalProgramInput.readOnly = false;
+        modalTimeInput.readOnly = false;
+        modalCountInput.readOnly = false;
 
         modalBack.style.display = 'block';
+        deleteButton.style.display = 'none';
     });
 });
 
@@ -127,13 +130,14 @@ modalBack.addEventListener('click', function () {
     modalBack.style.display = 'none';
   });
 
-deleteButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const row = button.parentElement.parentElement; // 삭제 버튼의 부모 요소의 부모 요소 (행)
-        const serviceName = row.querySelector('.row_text.prog').textContent;
-        const count = row.querySelector('.row_text.count').textContent;
-        const price = row.querySelector('.row_text.price').textContent;
-        const discount = row.querySelector('.row_text.discount').textContent;
+function submitForm() {
+    // progForm 클래스명을 가진 폼을 JavaScript로 서브밋
+    document.querySelector('.progForm').submit();
+  }
+
+  function deleteBtn() {
+    const serviceName = document.querySelector('input[name="prog_name"]').value;
+    const count = document.querySelector('input[name="prog_count"]').value;
 
         alert(serviceName + "를 삭제합니다.")
 
@@ -160,14 +164,5 @@ deleteButtons.forEach(button => {
         .catch(error => {
             console.error('Ajax 오류:', error);
         });
-    });
-});
-
-function submitForm() {
-    // progForm 클래스명을 가진 폼을 JavaScript로 서브밋
-    document.querySelector('.progForm').submit();
-  }
-function cancelModal() {
-    modalBack.style.display = 'none';
   }
   

@@ -83,7 +83,6 @@
                     <span  class="row_text discount">할인가</span>
                     <div class="btn_box">
                       <span  class="row_text modify"></span>
-                      <span  class="row_text del"></span>
                     </div>
                 </div>
                 <% programs.forEach((program, index) => { %>
@@ -94,8 +93,7 @@
                     <span class="row_text price"><%= program.price %></span>
                     <span class="row_text discount"><%= program.discount %></span>
                     <div class="btn_box">
-                      <span class="row_text modify">수정</span>
-                      <span class="row_text del">삭제</span>
+                      <span class="row_text modify">관리</span>
                     </div>
                   </div>
                 <% }); %>
@@ -134,7 +132,7 @@
             </div>
           <div class="modal_footer">
             <span class="btn check" onclick="submitForm()">확인</span>
-            <span class="btn cancel" onclick="cancelModal()">취소</span>
+            <span class="btn cancel" onclick="deleteBtn()">삭제</span>
           </div>
       </form>
       </div>
