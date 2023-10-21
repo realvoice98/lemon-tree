@@ -95,5 +95,76 @@ modalBack.addEventListener('click', function () {
 });
 
 function confirmBtn(){
-  const idInput = modal.querySelector('.inputbox.id');
+  const idInput = document.querySelector('input[name="id"]').value;
+
+  const result = confirm('예약을 확정하시겠습니까?');
+
+  if(result){
+      // Ajax 요청을 보낼 URL 및 데이터
+      const url = './reservation_manage/confirm_reserv'; // 서버의 API 엔드포인트
+      const data = {
+          id: idInput
+      };
+
+      // Ajax 요청을 보내고 응답을 처리
+      fetch(url, {
+          method: 'POST', // 또는 'GET' 등
+          body: JSON.stringify(data),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('서버 응답:', data);
+          location.reload();
+      })
+      .catch(error => {
+          console.error('Ajax 오류:', error);
+      });
+  }else{
+      alert('취소하였습니다.')
+  } 
+}
+
+function cancelBtn(){
+  const idInput = document.querySelector('input[name="id"]').value;
+
+  const result = confirm('예약을 취소하시겠습니까?');
+
+  if(result){
+      // Ajax 요청을 보낼 URL 및 데이터
+      const url = './reservation_manage/cancel_reserv'; // 서버의 API 엔드포인트
+      const data = {
+          id: idInput
+      };
+
+      // Ajax 요청을 보내고 응답을 처리
+      fetch(url, {
+          method: 'POST', // 또는 'GET' 등
+          body: JSON.stringify(data),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('서버 응답:', data);
+          location.reload();
+      })
+      .catch(error => {
+          console.error('Ajax 오류:', error);
+      });
+  }else{
+      alert('취소하였습니다.')
+  } 
+}
+
+function searchOnEnter(event){
+  if (event.key === 'Enter') {
+    const searchData = document.querySelector('.searchInput').value;
+    const url = `/admin/reservation_manage/search?searchData=${encodeURIComponent(searchData)}`;
+    window.location.href = url;
+    return false; // 폼 제출을 중단
+  }
 }
