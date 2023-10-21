@@ -11,18 +11,20 @@ import { useEffect } from 'react';
 function Reservation() {
 
     const [dateValue, changeDate] = useState(new Date());
+    const [chooseDay, setChooseDay] = useState(false);
     const [selectedProgram,setSelectedProgram] = useState('선택한 프로그램');
     const [selectedTime,setSelectedTime] = useState('');
     const [programList,setProgramList]  = useState([]);
     const [timeList,setTimeList]  = useState(['17 : 00','17 : 30','18 : 00','18 : 30']);
+    const [unableTimeList,setUnableTimeList] = useState([]);
     const [toggleStatus,setToggleStatus]  = useState(false);
     const [selectedCount,setSelectedCount] = useState('');
     const [confirmModal,setConfirmModal] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0); // 총 가격 나타내기
-    const [date, setDate] = useState(new Date());
     const [startDate,setStartDate] = useState("");
     const [endDate,setEndDate] = useState("");
-    const [program,setPrograms] = useState(); // 계산 함수에 쓰임
+    const [unableTimeIdx, setUnableTimeIdx] = useState([]);
+
 
     const formatStartDate = (inputDate) => {
       const parts = inputDate.split('-');
@@ -60,102 +62,123 @@ function Reservation() {
       
     }
 
+
+
+    // 날짜데이터 형식 만들기 ex)23.10.04
+    const formattedDate = dateValue.toLocaleDateString('ko-KR', {
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    
+    const lastIndex = formattedDate.lastIndexOf('.');
+    const trimmedDate = formattedDate.substring(0, lastIndex); // 맨 뒤의 점 제거
+
+  const toggleProgram = () =>{   
+      if(chooseDay === false){
+        alert('날짜를 선택해주세요');
+        return null;
+      }else{
+        setToggleStatus(!toggleStatus);
+      }
+  }
+
+  const onProgramCountHandler = (count) =>{
+      setSelectedCount(count)
+      const price = calculatePrice(selectedProgram, count);
+      setTotalPrice(price);
+  }
+
+  const onClickConfirmModal = () => {
+      setConfirmModal(true)
+  }
+  
+  const onClickProgram = (item) =>{
+      setSelectedProgram(item)
+      setToggleStatus(false)
+      const price = calculatePrice(item, selectedCount);
+      setTotalPrice(price);
+  }
+
+  // 월요일과 수요일만 활성화 또는 비활성화하는 함수
+const tileDisabled = ({ date, view }) => {
+  const startDate = new Date(openDate[0], openDate[1], openDate[2]); // 10월 1일
+  
+  const endDate = new Date(closeDate[0], closeDate[1], closeDate[2]); // 10월 10일
+
+  // startDate와 endDate 사이의 날짜 중에서 월요일 또는 수요일인 경우 활성화, 나머지는 비활성화
+  if (date >= startDate && date <= endDate) {
+    if (date.getDay() === 1 || date.getDay() === 3) {
+      return false; // 활성화
+    }
+  }
+  return true; // 비활성화
+};
+
+// tileContent 함수를 사용하여 오늘의 날짜에 '오늘' 텍스트를 추가
+const tileContent = ({ date, view }) => {
+  if (view === 'month') {
+    const isToday = date.getDate() === new Date().getDate();
+    return isToday ? <p style={{ position:'absolute',marginLeft:'10px', fontSize: '8px', marginBottom: '0px' ,zIndex:'99' }}>오늘</p> : null;
+  }
+  return null;
+};
+
+// 가격 계산 함수
+const calculatePrice = (program, count) => {
+  // const filteredProgram = programList.filter(item => item.prog_name === program);
+  // const filteredCount = programList.filter(item => item.prog_name === count);
+
+  const selectedData = programList.filter(item => item.prog_name === program && item.prog_count === count);
+
+  // 필터링된 결과에서 price와 discount 값을 추출
+  const prices = selectedData.map(item => item.price);
+  const discounts = selectedData.map(item => item.discount);
+
+  return prices;
+
+  //로그인한 사람의 역할에따라 다른값 보내기 
+  // if(userType==='STUDENT'){
+  //   return prices;
+  // }else{
+  //   return discounts;
+  // }
+};
+
+  // 모든 내용 클릭해야 예약하기 클릭할 수 있게하는 함수
+const reservationConfirm = () => {
+
+  return (
+    dateValue !== '' &&
+    selectedProgram !== '' && // 프로그램 선택
+    selectedCount !== '' && // 횟수 선택
+    selectedTime !== ''// 시간 선택
+  );
+};
+
+
     useEffect(() => {
       getOperaingDate();
       getPrograms();
     }, [])
 
-    // 날짜데이터 형식 만들기 ex)23.10.04
-    const formattedDate = dateValue.toLocaleDateString('ko-KR', {
-        year: '2-digit',
-        month: '2-digit',
-        day: '2-digit',
-      });
+    //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
+    useEffect (()=>{
       
-      const lastIndex = formattedDate.lastIndexOf('.');
-      const trimmedDate = formattedDate.substring(0, lastIndex); // 맨 뒤의 점 제거
+      const SERVER_URL = 'http://localhost:8001/ableTime'
+      axios.post(SERVER_URL,{trimmedDate})
+      .then(res => {
+          const timelist = res.data;
+          const setData = timelist.map(item => item.prog_time);
+          setUnableTimeList(setData);
+          const updatedTimeList = timeList.map(time => !unableTimeList.includes(time));
+          setUnableTimeIdx(updatedTimeList);
+        })
+        .catch(error => console.log(error));
+      // };
 
-    const toggleProgram = () =>{   
-        setToggleStatus(!toggleStatus);
-    }
-
-    const onProgramCountHandler = (count) =>{
-        setSelectedCount(count)
-        const price = calculatePrice(selectedProgram, count);
-        setTotalPrice(price);
-    }
-
-    const onClickConfirmModal = () => {
-        setConfirmModal(true)
-        console.log("선택한 프로그램:",selectedProgram,"선택한시간:",selectedTime,"선택한 날짜",dateValue)
-    }
-    
-    const onClickProgram = (item) =>{
-        setSelectedProgram(item)
-        setToggleStatus(false)
-        const price = calculatePrice(item, selectedCount);
-        setTotalPrice(price);
-    }
-
-    // 월요일과 수요일만 활성화 또는 비활성화하는 함수
-  const tileDisabled = ({ date, view }) => {
-    const startDate = new Date(openDate[0], openDate[1], openDate[2]); // 10월 1일
-    
-    const endDate = new Date(closeDate[0], closeDate[1], closeDate[2]); // 10월 10일
-
-    // startDate와 endDate 사이의 날짜 중에서 월요일 또는 수요일인 경우 활성화, 나머지는 비활성화
-    if (date >= startDate && date <= endDate) {
-      if (date.getDay() === 1 || date.getDay() === 3) {
-        return false; // 활성화
-      }
-    }
-    return true; // 비활성화
-  };
-
-  // tileContent 함수를 사용하여 오늘의 날짜에 '오늘' 텍스트를 추가
-  const tileContent = ({ date, view }) => {
-    if (view === 'month') {
-      const isToday = date.getDate() === new Date().getDate();
-      return isToday ? <p style={{ position:'absolute',marginLeft:'10px', fontSize: '8px', marginBottom: '0px' ,zIndex:'99' }}>오늘</p> : null;
-    }
-    return null;
-  };
-
-  // 가격 계산 함수
-  const calculatePrice = (program, count) => {
-    switch (program) {
-      case '프로그램1':
-        switch (count) {
-          case '1회':
-            return (10000).toLocaleString(); // toLocaleString은 10,000식으로 쉼표찍어줌
-          case '3회':
-            return (25000).toLocaleString();
-          default:
-            return 0;
-        }
-      case '프로그램2':
-        switch (count) {
-          case '1회':
-            return (20000).toLocaleString();
-          case '3회':
-            return (50000).toLocaleString();
-          default:
-            return 0;
-        }
-      default:
-        return 0;
-    }
-  };
-
-    // 모든 내용 클릭해야 예약하기 클릭할 수 있게하는 함수
-  const reservationConfirm = () => {
-    return (
-      dateValue !== '' &&
-      selectedProgram !== '' && // 프로그램 선택
-      selectedCount !== '' && // 횟수 선택
-      selectedTime !== ''// 시간 선택
-    );
-  };
+      
+    },[tileContent])
 
     return (
         <>
@@ -169,6 +192,7 @@ function Reservation() {
         <div class="reservation-content-container">
             <Calendar
                 onChange={changeDate}
+                onClickDay={()=>setChooseDay(true)}
                 formatDay={(locale, date) =>
                     date.toLocaleString('en', { day: 'numeric' })
                 }
@@ -177,7 +201,7 @@ function Reservation() {
                 // prevLabel={<PrevIcon />}
                 next2Label={null}
                 prev2Label={null}
-                showNeighboringMonth={false} // 날짜선택 전까지 비활성화
+                showNeighboringMonth={false} // 해당 월 날짜들만 보여줌
                 tileDisabled={tileDisabled} // 날짜 비활성화
                 tileContent={tileContent} // tileContent 함수 사용
             />
@@ -190,9 +214,9 @@ function Reservation() {
         </div>
         <div class="reservation-content-container">
             <div class="reservation-program-container">
-                <div class="reservation-program-selected" >
+                <div class="reservation-program-selected" onClick={toggleProgram} >
                     <div>{selectedProgram}</div>
-                    <img src="/assets/icon_programlist_toggle.png" alt="" onClick={toggleProgram}/>
+                    <img src="/assets/icon_programlist_toggle.png" alt="" />
                 </div>
                 {toggleStatus && 
                 <div class="reservation-program-contents">
@@ -201,10 +225,10 @@ function Reservation() {
                         return(
                           !isDuplicate && (
                             <>
-                                <div onClick={()=>onClickProgram(item.prog_name)}>
+                                <div key={idx}onClick={()=>onClickProgram(item.prog_name)}>
                                     { item.prog_name }
                                 </div>
-                                {programList[idx + 1] && <div className="dash" />}
+                                {programList[idx + 2] && <div className="dash" />}
                                 {/* {idx !== programList.length - 1 && <div className="dash" />} */}
                             </>
                         )
@@ -234,13 +258,17 @@ function Reservation() {
         <div class="reservation-content-container">
             <div class="reservation-time-container">
                 {timeList.map((item,idx)=>{
+
+                  const isDisabled = !unableTimeIdx[idx]; // updatedTimeList가 false이면 disabled
+
                     return(
-                        <div  
+                        <button  
                         key={idx}
                         className={`reservation-time-content ${selectedTime === item ? 'reservation-time-selected' : ''}`}
+                        disabled={isDisabled}
                         onClick={() => setSelectedTime(item)}>
                             {item}
-                        </div>
+                        </button>
                     )
                 })}
             </div>

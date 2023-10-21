@@ -6,6 +6,7 @@ export default function Menubar(props) {
 
   const {menuVisible,setMenuVisible} = props
   const navigate = useNavigate();
+  const userName = sessionStorage.getItem('name');
 
   const moveChangePhoneNum = () => {
     // 클릭 시 특정 URL로 이동
@@ -15,6 +16,11 @@ export default function Menubar(props) {
   const moveChangePW = () => {
     // 클릭 시 특정 URL로 이동
     navigate('/passwordChange');
+  };
+  const logOut = () => {
+    // 클릭 시 특정 URL로 이동
+    sessionStorage.clear();
+    navigate('/');
   };
 
   const moveMyTree = () => {
@@ -30,14 +36,14 @@ export default function Menubar(props) {
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
 };
-
+  
   return (
     <>
     <div className={`menu-slide ${menuVisible ? 'open' : ''}`}>
       <div class="menubar-close" onClick={toggleMenu}>X</div>
       <div class="menubar-container">
         <div class="menubar-header">
-          <div class="menubar-header-name">신가연님</div>
+          <div class="menubar-header-name">{userName}님</div>
         </div>
         <div class="menubar-menu-title">
             내정보관리
@@ -54,6 +60,10 @@ export default function Menubar(props) {
           </div>
           <div class="menubar-menu-content">
             <div>재학생인증</div>
+            <img alt="" src='assets/menubar_right_arrow.png'/>
+          </div>
+          <div class="menubar-menu-content" onClick={logOut}>
+            <div>로그아웃</div>
             <img alt="" src='assets/menubar_right_arrow.png'/>
           </div>
         </div>

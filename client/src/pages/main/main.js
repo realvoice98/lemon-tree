@@ -5,6 +5,7 @@ import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useUser } from '../../userContext';
 
 function Main() {
 
@@ -12,6 +13,7 @@ function Main() {
     const [programs,setPrograms] = useState([]);
     const [startDate,setStartDate] = useState("");
     const [endDate,setEndDate] = useState("");
+    const { user }  = useUser();
 
     useEffect (()=>{
         getPrograms();
@@ -45,7 +47,6 @@ function Main() {
         const SERVER_URL = 'http://localhost:8001/programs'
         await axios.get(SERVER_URL)
         .then(res => {
-            console.log(res)
             setPrograms(res.data)
           })
           .catch(error => console.log(error));

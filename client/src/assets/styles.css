@@ -882,10 +882,10 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    padding: 10px;
+    padding: 10px;  
     border: 1px solid #E9EAEC;
     cursor: pointer;
-    
+    background: white;
 }
 
 .reservation-time-selected{

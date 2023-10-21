@@ -8,9 +8,11 @@ import PasswordChange from './pages/mypage/passwordChange';
 import StudentConfirm from './pages/mypage/studentConfirm';
 import MyTree from './pages/reservation/myTree';
 import Reservation from './pages/reservation/reservation';
+import { UserProvider } from './userContext';
 
 function App() {
   return (
+    <UserProvider>
     <div className="MainContainer">
       <Routes>
         <Route path='/main' element={<Main />} />
@@ -24,8 +26,8 @@ function App() {
           <Route path='/myTree' element={<MyTree />} />
           <Route path='/reservation' element={<Reservation />} />
       </Routes>
-      
     </div>
+    </UserProvider>
   );
 }
 
