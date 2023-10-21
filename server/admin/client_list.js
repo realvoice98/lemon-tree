@@ -2,16 +2,39 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-router.get('/admin/client_list', (req, res) => {
-    db.query('SELECT * FROM client', (error, results, fields) => {
-      if (error) {
-        console.error('쿼리 실행 오류: ' + error);
-        res.status(500).send('서버 오류');
-        return;
-      }
+// 한 페이지당 아이템 수
+const itemsPerPage = 15;
 
-      res.render('client_list', { clients: results });
+// 미들웨어 설정 및 라우터 설정
+router.get('/admin/client_list', (req, res) => {
+    const currentPage = req.query.page || 1; // 현재 페이지 번호
+    const startIndex = (currentPage - 1) * itemsPerPage; // 데이터베이스에서 가져올 항목의 시작 인덱스
+
+    // 전체 데이터 수를 가져오는 쿼리
+    const totalQuery = 'SELECT COUNT(*) AS total FROM client';
+    // 현재 페이지에 해당하는 데이터를 가져오는 쿼리
+    const dataQuery = 'SELECT * FROM client ORDER BY id LIMIT ? OFFSET ?';
+
+    db.query(totalQuery, (error, totalResults) => {
+        if (error) {
+            console.error('쿼리 실행 오류: ' + error);
+            res.status(500).send('서버 오류');
+            return;
+        }
+
+        const totalItems = totalResults[0].total;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        db.query(dataQuery, [itemsPerPage, startIndex], (error, results) => {
+            if (error) {
+                console.error('쿼리 실행 오류: ' + error);
+                res.status(500).send('서버 오류');
+                return;
+            }
+
+            res.render('client_list', { clients: results, currentPage, totalPages });
+        });
     });
-  })
+});
 
 module.exports = router;
