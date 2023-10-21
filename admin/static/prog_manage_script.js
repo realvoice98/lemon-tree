@@ -19,32 +19,38 @@ function extractDates() {
         alert('시작일과 종료일을 모두 입력해주세요.');
         return; // 값이 없으면 함수를 종료하고 모달 창을 열어둠
     } else {
-        alert("운영날짜를 " + startDate + " ~ " + endDate + "로 설정합니다.");
+        const result = confirm('새 운영날짜를 설정하시겠습니까?');
 
-        // Ajax 요청을 보낼 URL 및 데이터
-        const url = './prog_manage/add_date'; // 서버의 API 엔드포인트
-        const data = {
-            startDate: startDate,
-            endDate: endDate
-        };
+        if(result){
+            // Ajax 요청을 보낼 URL 및 데이터
+            const url = './prog_manage/add_date'; // 서버의 API 엔드포인트
+            const data = {
+                startDate: startDate,
+                endDate: endDate
+            };
 
-        // Ajax 요청을 보내고 응답을 처리
-        fetch(url, {
-            method: 'POST', // 또는 'GET' 등
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('서버 응답:', data);
-            date_container.style.display = 'none';
-            management_date.style.display = 'block';
-        })
-        .catch(error => {
-            console.error('Ajax 오류:', error);
-        });
+            // Ajax 요청을 보내고 응답을 처리
+            fetch(url, {
+                method: 'POST', // 또는 'GET' 등
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('서버 응답:', data);
+                date_container.style.display = 'none';
+                management_date.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Ajax 오류:', error);
+            });
+        }else{
+            alert('취소하였습니다.')
+        }
+
+       
     }
 }
 
@@ -131,16 +137,52 @@ modalBack.addEventListener('click', function () {
   });
 
 function submitForm() {
-    // progForm 클래스명을 가진 폼을 JavaScript로 서브밋
-    document.querySelector('.progForm').submit();
+
+    const timeField = document.querySelector('.inputbox.time');
+    const numberField = document.querySelector('.inputbox.number');
+    const priceField = document.querySelector('.inputbox.price');
+    const discountField = document.querySelector('.inputbox.discount');
+
+    // 정규 표현식을 사용하여 형식 체크
+    const timePattern = /^(30|60)$/;
+    const numberPattern = /^(1회|3회)$/;
+    const pricePattern = /^\d{1,3}(,\d{3})*$/;
+    const discountPattern = /^\d{1,3}(,\d{3})*$/;
+
+    if (!timePattern.test(timeField.value)) {
+        alert('시간 형식에 맞지 않습니다.');
+        return false;
+    }
+    if (!numberPattern.test(numberField.value)) {
+        alert('횟수 형식에 맞지 않습니다.');
+        return false;
+    }
+    if (!pricePattern.test(priceField.value)) {
+        alert('정상가 형식에 맞지 않습니다.');
+        return false;
+    }
+    if (!discountPattern.test(discountField.value)) {
+        alert('할인가 형식에 맞지 않습니다.');
+        return false;
+    }
+
+    const result = confirm('프로그램을 추가/수정 합니다.')
+
+    if(result){
+        // progForm 클래스명을 가진 폼을 JavaScript로 서브밋
+        document.querySelector('.progForm').submit();
+    }else{
+        alert('취소하였습니다.')
+    }
   }
 
   function deleteBtn() {
     const serviceName = document.querySelector('input[name="prog_name"]').value;
     const count = document.querySelector('input[name="prog_count"]').value;
 
-        alert(serviceName + "를 삭제합니다.")
+    const result = confirm('삭제하시겠습니까?');
 
+    if(result){
         // Ajax 요청을 보낼 URL 및 데이터
         const url = './prog_manage/delete_prog'; // 서버의 API 엔드포인트
         const data = {
@@ -164,5 +206,8 @@ function submitForm() {
         .catch(error => {
             console.error('Ajax 오류:', error);
         });
+    }else{
+        alert('취소하였습니다.')
+    }    
   }
   

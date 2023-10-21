@@ -12,7 +12,7 @@ router.get('/admin/main', (req, res) => {
   const day = today.getDate().toString().padStart(2, '0');
 
   // 날짜를 'yy.mm.dd' 형식으로 변환
-  const formattedToday = `${year}.${month}.${day}`;
+  const formattedToday = `${year}. ${month}. ${day}`;
 
   // 내일 날짜 생성
   const tomorrow = new Date();
@@ -24,29 +24,35 @@ router.get('/admin/main', (req, res) => {
   const nextDay = tomorrow.getDate().toString().padStart(2, '0');
 
   // 내일 날짜를 'yy.mm.dd' 형식으로 변환
-  const formattedTomorrow = `${nextYear}.${nextMonth}.${nextDay}`;
+  const formattedTomorrow = `${nextYear}. ${nextMonth}. ${nextDay}`;
 
   let todayReservations, tomorrowReservations;
 
   // 오늘 예약 정보 조회
-  db.query("SELECT * FROM reservations WHERE reservation_date = ?" , [formattedToday],(error, results, fields) => {
+  db.query("SELECT * FROM reservations WHERE reservation_date = ? and reservation_status != '예약취소'" , [formattedToday],(error, results, fields) => {
     if (error) {
       console.error('오늘 예약 조회 오류: ' + error);
       res.status(500).send('서버 오류');
       return;
     }
 
-    todayReservations = results;
+    todayReservations = results.map((reservation) => ({
+      ...reservation,
+      prog_time: reservation.prog_time.replace(/\s/g, ''), // 시간에서 공백 제거
+    }));
 
     // 내일 예약 정보 조회
-    db.query("SELECT * FROM reservations WHERE reservation_date = ?", [formattedTomorrow], (error, results, fields) => {
+    db.query("SELECT * FROM reservations WHERE reservation_date = ? and reservation_status != '예약취소'", [formattedTomorrow], (error, results, fields) => {
       if (error) {
         console.error('내일 예약 조회 오류: ' + error);
         res.status(500).send('서버 오류');
         return;
       }
 
-      tomorrowReservations = results;
+      tomorrowReservations = results.map((reservation) => ({
+        ...reservation,
+        prog_time: reservation.prog_time.replace(/\s/g, ''), // 시간에서 공백 제거
+      }));
 
       // 시작 시간과 마지막 시간 설정
       const startTime = '17:00';

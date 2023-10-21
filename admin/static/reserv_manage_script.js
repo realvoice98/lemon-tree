@@ -21,19 +21,32 @@ rows.forEach(row => {
     const prog = row.querySelector('.prog').textContent;
     const count = row.querySelector('.count').textContent;
     const note = row.querySelector('.note').textContent;
-    const date = row.querySelector('.date').textContent;
-    const time = row.querySelector('.time').textContent;
+    const datetime = row.querySelector('.date').textContent;
+    const status = row.querySelector('.time').textContent;
+    const price = row.querySelector('.price').textContent;
+    const discount = row.querySelector('.discount').textContent;
+    const id = row.querySelector('.id').textContent;
+
+    const dateSlice = datetime.split('/');
+    const date = dateSlice[0];
+    let time = dateSlice[1];
+
+    time = time.replace(':', ' : ');
 
     const rowData = {
       name: name,
-      number: number,
-      sex: sex,
+      phone: number,
+      gender: sex,
       std: std,
-      prog: prog,
-      count: count,
+      prog_name: prog,
+      prog_count: count,
       note: note,
       date: date,
-      time: time
+      reservation_status: status,
+      price: price,
+      discount: discount,
+      prog_time : time,
+      id : id
     };
 
     // 인풋 태그를 선택
@@ -42,9 +55,13 @@ rows.forEach(row => {
     const sexInput = modal.querySelector('.inputbox.sex');
     const noteInput = modal.querySelector('.inputbox.note');
     const dateInput = modal.querySelector('.inputbox.date');
+    const timeInput = modal.querySelector('.inputbox.time');
     const progInput = modal.querySelector('.inputbox.prog');
     const countInput = modal.querySelector('.inputbox.count');
     const stdInput = modal.querySelector('.inputbox.std');
+    const priceInput = modal.querySelector('.inputbox.price');
+    const discountInput = modal.querySelector('.inputbox.discount');
+    const idInput = modal.querySelector('.inputbox.id');
 
     // 추출한 데이터를 인풋 태그에 설정
     nameInput.value = name;
@@ -55,6 +72,10 @@ rows.forEach(row => {
     stdInput.value =std;
     progInput.value = prog;
     dateInput.value = date;
+    priceInput.value = price;
+    discountInput.value = discount;
+    timeInput.value = time;
+    idInput.value = id;
 
     // 클릭된 로우의 데이터를 저장
     clickedRowData = rowData;
@@ -72,3 +93,7 @@ modal.addEventListener('click', function(event) {
 modalBack.addEventListener('click', function () {
   modalBack.style.display = 'none';
 });
+
+function confirmBtn(){
+  const idInput = modal.querySelector('.inputbox.id');
+}

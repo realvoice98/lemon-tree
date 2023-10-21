@@ -1,7 +1,7 @@
 function searchOnEnter(event) {
     if (event.key === 'Enter') {
         const searchTerm = event.target.value.toLowerCase();
-        const rows = document.querySelectorAll('.table_content .row');
+        const rows = document.querySelectorAll('.row');
 
         rows.forEach(function(row) {
             const name = row.querySelector('.name_client').textContent.toLowerCase();
@@ -19,7 +19,7 @@ function searchOnEnter(event) {
 function tablet_searchOnEnter(event) {
     if (event.key === 'Enter') {
         const searchTerm = event.target.value.toLowerCase();
-        const rows = document.querySelectorAll('.table_content .row');
+        const rows = document.querySelectorAll('.row');
 
         rows.forEach(function(row) {
             const name = row.querySelector('.name_client').textContent.toLowerCase();

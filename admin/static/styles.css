@@ -568,6 +568,10 @@ tbody{
       .inputbox{
         width: 300px;
       }
+      .inputbox.date,
+      .inputbox.time{
+        width: 150px;
+      }
       .inputbox.note{
         width: 395px;
         height: 125px;
