@@ -53,7 +53,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <input type="text" placeholder="이름 또는 번호 검색" class="searchInput">
+            <form action="/admin/reservation_manage/search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;">
+              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnterTablet(event)">
+              <input type="submit" value="검색" class="searchBtn">
+            </form>
         </div>        
         </div>
         <div class="menu_bar">
@@ -97,12 +100,12 @@
                     <td  class="row_text sex"><%=reservation.gender %></td>
                     <td  class="row_text std"><%=reservation.std %></td>
                     <td  class="row_text prog"><%=reservation.prog_name %></td>
-                    <td  class="row_text count"><%=reservation.prog_count %></td>
+                    <td  class="row_text count"><%=reservation.remain_count %></td>
                     <td  class="row_text note"><%=reservation.note %></td>
-                    <td  class="row_text date"><%=reservation.reservation_date %>/<%=reservation.prog_time %></td>
+                    <td  class="row_text date"><%=reservation.reservation_date %>/<%=reservation.reservation_time %></td>
                     <td  class="row_text time"><%=reservation.reservation_status %></td>
                     <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
-                    <td  class="row_text discount" style="display: none;"><%=reservation.discount %></td>
+                    <td class="row_text discount" style="display: none;"><%= reservation.discount %></td>
                     <td  class="row_text id" style="display: none;"><%=reservation.id %></td>
                 </tr>
                 <% }); %>
@@ -136,45 +139,45 @@
               <span class="client info_title">예약자 정보</span>
               <div class="info_box name">
                 <span class="box_name">이름</span>
-                <input type="text" name="" class="inputbox name" readonly>
+                <input type="text" name="name" class="inputbox name" readonly>
               </div>
               <div class="info_box number">
                 <span class="box_name">번호</span>
-                <input type="text" name="" class="inputbox number">
+                <input type="text" name="phone" class="inputbox number" readonly>
               </div>
               <div class="info_box sex">
                 <span class="box_name">성별</span>
-                <input type="text" name="" class="inputbox sex" readonly>
+                <input type="text" name="gender" class="inputbox sex" readonly>
               </div>
               <div class="info_box note">
                 <span class= "box_name">비고</span>
-                <textarea name="" class="inputbox note"></textarea>
+                <textarea name="note" class="inputbox note"></textarea>
               </div>
             </div>
             <div class="reserv info">
               <span class="reserv info_title">예약 정보</span>
               <div class="info_box date">
                 <span class="box_name">예약날짜</span>
-                <input type="text" name="reservation_date" class="inputbox date" style="border-right: solid 1px #E9EAEC;">
-                <input type="text" name="prog_time" class="inputbox time">
+                <input type="text" name="reservation_date" class="inputbox date" style="border-right: solid 1px #E9EAEC;" readonly>
+                <input type="text" name="reservation_time" class="inputbox time" readonly>
               </div>
               <div class="info_box prog">
                 <span class="box_name">프로그램</span>
-                <input type="text" name="" class="inputbox prog">
+                <input type="text" name="prog_name" class="inputbox prog" readonly>
               </div>
               <span class="fare info_title">요금 정보</span>
               <div class="info_box fare">
                 <div class="fare_content">
                   <span class="fare_box">횟수</span>
-                  <input type="text" name="" class="inputbox count">
+                  <input type="text" name="remain_count" class="inputbox count" readonly>
                 </div>
                 <div class="fare_content">
                   <span class="fare_box">재학생</span>
-                  <input type="text" name="" class="inputbox std">
+                  <input type="text" name="std" class="inputbox std">
                 </div>
                 <div class="fare_content">
                   <span class="fare_box">정상가</span>
-                  <input type="text" name="price" class="inputbox price">
+                  <input type="text" name="price" class="inputbox price" readonly>
                 </div>
                 <div class="fare_content">
                   <span class="fare_box">할인가</span>
@@ -184,9 +187,9 @@
             </div>
           </div>
           <div class="modal_footer">
-            <span class="btn modify" data-action="">수정</span>
-            <span class="btn pay" data-action="">결제</span>
-            <span class="btn cancel" onclick="cancelBtn()">예약 취소</span>
+            <span class="btn modify" onclick="modifyBtn()">수정</span>
+            <span class="btn pay" onclick="paymentBtn()">결제</span>
+            <span class="btn cancel" onclick="cancelBtn()">예약취소</span>
           </div>
         </div>
       </div>

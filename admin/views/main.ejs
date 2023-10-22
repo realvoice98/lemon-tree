@@ -111,9 +111,9 @@
                           <td class="row_text sex"><%= reservationsByTimeToday[time][0].gender %></td>
                           <td class="row_text std"><%= reservationsByTimeToday[time][0].std %></td>
                           <td class="row_text prog"><%= reservationsByTimeToday[time][0].prog_name %></td>
-                          <td class="row_text count"><%= reservationsByTimeToday[time][0].prog_count %></td>
+                          <td class="row_text count"><%= reservationsByTimeToday[time][0].remain_count %></td>
                           <td class="row_text note"><%= reservationsByTimeToday[time][0].note %></td>
-                          <td class="row_text date"><%= reservationsByTimeToday[time][0].reservation_date %>/<%= reservationsByTimeToday[time][0].prog_time %></td>
+                          <td class="row_text date"><%= reservationsByTimeToday[time][0].reservation_date %>/<%= reservationsByTimeToday[time][0].reservation_time %></td>
                           <td class="row_text time"><%= reservationsByTimeToday[time][0].reservation_status %></td>
                           <td  class="row_text price" style="display: none;"><%=reservationsByTimeToday[time][0].price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservationsByTimeToday[time][0].discount %></td>
@@ -143,9 +143,9 @@
                           <td class="row_text sex"><%= reservation.gender %></td>
                           <td class="row_text std"><%= reservation.std %></td>
                           <td class="row_text prog"><%= reservation.prog_name %></td>
-                          <td class="row_text count"><%= reservation.prog_count %></td>
+                          <td class="row_text count"><%= reservation.remain_count %></td>
                           <td class="row_text note"><%= reservation.note %></td>
-                          <td class="row_text date"><%= reservation.reservation_date %>/<%= reservation.prog_time %></td>
+                          <td class="row_text date"><%= reservation.reservation_date %>/<%= reservation.reservation_time %></td>
                           <td class="row_text time"><%= reservation.reservation_status %></td>
                           <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservation.discount %></td>
@@ -210,9 +210,9 @@
                           <td class="row_text sex"><%= reservationsByTimeTomorrow[time][0].gender %></td>
                           <td class="row_text std"><%= reservationsByTimeTomorrow[time][0].std %></td>
                           <td class="row_text prog"><%= reservationsByTimeTomorrow[time][0].prog_name %></td>
-                          <td class="row_text count"><%= reservationsByTimeTomorrow[time][0].prog_count %></td>
+                          <td class="row_text count"><%= reservationsByTimeTomorrow[time][0].remain_count %></td>
                           <td class="row_text note"><%= reservationsByTimeTomorrow[time][0].note %></td>
-                          <td class="row_text date"><%= reservationsByTimeTomorrow[time][0].reservation_date %>/<%= reservationsByTimeTomorrow[time][0].prog_time %></td>
+                          <td class="row_text date"><%= reservationsByTimeTomorrow[time][0].reservation_date %>/<%= reservationsByTimeTomorrow[time][0].reservation_time %></td>
                           <td class="row_text time"><%= reservationsByTimeTomorrow[time][0].reservation_status %></td>
                           <td  class="row_text price" style="display: none;"><%=reservationsByTimeTomorrow[time][0].price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservationsByTimeTomorrow[time][0].discount %></td>
@@ -242,9 +242,9 @@
                           <td class="row_text sex"><%= reservation.gender %></td>
                           <td class="row_text std"><%= reservation.std %></td>
                           <td class="row_text prog"><%= reservation.prog_name %></td>
-                          <td class="row_text count"><%= reservation.prog_count %></td>
+                          <td class="row_text count"><%= reservation.remain_count %></td>
                           <td class="row_text note"><%= reservation.note %></td>
-                          <td class="row_text date"><%= reservation.reservation_date %>/<%= reservation.prog_time %></td>
+                          <td class="row_text date"><%= reservation.reservation_date %>/<%= reservation.reservation_time %></td>
                           <td class="row_text time"><%= reservation.reservation_status %></td>
                           <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservation.discount %></td>
@@ -273,15 +273,15 @@
               <span class="client info_title">예약자 정보</span>
               <div class="info_box name">
                 <span class="box_name">이름</span>
-                <input type="text" name="name" class="inputbox name">
+                <input type="text" name="name" class="inputbox name" readonly>
               </div>
               <div class="info_box number">
                 <span class="box_name">번호</span>
-                <input type="text" name="phone" class="inputbox number">
+                <input type="text" name="phone" class="inputbox number" readonly>
               </div>
               <div class="info_box sex">
                 <span class="box_name">성별</span>
-                <input type="text" name="gender" class="inputbox sex">
+                <input type="text" name="gender" class="inputbox sex" readonly>
               </div>
               <div class="info_box note">
                 <span class="box_name">비고</span>
@@ -292,18 +292,18 @@
               <span class="reserv info_title">예약 정보</span>
               <div class="info_box date">
                 <span class="box_name">예약날짜</span>
-                <input type="text" name="reservation_date" class="inputbox date" style="border-right: solid 1px #E9EAEC;">
-                <input type="text" name="prog_time" class="inputbox time">
+                <input type="text" name="reservation_date" class="inputbox date" style="border-right: solid 1px #E9EAEC;" readonly>
+                <input type="text" name="reservation_time" class="inputbox time" readonly>
               </div>
               <div class="info_box prog">
                 <span class="box_name">프로그램</span>
-                <input type="text" name="prog_name" class="inputbox prog">
+                <input type="text" name="prog_name" class="inputbox prog" readonly>
               </div>
               <span class="fare info_title">요금 정보</span>
               <div class="info_box fare">
                 <div class="fare_content">
                   <span class="fare_box">횟수</span>
-                  <input type="text" name="prog_count" class="inputbox count" readonly>
+                  <input type="text" name="remain_count" class="inputbox count" readonly>
                 </div>
                 <div class="fare_content">
                   <span class="fare_box">재학생</span>
@@ -315,7 +315,7 @@
                 </div>
                 <div class="fare_content">
                   <span class="fare_box">할인가</span>
-                  <input type="text" name="discount" class="inputbox discount" readonly>
+                  <input type="text" name="discount" class="inputbox discount">
                 </div>
               </div>
             </div>
@@ -323,7 +323,7 @@
           <div class="modal_footer">
             <span class="btn modify" onclick="modifyBtn()">수정</span>
             <span class="btn pay" onclick="paymentBtn()">결제</span>
-            <span class="btn cancel" onclick="cancelBtn()">예약 취소</span>
+            <span class="btn cancel" onclick="cancelBtn()">예약취소</span>
           </div>
         </div>
       </div>

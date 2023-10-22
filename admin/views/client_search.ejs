@@ -54,9 +54,9 @@
                 <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <form action="/admin/client_list/client_search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;">
-              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="tablet_searchOnEnter(event)">
-              <input type="submit" value="검색" class="searchBtn">
-            </form>
+                <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="tablet_searchOnEnter(event)">
+                <input type="submit" value="검색" class="searchBtn">
+              </form>
         </div>        
         </div>
         <div class="menu_bar">
@@ -73,9 +73,9 @@
                     <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <form action="/admin/client_list/client_search" method="get" style="display: flex;justify-content: space-between; min-width: 380px;">
-                  <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">
-                  <input type="submit" value="검색" class="searchBtn">
-                </form>
+                    <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">
+                    <input type="submit" value="검색" class="searchBtn">
+                  </form>
             </div>
           </div>
           <table class="table a">
@@ -106,11 +106,11 @@
             <ul class="pagination-list">
                 <% for (let page = 1; page <= totalPages; page++) { %>
                     <li class="pagination-item">
-                        <a href="/admin/client_list?page=<%= page %>" class="pagination-link <%= page === currentPage ? 'active' : '' %>"><%= page %></a>
+                        <a href="/admin/client_list/client_search?page=<%= page %>&searchData=<%= encodeURIComponent(searchData) %>" class="pagination-link <%= page === currentPage ? 'active' : '' %>"><%= page %></a>
                     </li>
                 <% } %>
-            </ul>
-          </div>
+            </ul>                
+        </div>
         </div>
     </div>
     <script src="/client_list_script.js"></script>

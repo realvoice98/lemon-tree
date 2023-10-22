@@ -83,6 +83,10 @@ tbody{
   margin-right: 10px; /* Adjust this value to control the spacing between pagination items */
 }
 
+.pagination-link.active {
+  background-color: #000;
+  color: #fff;
+}
 .pagination-link {
   text-decoration: none;
   color: #000;
@@ -91,10 +95,7 @@ tbody{
   border-radius: 4px;
 }
 
-.pagination-link.active {
-  background-color: #000;
-  color: #fff;
-}
+
 
 /*PC*/
 @media all and (min-width:1024px) { 
@@ -682,7 +683,8 @@ tbody{
     }
     .search-box {
       display: flex;
-      width: 200px;
+      width: 230px;
+      height: 30px;
       padding: 10px 14px;
       align-items: center;
       gap: 8px;
@@ -765,7 +767,9 @@ tbody{
     }
     .row_top .row_text.name,  
     .row .row_text.name{
+      flex: 1 0 0;
       width: 50px;
+      text-align: center;
     }
     .row_top .row_text.number, 
     .row .row_text.number{
@@ -781,6 +785,7 @@ tbody{
     }
     .row_top .row_text.count, 
     .row .row_text.count{
+      flex: 1 0 0;
       width: 55px;
       text-align: center;
     }
@@ -792,6 +797,7 @@ tbody{
     }
     .row_top .row_text.time, 
     .row .row_text.time{
+      flex: 1 0 0;
       width: 130px;
       text-align: center;
     }
@@ -880,7 +886,7 @@ tbody{
       min-height: 70px;
       padding: 12px 8px;
       align-items: center;
-      gap: 24px;
+      gap: 10px;
       align-self: stretch;
     }
     .row.a{
@@ -1053,7 +1059,13 @@ tbody{
       font-size: 13px;      
     }
     .inputbox{
-      width: 500px;
+      width: 485px;
+    }
+    .inputbox.date{
+      width: 225px;
+    }
+    .inputbox.time{
+      width: 225px;
     }
     .inputbox.note{
       width: 540px;
@@ -1126,12 +1138,12 @@ tbody{
       align-items: center;
       flex-shrink: 0;
       align-self: stretch;
-      background: #FFFED8;
+      background: #fff;
       justify-content: space-between;
     }
     .search-box {
       display: flex;
-      width: 110px;
+      width: 150px;
       height: 20px;
       padding: 5px 5px;
       align-items: center;
@@ -1142,20 +1154,25 @@ tbody{
       background-color: #fff;
       margin-top: 16px;
     }
-
-    #searchInput{
+    .searchInput{
       display: flex;
-      width: 20px;
+      width: 75px;
       align-items: center;
       gap: 8px;
       flex: 1 0 0;
-      font-size: 10px;
+      font-size: 8px;
+    }
+    .searchBtn{
+      width: 30px;
+      height: 15px;
+      font-size: 8px;
     }
     .header_text{
-      font-size: 18px;
+      font-size: 25px;
       font-style: normal;
       font-weight: 700;
       line-height: 24px; /* 80% */
+      color: #FFCA1E;
     }
     .menu_bar{
       display: flex;
@@ -1165,7 +1182,7 @@ tbody{
       flex-shrink: 0;
       align-self: stretch;
       border-top: 1px solid #9A9A9A;
-      background: #FFFED8;
+      background: #E9EAEC;
     }
     .main_page, .client_list, 
     .reserv_manage, .prog_manage{
@@ -1274,7 +1291,7 @@ tbody{
     }
     .row_top .row_text.del,
     .row_top .row_text.modify{
-      background: #FFFED8;
+      background: #FFF;
       display: flex;
       padding: 1px 9px;
       align-items: center;

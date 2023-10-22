@@ -1,35 +1,17 @@
 function searchOnEnter(event) {
     if (event.key === 'Enter') {
-        const searchTerm = event.target.value.toLowerCase();
-        const rows = document.querySelectorAll('.row');
-
-        rows.forEach(function(row) {
-            const name = row.querySelector('.name_client').textContent.toLowerCase();
-            const number = row.querySelector('.number_client').textContent.toLowerCase();
-
-            if (searchTerm === '' || name.includes(searchTerm) || number.includes(searchTerm)) {
-                row.style.display = 'flex';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
+        const searchData = document.querySelector('.searchInput').value;
+        const url = `/admin/client_list/client_search?searchData=${encodeURIComponent(searchData)}`;
+        window.location.href = url;
+        return false; // 폼 제출을 중단
+      }
 }
 
 function tablet_searchOnEnter(event) {
     if (event.key === 'Enter') {
-        const searchTerm = event.target.value.toLowerCase();
-        const rows = document.querySelectorAll('.row');
-
-        rows.forEach(function(row) {
-            const name = row.querySelector('.name_client').textContent.toLowerCase();
-            const number = row.querySelector('.number_client').textContent.toLowerCase();
-
-            if (searchTerm === '' || name.includes(searchTerm) || number.includes(searchTerm)) {
-                row.style.display = 'flex';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
+        const searchData = document.querySelector('.searchInput').value;
+        const url = `/admin/client_list/client_search?searchData=${encodeURIComponent(searchData)}`;
+        window.location.href = url;
+        return false; // 폼 제출을 중단
+      }
 }
