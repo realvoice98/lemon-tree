@@ -76,9 +76,9 @@ router.get('/admin/reservation_manage/search', (req, res) => {
   router.post('/admin/reservation_manage/confirm_reserv', (req, res) => {
     const id = req.body.id;
 
-    db.query("update reservations set reservation_status = '예약확정'  where id = ?", [id], (error, results, fields) => {
+    db.query("update reservations set reservation_status = '예약완료'  where id = ?", [id], (error, results, fields) => {
       if (error) {
-        console.error('데이터 삭제 오류: ' + error);
+        console.error('데이터 수정 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });
       } else {
         res.json({ message: '예약이 확정되었습니다.' });
@@ -91,12 +91,43 @@ router.get('/admin/reservation_manage/search', (req, res) => {
 
     db.query("update reservations set reservation_status = '예약취소'  where id = ?", [id], (error, results, fields) => {
       if (error) {
-        console.error('데이터 삭제 오류: ' + error);
+        console.error('데이터 수정 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });
       } else {
         res.json({ message: '예약이 취소되었습니다.' });
       }
     });
   });
+
+  router.post('/admin/reservation_manage/payment_reserv', (req, res) => {
+    const id = req.body.id;
+    const discount = req.body.discount;
+
+    db.query("update reservations set reservation_status = '결제완료', discount = ?  where id = ?", [discount, id], (error, results, fields) => {
+      if (error) {
+        console.error('데이터 수정 오류: ' + error);
+        res.status(500).json({ message: '오류 발생' });
+      } else {
+        res.json({ message: '결제되었습니다.' });
+      }
+    });
+  });
+
+  router.post('/admin/reservation_manage/modify_reserv', (req, res) => {
+    const id = req.body.id;
+    const note = req.body.note;
+    const std = req.body.std;
+    const discount = req.body.discount;
+
+    db.query("update reservations set note = ?, std = ?, discount = ?  where id = ?", [note, std, discount, id], (error, results, fields) => {
+      if (error) {
+        console.error('데이터 수정 오류: ' + error);
+        res.status(500).json({ message: '오류 발생' });
+      } else {
+        res.json({ message: '수정되었습니다.' });
+      }
+    });
+  });
+
 
 module.exports = router;

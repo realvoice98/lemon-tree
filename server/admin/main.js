@@ -38,7 +38,7 @@ router.get('/admin/main', (req, res) => {
 
     todayReservations = results.map((reservation) => ({
       ...reservation,
-      prog_time: reservation.prog_time.replace(/\s/g, ''), // 시간에서 공백 제거
+      reservation_time: reservation.reservation_time.replace(/\s/g, ''), // 시간에서 공백 제거
     }));
 
     // 내일 예약 정보 조회
@@ -51,7 +51,7 @@ router.get('/admin/main', (req, res) => {
 
       tomorrowReservations = results.map((reservation) => ({
         ...reservation,
-        prog_time: reservation.prog_time.replace(/\s/g, ''), // 시간에서 공백 제거
+        reservation_time: reservation.reservation_time.replace(/\s/g, ''), // 시간에서 공백 제거
       }));
 
       // 시작 시간과 마지막 시간 설정
@@ -69,13 +69,13 @@ router.get('/admin/main', (req, res) => {
         reservationsByTimeTomorrow[currentTime] = [];
 
         todayReservations.forEach((reservation) => {
-          if (reservation.prog_time === currentTime) {
+          if (reservation.reservation_time === currentTime) {
             reservationsByTimeToday[currentTime].push(reservation);
           }
         });
 
         tomorrowReservations.forEach((reservation) => {
-          if (reservation.prog_time === currentTime) {
+          if (reservation.reservation_time === currentTime) {
             reservationsByTimeTomorrow[currentTime].push(reservation);
           }
         });
