@@ -118,6 +118,7 @@
                           <td  class="row_text price" style="display: none;"><%=reservationsByTimeToday[time][0].price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservationsByTimeToday[time][0].discount %></td>
                           <td  class="row_text id" style="display: none;"><%=reservationsByTimeToday[time][0].id %></td>
+                          <td  class="row_text client_id" style="display: none;"><%=reservationsByTimeToday[time][0].client_id %></td>
                       </tr>
                       <% if (time !== '18:30') { %>
                       <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -150,6 +151,7 @@
                           <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservation.discount %></td>
                           <td  class="row_text id" style="display: none;"><%=reservation.id %></td>
+                          <td  class="row_text client_id" style="display: none;"><%=reservation.client_id %></td>
                       </tr>
                       <% }); %>
                   <% } %>
@@ -217,6 +219,7 @@
                           <td  class="row_text price" style="display: none;"><%=reservationsByTimeTomorrow[time][0].price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservationsByTimeTomorrow[time][0].discount %></td>
                           <td  class="row_text id" style="display: none;"><%=reservationsByTimeTomorrow[time][0].id %></td>
+                          <td  class="row_text client_id" style="display: none;"><%=reservationsByTimeTomorrow[time][0].client_id %></td>
                       </tr>
                       <% if (time !== '18:30') { %>
                       <!-- 18:30 타임이 아닌 경우에만 row b 표시 -->
@@ -249,6 +252,7 @@
                           <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
                           <td  class="row_text discount" style="display: none;"><%=reservation.discount %></td>
                           <td  class="row_text id" style="display: none;"><%=reservation.id %></td>
+                          <td  class="row_text client_id" style="display: none;"><%=reservation.client_id %></td>
                       </tr>
                       <% }); %>
                   <% } %>
@@ -269,6 +273,7 @@
           </div>
           <div class="modal_main">
             <input type="hidden" name="id" class="inputbox id">
+            <input type="hidden" name="client_id" class="inputbox client_id">
             <div class="client info">
               <span class="client info_title">예약자 정보</span>
               <div class="info_box name">

@@ -107,6 +107,7 @@
                     <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
                     <td class="row_text discount" style="display: none;"><%= reservation.discount %></td>
                     <td  class="row_text id" style="display: none;"><%=reservation.id %></td>
+                    <td  class="row_text client_id" style="display: none;"><%=reservation.client_id %></td>
                 </tr>
                 <% }); %>
               </tbody>
@@ -115,7 +116,7 @@
               <ul class="pagination-list">
                   <% for (let page = 1; page <= totalPages; page++) { %>
                       <li class="pagination-item">
-                          <a href="/admin/reservation_manage?page=<%= page %>" class="pagination-link <%= page === currentPage ? 'active' : '' %>"><%= page %></a>
+                          <a href="/admin/reservation_manage?page=<%= page %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
                       </li>
                   <% } %>
               </ul>
@@ -135,6 +136,7 @@
           </div>
           <div class="modal_main">
             <input type="hidden" name="id" class="inputbox id">
+            <input type="hidden" name="client_id" class="inputbox client_id">
             <div class="client info">
               <span class="client info_title">예약자 정보</span>
               <div class="info_box name">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 목록</title>
+    <title>매출관리</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -54,9 +54,9 @@
                 <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <form action="/admin/client_list/client_search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;">
-                <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="tablet_searchOnEnter(event)">
-                <input type="submit" value="검색" class="searchBtn">
-              </form>
+              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="tablet_searchOnEnter(event)">
+              <input type="submit" value="검색" class="searchBtn">
+            </form>
         </div>        
         </div>
         <div class="menu_bar">
@@ -66,53 +66,81 @@
           <div class="prog_manage"><a href="/admin/prog_manage" class="menu_text">프로그램관리</a></div>
         </div>
         <div class="main">
-          <div class="table_title">
-            <span class="table_title_text">회원목록</span>
-            <div class="search-box">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <form action="/admin/client_list/client_search" method="get" style="display: flex;justify-content: space-between; min-width: 380px;">
-                    <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">
-                    <input type="submit" value="검색" class="searchBtn">
-                  </form>
+          <div>
+            <div>
+
             </div>
+          </div>
+          <div class="sale_table">
+            <div class="sale_search">
+              <span class="sale_search_text">기간조회</span>
+              <input type="date" class="startDate" id="startDateInput" required>~
+              <input type="date" class="endDate" id="endDateInput" required>
+            </div>
+            <table class="table a">
+              <thead class="table_content a" style="background: #E9EAEC;">   
+                <tr class="row_top">
+                    <th  class="row_text name_client"></th>
+                    <th  class="row_text number_client">건수</th>
+                    <th  class="row_text dob">총매출</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr class="row">
+                    <td class="row_text name_client">합계</td>
+                    <td class="row_text number_client"><%= totalItems %>회</td>
+                    <td class="row_text dob"><%= total_price %>원</td>
+                  </tr>
+              </tbody>
+            </table>
           </div>
           <table class="table a">
             <thead class="table_content a">   
               <tr class="row_top">
-                  <th  class="row_text name_client">이름</th>
-                  <th  class="row_text number_client">휴대폰 번호</th>
-                  <th  class="row_text dob">생년월일</th>
-                  <th  class="row_text sex_client">성별</th>
-                  <th  class="row_text std_client">재학생</th>
-                  <th  class="row_text agree">마케팅 동의</th>
+                  <th  class="row_text name_client">No.</th>
+                  <th  class="row_text number_client">결제일자</th>
+                  <th  class="row_text dob">프로그램</th>
+                  <th  class="row_text sex_client">결제금액</th>
               </tr>
             </thead>
             <tbody>
-              <% clients.forEach((client, index) => { %>
-              <tr class="row <%= index % 2 === 0 ? 'a' : 'b' %>">
-                  <td  class="row_text name_client"><%=client.name%></td>
-                  <td  class="row_text number_client"><%=client.phone%></td>
-                  <td  class="row_text dob"><%=client.birth%></td>
-                  <td  class="row_text sex_client"><%=client.gender%></td>
-                  <td  class="row_text std_client"><%=client.std%></td>
-                  <td  class="row_text agree"><%=client.consent%></td>
-              </tr>
+              <% sales.forEach((sale, index) => { %>
+                <tr class="row <%= index % 2 === 0 ? 'a' : 'b' %>">
+                  <td class="row_text name_client"><%= sale.id %></td>
+                  <td class="row_text number_client"><%= formatDateString(sale.sale_date) %></td>
+                  <td class="row_text dob"><%= sale.prog_name %></td>
+                  <td class="row_text sex_client"><%= sale.price %></td>
+                </tr>
               <% }); %>
+              
+              <% function formatDateString(date) {
+                   if (date instanceof Date) {
+                     // 날짜 객체인 경우 'yyyy-mm-dd' 형식으로 형식화
+                     return date.getFullYear() + '-' + pad((date.getMonth() + 1), 2) + '-' + pad(date.getDate(), 2);
+                   } else {
+                     // 문자열인 경우에는 그대로 반환
+                     return date;
+                   }
+                 }
+              
+                 function pad(number, length) {
+                   // 숫자를 지정한 자릿수로 패딩
+                   return ('0000' + number).slice(-length);
+                 }
+              %>
             </tbody>
           </table>
           <div class="pagination">
             <ul class="pagination-list">
                 <% for (let page = 1; page <= totalPages; page++) { %>
                     <li class="pagination-item">
-                        <a href="/admin/client_list/client_search?page=<%= page %>&searchData=<%= encodeURIComponent(searchData) %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
+                        <a href="/admin/sale_manage?page=<%= page %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
                     </li>
                 <% } %>
-            </ul>                
-        </div>
+            </ul>
+          </div>
         </div>
     </div>
-    <script src="/client_list_script.js"></script>
+    <script src=""></script>
 </body>
 </html>

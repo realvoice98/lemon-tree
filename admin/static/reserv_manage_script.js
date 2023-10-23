@@ -26,6 +26,7 @@ rows.forEach(row => {
     const price = row.querySelector('.price').textContent;
     const discount = row.querySelector('.discount').textContent;
     const id = row.querySelector('.id').textContent;
+    const client_id = row.querySelector('.client_id').textContent;
 
     const dateSlice = datetime.split('/');
     const date = dateSlice[0];
@@ -62,6 +63,7 @@ rows.forEach(row => {
     const priceInput = modal.querySelector('.inputbox.price');
     const discountInput = modal.querySelector('.inputbox.discount');
     const idInput = modal.querySelector('.inputbox.id');
+    const client_idInput = modal.querySelector('.inputbox.client_id');
 
     // 추출한 데이터를 인풋 태그에 설정
     nameInput.value = name;
@@ -76,6 +78,7 @@ rows.forEach(row => {
     discountInput.value = discount;
     timeInput.value = time;
     idInput.value = id;
+    client_idInput.value = client_id;
 
     // 클릭된 로우의 데이터를 저장
     clickedRowData = rowData;
@@ -162,6 +165,7 @@ function cancelBtn(){
 
 function modifyBtn(){
   const idInput = document.querySelector('input[name="id"]').value;
+  const client_idInput = document.querySelector('input[name="client_id"]').value;
   const nameInput = document.querySelector('input[name="name"]').value;
   const phoneInput = document.querySelector('input[name="phone"]').value;
   const genderInput = document.querySelector('input[name="gender"]').value;
@@ -180,6 +184,7 @@ function modifyBtn(){
       const url = './reservation_manage/modify_reserv'; // 서버의 API 엔드포인트
       const data = {
           id: idInput,
+          client_id: client_idInput,
           name: nameInput,
           phone: phoneInput,
           gender: genderInput,
@@ -215,19 +220,38 @@ function modifyBtn(){
 
 function paymentBtn(){
   const idInput = document.querySelector('input[name="id"]').value;
+  const client_idInput = document.querySelector('input[name="client_id"]').value;
   const stdInput = document.querySelector('input[name="std"]').value;
+  const prog_nameInput = document.querySelector('input[name="prog_name"]').value;
   const priceInput = document.querySelector('input[name="price"]').value;
   const discountInput = document.querySelector('input[name="discount"]').value;
+
+  // 현재 날짜 객체 생성
+  var currentDate = new Date();
+
+  // 날짜를 'yyyy-mm-dd' 형식으로 변환
+  var year = currentDate.getFullYear();
+  var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  var day = currentDate.getDate().toString().padStart(2, '0');
+
+  const formattedDate = year + '-' + month + '-' + day;
+
+  console.log(formattedDate); // 예를 들어, '2023-10-23'
+
 
   if(stdInput != '재학생'){
     const result = confirm(priceInput + '원을 결제하시겠습니까?');
 
     if(result){
       // Ajax 요청을 보낼 URL 및 데이터
-      const url = './reservation_manage/cancel_reserv'; // 서버의 API 엔드포인트
+      const url = './reservation_manage/payment_reserv'; // 서버의 API 엔드포인트
       const data = {
           id: idInput,
-          price: priceInput
+          client_id: client_idInput,
+          std: stdInput,
+          price: priceInput,
+          prog_name: prog_nameInput,
+          sale_date: formattedDate
       };
 
       // Ajax 요청을 보내고 응답을 처리
@@ -254,10 +278,14 @@ function paymentBtn(){
 
     if(result){
       // Ajax 요청을 보낼 URL 및 데이터
-      const url = './reservation_manage/cancel_reserv'; // 서버의 API 엔드포인트
+      const url = './reservation_manage/payment_reserv'; // 서버의 API 엔드포인트
       const data = {
           id: idInput,
-          price: discountInput
+          client_id: client_idInput,
+          std: stdInput,
+          price: discountInput,
+          prog_name: prog_nameInput,
+          sale_date: formattedDate
       };
 
       // Ajax 요청을 보내고 응답을 처리

@@ -106,7 +106,7 @@
             <ul class="pagination-list">
                 <% for (let page = 1; page <= totalPages; page++) { %>
                     <li class="pagination-item">
-                        <a href="/admin/client_list?page=<%= page %>" class="pagination-link <%= page === currentPage ? 'active' : '' %>"><%= page %></a>
+                        <a href="/admin/client_list?page=<%= page %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
                     </li>
                 <% } %>
             </ul>
