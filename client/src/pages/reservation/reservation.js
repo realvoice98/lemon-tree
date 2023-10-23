@@ -13,17 +13,23 @@ function Reservation() {
     const [dateValue, changeDate] = useState(new Date());
     const [chooseDay, setChooseDay] = useState(false);
     const [selectedProgram,setSelectedProgram] = useState('선택한 프로그램');
+    const [selectedReservTime,setSelectedReservTime]  = useState('');
     const [selectedTime,setSelectedTime] = useState('');
+    const [selectedCount,setSelectedCount] = useState('');
+    const [viewProgram,setViewProgram] = useState("프로그램을 선택하세요");    
     const [programList,setProgramList]  = useState([]);
     const [timeList,setTimeList]  = useState(['17 : 00','17 : 30','18 : 00','18 : 30']);
     const [unableTimeList,setUnableTimeList] = useState([]);
     const [toggleStatus,setToggleStatus]  = useState(false);
-    const [selectedCount,setSelectedCount] = useState('');
     const [confirmModal,setConfirmModal] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0); // 총 가격 나타내기
     const [startDate,setStartDate] = useState("");
     const [endDate,setEndDate] = useState("");
     const [unableTimeIdx, setUnableTimeIdx] = useState([]);
+
+    // 오늘 이전 날짜는 클릭할 수 없게하는 함수
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 오늘 날짜의 시간 정보를 00:00:00으로 
 
 
     const formatStartDate = (inputDate) => {
@@ -55,7 +61,6 @@ function Reservation() {
       const SERVER_URL = 'http://localhost:8001/programs'
       await axios.get(SERVER_URL)
       .then(res => {
-          console.log(res.data)
           setProgramList(res.data)
         })
         .catch(error => console.log(error));
@@ -93,10 +98,12 @@ function Reservation() {
       setConfirmModal(true)
   }
   
-  const onClickProgram = (item) =>{
-      setSelectedProgram(item)
+  const onClickProgram = (item_name,item_time) =>{
+      setSelectedProgram(item_name)
+      setSelectedTime(item_time)
+      setViewProgram(item_name + " "+item_time + "min")
       setToggleStatus(false)
-      const price = calculatePrice(item, selectedCount);
+      const price = calculatePrice(item_name, selectedCount);
       setTotalPrice(price);
   }
 
@@ -107,7 +114,7 @@ const tileDisabled = ({ date, view }) => {
   const endDate = new Date(closeDate[0], closeDate[1], closeDate[2]); // 10월 10일
 
   // startDate와 endDate 사이의 날짜 중에서 월요일 또는 수요일인 경우 활성화, 나머지는 비활성화
-  if (date >= startDate && date <= endDate) {
+  if (date >= startDate && date <= endDate && date >= today) {
     if (date.getDay() === 1 || date.getDay() === 3) {
       return false; // 활성화
     }
@@ -119,7 +126,7 @@ const tileDisabled = ({ date, view }) => {
 const tileContent = ({ date, view }) => {
   if (view === 'month') {
     const isToday = date.getDate() === new Date().getDate();
-    return isToday ? <p style={{ position:'absolute',marginLeft:'10px', fontSize: '8px', marginBottom: '0px' ,zIndex:'99' }}>오늘</p> : null;
+    return isToday ? <p style={{ position:'absolute',marginLeft:'11px', fontSize: '8px', marginBottom: '0px' ,zIndex:'99' }}>오늘</p> : null;
   }
   return null;
 };
@@ -196,7 +203,7 @@ const reservationConfirm = () => {
                 formatDay={(locale, date) =>
                     date.toLocaleString('en', { day: 'numeric' })
                 }
-                value={dateValue}
+                value={chooseDay ? dateValue : null}
                 // nextLabel={<NextIcon />}
                 // prevLabel={<PrevIcon />}
                 next2Label={null}
@@ -215,7 +222,7 @@ const reservationConfirm = () => {
         <div class="reservation-content-container">
             <div class="reservation-program-container">
                 <div class="reservation-program-selected" onClick={toggleProgram} >
-                    <div>{selectedProgram}</div>
+                    <div>{viewProgram}</div>
                     <img src="/assets/icon_programlist_toggle.png" alt="" />
                 </div>
                 {toggleStatus && 
@@ -223,10 +230,10 @@ const reservationConfirm = () => {
                     {programList.map((item,idx)=>{
                       const isDuplicate = idx > 0 && item.prog_name === programList[idx - 1].prog_name;
                         return(
-                          !isDuplicate && (
+                          isDuplicate && (
                             <>
-                                <div key={idx}onClick={()=>onClickProgram(item.prog_name)}>
-                                    { item.prog_name }
+                                <div key={idx}onClick={()=>onClickProgram(item.prog_name,item.prog_time)}>
+                                    { item.prog_name } { item.prog_time + "min"}
                                 </div>
                                 {programList[idx + 2] && <div className="dash" />}
                                 {/* {idx !== programList.length - 1 && <div className="dash" />} */}
@@ -264,9 +271,9 @@ const reservationConfirm = () => {
                     return(
                         <button  
                         key={idx}
-                        className={`reservation-time-content ${selectedTime === item ? 'reservation-time-selected' : ''}`}
+                        className={`reservation-time-content ${selectedReservTime === item ? 'reservation-time-selected' : ''}`}
                         disabled={isDisabled}
-                        onClick={() => setSelectedTime(item)}>
+                        onClick={() => setSelectedReservTime(item)}>
                             {item}
                         </button>
                     )
@@ -293,6 +300,7 @@ const reservationConfirm = () => {
         dateValue={trimmedDate}
         selectedProgram={selectedProgram}
         selectedTime={selectedTime}
+        selectedReservTime={selectedReservTime}
         selectedCount={selectedCount}
         totalPrice={totalPrice}
         

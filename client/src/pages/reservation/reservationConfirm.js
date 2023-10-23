@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import { useUser } from '../../userContext';
 
-function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedCount, selectedTime, totalPrice }) {
+function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedReservTime, selectedCount, selectedTime, totalPrice }) {
 
   const [clickYesNo, setClickYesNo] = useState('');
   const [inputText, setInputText] = useState('');
@@ -38,6 +38,7 @@ function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedCount, 
       prog_count : selectedCount,
       note : inputText,
       reservation_date : dateValue,
+      reservation_time: selectedReservTime,
       price : totalPrice,
       discount : totalPrice,
       reservation_status : '예약대기'
@@ -78,7 +79,7 @@ function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedCount, 
 
           <div class="reservationModal-content">
             <div class="reservationModal-title">시간</div>
-            <div class="reservationModal-info">{dateValue} / {selectedTime}</div>
+            <div class="reservationModal-info">{dateValue} / {selectedTime + " min"}</div>
           </div>
           <div class="reservationModal-content">
             <div class="reservationModal-title">프로그램</div>

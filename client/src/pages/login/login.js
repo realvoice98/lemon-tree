@@ -48,13 +48,10 @@ function Login() {
           sessionStorage.setItem(attr, userInfo[attr]);
         });
         navigate('/main');
-        // 토큰을 저장하고 사용자를 다음 화면으로 리디렉션하거나 다른 작업 수행
-      } else {
-        // 로그인 실패
-        this.setState({ message: response.data.message });
-      }
+      } 
     } catch (error) {
       console.error('로그인 요청 오류:', error);
+      alert('전화번호 혹은 비밀번호를 확인해주세요');
     }
   }
 
