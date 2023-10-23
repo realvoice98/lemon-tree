@@ -32,25 +32,20 @@ app.use('/',passwordChange);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../admin/views'));
 
-// app.use(express.static(path.join(__dirname, '../client/build')));
-
 app.use(express.static(path.join(__dirname, '../admin/static'))); //관리자 정적 파일
-
-// app.get('/',function(req,res){
-//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
-// })
-
 
 const clientListRoutes = require('./admin/client_list'); 
 const loginRoutes = require('./admin/login'); 
 const mainRoutes = require('./admin/main'); 
 const progManageRoutes = require('./admin/prog_manage'); 
 const reservManageRoutes = require('./admin/reserv_manage'); 
+const saleManageRoutes = require('./admin/sale_manage'); 
 app.use('/', clientListRoutes);
 app.use('/', loginRoutes);
 app.use('/', mainRoutes);
 app.use('/', progManageRoutes);
 app.use('/', reservManageRoutes);
+app.use('/', saleManageRoutes);
 //관리자 end
 
 app.listen(PORT, function () {
