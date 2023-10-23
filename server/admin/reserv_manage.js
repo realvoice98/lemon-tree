@@ -101,17 +101,36 @@ router.get('/admin/reservation_manage/search', (req, res) => {
 
   router.post('/admin/reservation_manage/payment_reserv', (req, res) => {
     const id = req.body.id;
-    const discount = req.body.discount;
-
-    db.query("update reservations set reservation_status = '결제완료', discount = ?  where id = ?", [discount, id], (error, results, fields) => {
+    const price = req.body.price;
+    const prog_name = req.body.prog_name;
+    const sale_date = req.body.sale_date;
+    const client_id = req.body.client_id;
+    const std = req.body.std;
+  
+    db.query("update reservations set reservation_status = '결제완료', discount = ?, std = ? where client_id = ?", [price, std, client_id], (error, results, fields) => {
       if (error) {
         console.error('데이터 수정 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });
       } else {
-        res.json({ message: '결제되었습니다.' });
+        db.query("update client set std = ? where id = ?", [std, client_id], (error, results, fields) => {
+          if (error) {
+            console.error('데이터 삽입 오류: ' + error);
+            res.status(500).json({ message: '오류 발생' });
+          } else {
+            db.query("insert into sales (sale_date, prog_name, price) values(?, ?, ?)", [sale_date, prog_name, price], (error, results, fields) => {
+              if (error) {
+                console.error('데이터 삽입 오류: ' + error);
+                res.status(500).json({ message: '오류 발생' });
+              } else {
+                res.json({ message: '결제되었습니다.' });
+              }
+            });
+          }
+        });
       }
     });
   });
+  
 
   router.post('/admin/reservation_manage/modify_reserv', (req, res) => {
     const id = req.body.id;
