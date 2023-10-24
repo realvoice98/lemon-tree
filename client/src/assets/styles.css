@@ -23,7 +23,7 @@
 }
 
 .header-icon {
-
+    cursor: pointer;
     width: 24px;
     height: 24px;
 }
@@ -455,6 +455,12 @@
 .menubar-close {
     padding: 20px;
     text-align: end;
+    cursor: pointer;
+}
+
+.menubar-close-icon {
+    width: 30px;
+    height: 30px;
 }
 
 .menubar-header {
@@ -491,6 +497,13 @@
     padding: 5px 30px 5px 30px;
     font-size: 14px;
     font-weight: 700;
+    cursor: pointer;
+}
+
+.menubar-menu-icon {
+    width: 17px;
+    height: 17px;
+    align-self: center;
 }
 
 .menu-slide {
@@ -560,6 +573,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #fff;
+    width: 100%;
+    border: none;
 }
 
 .myTree-program {
@@ -574,11 +590,17 @@
     font-weight: 700;
 }
 
+.myTree-right-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .myTree-count {
     color: #111;
     font-family: 'DM Sans';
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .myTree-program-time {
@@ -603,7 +625,7 @@
     margin: 0 10px;
 }
 
-.myTree-btn {
+.myTree-btn-cancle {
     border-radius: 20px;
     border: 1px solid #EE4C69;
     background: #EE4C69;
@@ -613,6 +635,33 @@
     font-size: 10px;
     font-weight: 700;
     padding: 3px 7px;
+    margin-left: 15px;
+
+}
+
+.myTree-btn-reserv {
+    border-radius: 20px;
+    border: 1px solid #2EC807;
+    background: #2EC807;
+    box-shadow: 0px 4px 4px 0px rgba(217, 217, 217, 0.25);
+    color: #FFF;
+    font-family: 'DM Sans';
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 7px;
+    margin-left: 15px;
+}
+
+.myTree-status-list {
+    border-radius: 20px;
+    border: 1px solid rgba(217, 217, 217, 0.5);
+    box-shadow: 0px 4px 4px 0px rgba(217, 217, 217, 0.2);
+    color: #FFF;
+    font-family: 'DM Sans';
+    font-size: 10px !important;
+    font-weight: 700;
+    padding: 3px 7px;
+    margin-left: 15px;
 }
 
 .myTree-status {
@@ -732,6 +781,12 @@
 
 .login-btn-active:active {
     background-color: #FFEB54;
+}
+
+.login-btn-active:disabled {
+    background-color: #E9EAEC;
+    color: #fff;
+    cursor: not-allowed;
 }
 
 .login-signUp {

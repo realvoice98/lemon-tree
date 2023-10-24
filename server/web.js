@@ -8,6 +8,7 @@ const login = require('./client/login');
 const main = require('./client/main');
 const reservation = require('./client/reservation');
 const signup = require('./client/signup');
+const count = require('./client/mytree');
 const phoneNumChange = require('./client/mypage/phoneNumChange');
 const passwordChange = require('./client/mypage/passwordChange');
 
@@ -22,6 +23,7 @@ app.use('/',login);
 app.use('/',main);
 app.use('/',reservation);
 app.use('/',signup);
+app.use('/',count);
 app.use('/',phoneNumChange);
 app.use('/',passwordChange);
 

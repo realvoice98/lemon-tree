@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import '../../assets/styles.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function SignUp() {
+
+  const navigate = useNavigate();
 
   const [phoneNum, setPhoneNum] = useState("");
   const [password, setPassword] = useState("");
@@ -144,8 +147,9 @@ function SignUp() {
   const signupSubmit = async() => {
     const SERVER_URL = 'http://localhost:8001/signup'
     await axios.post(SERVER_URL,{phoneNum,password,name,birthday,gender,studentsConfirm,marketing})
-    // 여기에 서버로 데이터 보내는 코드 작성 
-    // phoneNum, password, name, birthday, gender, student
+
+    alert('회원가입이 성공적으로 완료되었습니다.')
+    navigate('/')
   }
 
   return (

@@ -40,7 +40,9 @@ export default function Menubar(props) {
   return (
     <>
     <div className={`menu-slide ${menuVisible ? 'open' : ''}`}>
-      <div class="menubar-close" onClick={toggleMenu}>X</div>
+      <div class="menubar-close">
+        <img class="menubar-close-icon" onClick={toggleMenu} alt="" src='assets/icon_x.png'/>
+      </div>
       <div class="menubar-container">
         <div class="menubar-header">
           <div class="menubar-header-name">{userName}님</div>
@@ -52,19 +54,19 @@ export default function Menubar(props) {
         <div class="menubar-menu-list">
           <div class="menubar-menu-content" onClick={moveChangePhoneNum}>
             <div>전화번호 변경</div>
-            <img alt="" src='assets/menubar_right_arrow.png'/>
+            <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
           <div class="menubar-menu-content" onClick={moveChangePW}>
             <div>비밀번호 변경</div>
-            <img alt="" src='assets/menubar_right_arrow.png'/>
+            <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
           <div class="menubar-menu-content">
             <div>재학생인증</div>
-            <img alt="" src='assets/menubar_right_arrow.png'/>
+            <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
           <div class="menubar-menu-content" onClick={logOut}>
             <div>로그아웃</div>
-            <img alt="" src='assets/menubar_right_arrow.png'/>
+            <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
         </div>
         <div class="menubar-menu-title">
@@ -74,11 +76,11 @@ export default function Menubar(props) {
         <div class="menubar-menu-list">
           <div class="menubar-menu-content" onClick={moveMyTree}>
             <div>My Tree</div>
-            <img alt="" src='assets/menubar_right_arrow.png'/>
+            <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
           <div class="menubar-menu-content" onClick={moveReservation}>
             <div>예약 하기</div>
-            <img alt="" src='assets/menubar_right_arrow.png'/>
+            <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
         </div>
 

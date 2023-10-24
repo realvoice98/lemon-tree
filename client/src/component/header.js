@@ -16,7 +16,7 @@ function Header(props) {
     return (
         <div className='header'>
             <Link to="/main" className='logo'>Lemon Tree</Link>
-            <img src='assets/icon_header.png' alt="" className='header_icon' onClick={toggleMenu}/>
+            <img src='assets/icon_header.png' alt="" className='header-icon' onClick={toggleMenu}/>
             <Menubar menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>
         </div>
     );

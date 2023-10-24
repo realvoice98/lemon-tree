@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { useUser } from '../../userContext';
+import { useNavigate } from "react-router-dom";
 
-function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedReservTime, selectedCount, selectedTime, totalPrice }) {
+function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedCount, selectedTime, totalPrice }) {
+  
+  const navigate = useNavigate();
 
   const [clickYesNo, setClickYesNo] = useState('');
   const [inputText, setInputText] = useState('');
@@ -19,6 +22,7 @@ function ReservationConfirm({ onClose,dateValue,selectedProgram, selectedReservT
 
   const yesHandleClose = () => {
     onClose?.();
+    navigate('/myTree')
   };
 
   const noHandleClose = () => {
