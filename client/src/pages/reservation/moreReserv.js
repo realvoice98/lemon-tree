@@ -4,28 +4,30 @@ import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 import './customCalendar.css'; // 사용자 정의 스타일을 불러옵니다.
 import { useState } from 'react';
-import ReservationConfirm from './reservationConfirm';
 import axios from 'axios';
 import { useEffect } from 'react';
+import MoreModal from './modal/moreModal';
+import { useLocation } from 'react-router-dom';
 
-function Reservation() {
+function MoreReserv() {
 
   const [dateValue, changeDate] = useState(new Date());
   const [chooseDay, setChooseDay] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState('선택한 프로그램');
-  const [selectedReservTime, setSelectedReservTime] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
-  const [selectedCount, setSelectedCount] = useState('');
-  const [viewProgram, setViewProgram] = useState("프로그램을 선택하세요");
-  const [programList, setProgramList] = useState([]);
   const [timeList, setTimeList] = useState(['17 : 00', '17 : 30', '18 : 00', '18 : 30']);
   const [unableTimeList, setUnableTimeList] = useState([]);
   const [unableTimeIdx, setUnableTimeIdx] = useState([]);
-  const [toggleStatus, setToggleStatus] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0); // 총 가격 나타내기
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const progName = searchParams.get("prog_name");
+
+
 
   // 오늘 이전 날짜는 클릭할 수 없게하는 함수
   const today = new Date();
@@ -56,18 +58,6 @@ function Reservation() {
       .catch(error => console.log(error));
   }
 
-  const getPrograms = async () => {
-    const SERVER_URL = 'http://localhost:8001/programs'
-    await axios.get(SERVER_URL)
-      .then(res => {
-        setProgramList(res.data)
-      })
-      .catch(error => console.log(error));
-
-  }
-
-
-
   // 날짜데이터 형식 만들기 ex)23.10.04
   const formattedDate = dateValue.toLocaleDateString('ko-KR', {
     year: '2-digit',
@@ -78,32 +68,8 @@ function Reservation() {
   const lastIndex = formattedDate.lastIndexOf('.');
   const trimmedDate = formattedDate.substring(0, lastIndex); // 맨 뒤의 점 제거
 
-  const toggleProgram = () => {
-    if (chooseDay === false) {
-      alert('날짜를 선택해주세요');
-      return null;
-    } else {
-      setToggleStatus(!toggleStatus);
-    }
-  }
-
-  const onProgramCountHandler = (count) => {
-    setSelectedCount(count)
-    const price = calculatePrice(selectedProgram, count);
-    setTotalPrice(price);
-  }
-
   const onClickConfirmModal = () => {
     setConfirmModal(true)
-  }
-
-  const onClickProgram = (item_name, item_time) => {
-    setSelectedProgram(item_name)
-    setSelectedTime(item_time)
-    setViewProgram(item_name + " " + item_time + "min")
-    setToggleStatus(false)
-    const price = calculatePrice(item_name, selectedCount);
-    setTotalPrice(price);
   }
 
   // 월요일과 수요일만 활성화 또는 비활성화하는 함수
@@ -130,34 +96,10 @@ function Reservation() {
     return null;
   };
 
-  // 가격 계산 함수
-  const calculatePrice = (program, count) => {
-    // const filteredProgram = programList.filter(item => item.prog_name === program);
-    // const filteredCount = programList.filter(item => item.prog_name === count);
-
-    const selectedData = programList.filter(item => item.prog_name === program && item.prog_count === count);
-
-    // 필터링된 결과에서 price와 discount 값을 추출
-    const prices = selectedData.map(item => item.price);
-    const discounts = selectedData.map(item => item.discount);
-
-    return prices;
-
-    //로그인한 사람의 역할에따라 다른값 보내기 
-    // if(userType==='STUDENT'){
-    //   return prices;
-    // }else{
-    //   return discounts;
-    // }
-  };
-
   // 모든 내용 클릭해야 예약하기 클릭할 수 있게하는 함수
   const reservationConfirm = () => {
-
     return (
       dateValue !== '' &&
-      selectedProgram !== '' && // 프로그램 선택
-      selectedCount !== '' && // 횟수 선택
       selectedTime !== ''// 시간 선택
     );
   };
@@ -165,7 +107,6 @@ function Reservation() {
 
   useEffect(() => {
     getOperaingDate();
-    getPrograms();
   }, [])
 
   //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
@@ -175,7 +116,7 @@ function Reservation() {
     axios.post(SERVER_URL, { trimmedDate })
       .then(res => {
         const timelist = res.data;
-        const setData = timelist.map(item => item.prog_time);
+        const setData = timelist.map(item => item.progName);
         setUnableTimeList(setData);
         const updatedTimeList = timeList.map(time => !unableTimeList.includes(time));
         setUnableTimeIdx(updatedTimeList);
@@ -189,11 +130,12 @@ function Reservation() {
   return (
     <>
       <Header></Header>
-      {/* 날짜 선택 */}
+      <div class="reservation-category-container">
+        <div class="reservation-category title-view">{progName}</div>
+      </div>
       <div class="reservation-category-container">
         <img src='assets/icon_reservation_calendar.png' alt="" class="reservation-category-icon" />
         <div class="reservation-category">날짜 선택</div>
-
       </div>
       <div class="reservation-content-container">
         <Calendar
@@ -212,79 +154,30 @@ function Reservation() {
           tileContent={tileContent} // tileContent 함수 사용
         />
       </div>
-
-      {/* 프로그램 선택 */}
-      <div class="reservation-category-container">
-        <img src='assets/icon_reservation_choose_program.png' alt="" class="reservation-category-icon" />
-        <div class="reservation-category">프로그램 선택</div>
-      </div>
-      <div class="reservation-content-container">
-        <div class="reservation-program-container">
-          <div class="reservation-program-selected" onClick={toggleProgram} >
-            <div>{viewProgram}</div>
-            <img src="/assets/icon_programlist_toggle.png" alt="" />
-          </div>
-          {toggleStatus &&
-            <div class="reservation-program-contents">
-              {programList.map((item, idx) => {
-                const isDuplicate = idx > 0 && item.prog_name === programList[idx - 1].prog_name;
-                return (
-                  isDuplicate && (
-                    <>
-                      <div key={idx} onClick={() => onClickProgram(item.prog_name, item.prog_time)}>
-                        {item.prog_name} {item.prog_time + "min"}
-                      </div>
-                      {programList[idx + 2] && <div className="dash" />}
-                      {/* {idx !== programList.length - 1 && <div className="dash" />} */}
-                    </>
-                  )
-                )
-              })}
-            </div>
-          }
-          {/* {selectProgramStatus &&  */}
-          <div class="reservation-category">횟수</div>
-          <div class="signup-buttonContainer">
-            <div class="signup-buttonContents">
-              <button onClick={() => onProgramCountHandler('1회')} className=
-                {selectedCount === '1회' ? 'signup-button-selected' : 'signup-button-unselected'}> 1회 </button>
-              <button onClick={() => onProgramCountHandler('3회')} className=
-                {selectedCount === '3회' ? 'signup-button-selected' : 'signup-button-unselected'}> 3회 </button>
-            </div>
-          </div>
-          {/* } */}
-
-        </div>
-      </div>
       {/* 시간 선택 */}
       <div class="reservation-category-container">
         <img src='assets/icon_reservation_choose_time.png' alt="" class="reservation-category-icon" />
         <div class="reservation-category">시간 선택</div>
       </div>
-      <div class="reservation-content-container">
+      <div class="reservation-content-container line2">
         <div class="reservation-time-container">
           {timeList.map((item, idx) => {
-
             const isDisabled = !unableTimeIdx[idx]; // updatedTimeList가 false이면 disabled
-
             return (
               <button
                 key={idx}
-                className={`reservation-time-content ${selectedReservTime === item ? 'reservation-time-selected' : ''}`}
+                className={`reservation-time-content ${selectedTime === item ? 'reservation-time-selected' : ''}`}
                 disabled={isDisabled}
-                onClick={() => setSelectedReservTime(item)}>
+                onClick={() => setSelectedTime(item)}>
                 {item}
               </button>
             )
           })}
         </div>
       </div>
-      <div class="reservation-category-container pay">
-        <img src='assets/icon_reservation_pay.png' alt="" class="reservation-category-icon" />
-        <div class="reservation-category">결제 금액 <span>{totalPrice}원</span> </div>
-      </div>
-      <div class="reservation-content-container">
-        <button className={`${reservationConfirm() ? 'reservation-pay-active' : 'reservation-pay-inactive'}`}
+      <div className='view' />
+      <div class="reservation-content-container line">
+        <button className={`bottom-btn ${reservationConfirm() ? 'reservation-pay-active' : 'reservation-pay-inactive'}`}
           onClick={onClickConfirmModal}
           disabled={!reservationConfirm()}
         >예약하기</button>
@@ -292,17 +185,14 @@ function Reservation() {
 
 
       {confirmModal === true &&
-        <ReservationConfirm
+        <MoreModal
           dateValue={trimmedDate}
           selectedProgram={selectedProgram}
           selectedTime={selectedTime}
-          selectedReservTime={selectedReservTime}
-          selectedCount={selectedCount}
-          totalPrice={totalPrice}
           setConfirmModal={setConfirmModal}
         />}
     </>
   );
 }
 
-export default Reservation;
+export default MoreReserv;

@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
-import { useUser } from '../../userContext';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount, selectedTime, totalPrice, selectedReservTime, setConfirmModal }) {
+function MoreModal({ dateValue, selectedTime, setConfirmModal }) {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const reservId = searchParams.get("id");
+  const progName = searchParams.get("prog_name");
+  const progTime = searchParams.get("prog_time");
+  const remainCount = searchParams.get("remain_count");
+  const totalCount = searchParams.get("total_count");
+
   const [clickYesNo, setClickYesNo] = useState('');
   const [inputText, setInputText] = useState('');
-  const { user } = useUser();
-
-  // 예약테이블에 보낼 회원 정보 sessionStorage에서 추출
-  const sessionStorageKeys = Object.keys(sessionStorage);
-  const sessionStorageData = {};
-  sessionStorageKeys.forEach(key => {
-    sessionStorageData[key] = sessionStorage.getItem(key);
-  });
-  const { consent, gender, id, name, passwd, phone, std } = sessionStorageData;
 
   const goMyTree = () => {
     setConfirmModal(false)
@@ -26,22 +24,12 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
   }
 
   const onClickYes = async () => {
-    const SERVER_URL = 'http://localhost:8001/reservation'
+    const SERVER_URL = 'http://localhost:8001/reservationMore'
     await axios.post(SERVER_URL, {
-      client_id: id,
-      name: name,
-      phone: phone,
-      gender: gender,
-      std: std,
-      prog_name: selectedProgram,
-      prog_time: selectedTime,
-      prog_count: selectedCount,
+      id: reservId,
       note: inputText,
       reservation_date: dateValue,
-      reservation_time: selectedReservTime,
-      price: totalPrice,
-      discount: totalPrice,
-      reservation_status: '예약대기'
+      reservation_time: selectedTime,
     })
       .then(res => {
         setClickYesNo('yes')
@@ -82,14 +70,14 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
               <div className="myTree-modal-content">
                 <div className="myTree-modal-inner-content">
                   <div className="myTree-modal-inner-txt">날짜 / 시간</div>
-                  <div className="myTree-modal-inner-data">{dateValue} / {selectedReservTime}</div>
+                  <div className="myTree-modal-inner-data">{dateValue} / {selectedTime}</div>
                 </div>
                 <div className="myTree-modal-inner-content">
                   <div className="myTree-modal-inner-txt">프로그램</div>
                   <div className="myTree-modal-inner-data">
                     <div className="myTree-modal-inner-view">
-                      <div>{selectedProgram}</div>
-                      <div className="small-txt">({selectedTime}min)</div>
+                      <div>{progName}</div>
+                      <div className="small-txt">({progTime}min)</div>
                     </div>
                   </div>
                 </div>
@@ -100,11 +88,7 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
                       <div className="small-txt">(잔여/총)</div>
                     </div>
                   </div>
-                  <div className="myTree-modal-inner-data">{selectedCount}</div>
-                </div>
-                <div className="myTree-modal-inner-content">
-                  <div className="myTree-modal-inner-txt">금액</div>
-                  <div className="myTree-modal-inner-data">{totalPrice}원</div>
+                  <div className="myTree-modal-inner-data">{remainCount}회 / {totalCount} 회</div>
                 </div>
                 <div class="myTree-modal-inner-content">
                   <div class="myTree-modal-inner-txt">요청사항</div>
@@ -151,41 +135,4 @@ const ModalWrap = styled.div`
   padding: 20px;
 `;
 
-const CloseButton = styled.div`
-  float: right;
-  width: 40px;
-  height: 40px;
-  margin: 20px;
-  cursor: pointer;
-  i {
-    color: #5d5d5d;
-    font-size: 30px;
-  }
-`;
-
-const Contents = styled.div`
-  margin: 50px 30px;
-  h1 {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 60px;
-  }
-  img {
-    margin-top: 60px;
-    width: 300px;
-  }
-`;
-const Button = styled.button`
-  cursor: pointer;
-  width: 100%;
-  background-color: #DFE3E8;
-  color: #ffffff;
-  border-radius: 5px;
-  border:0px;
-  padding: 10px;
-  margin-top: 20px;
-  &:hover {
-    background-color: #898989;
-  }
-`;
-export default ReservationConfirm;
+export default MoreModal;

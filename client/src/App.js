@@ -9,6 +9,7 @@ import StudentConfirm from './pages/mypage/studentConfirm';
 import MyTree from './pages/reservation/myTree';
 import Reservation from './pages/reservation/reservation';
 import { UserProvider } from './userContext';
+import MoreReserv from './pages/reservation/moreReserv';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           {/* 예약 관리 */}
           <Route path='/myTree' element={<MyTree />} />
           <Route path='/reservation' element={<Reservation />} />
+          <Route path='/moreReserv' element={<MoreReserv />} />
       </Routes>
     </div>
     </UserProvider>

@@ -11,7 +11,7 @@ router.get('/myTree', (req, res) => {
   const client_id = req.query.client_id;
 
   db.query(
-    'SELECT * FROM reservations WHERE client_id = ?',
+    'SELECT * FROM reservations WHERE client_id = ? AND remain_count > 0',
     [client_id],
     (error, rows) => {
         if (error) throw error;
@@ -42,5 +42,33 @@ router.get('/reservationList', (req, res) => {
         res.send(rows);
     });
 });
+
+router.post('/reservationCancle', (req, res) => {
+  const id = req.body.id;
+  const reservation_status = '취소완료';
+  db.query(
+    'UPDATE reservations SET reservation_status = ? WHERE id = ?',
+    [reservation_status, id],
+    (error, rows) => {
+        if (error) throw error;
+        res.send(rows);
+    });
+});
+
+router.post('/reservationMore', (req, res) => {
+  const id = req.body.id;
+  const reservation_date = req.body.reservation_date;
+  const reservation_time = req.body.reservation_time;
+  const note = req.body.note;
+  const reservation_status = '예약대기';
+  db.query(
+    'UPDATE reservations SET reservation_date = ?, reservation_time = ?, note = ?, reservation_status = ? WHERE id = ?',
+    [reservation_date, reservation_time, note, reservation_status, id],
+    (error, rows) => {
+        if (error) throw error;
+        res.send(rows);
+    });
+});
+
 
 module.exports = router;
