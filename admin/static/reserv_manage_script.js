@@ -312,6 +312,15 @@ function paymentBtn(){
 
 }
 
+// SVG 아이콘을 클릭할 때 form을 제출하는 함수
+document.getElementById('searchIcon').addEventListener('click', function() {
+  document.getElementById('searchForm').submit();
+});
+// SVG 아이콘을 클릭할 때 form을 제출하는 함수
+document.getElementById('searchIcon2').addEventListener('click', function() {
+  document.getElementById('searchForm2').submit();
+});
+
 function searchOnEnter(event){
   if (event.key === 'Enter') {
     const searchData = document.querySelector('.searchInput').value;
@@ -328,3 +337,5 @@ function searchOnEnterTablet(event){
     return false; // 폼 제출을 중단
   }
 }
+
+

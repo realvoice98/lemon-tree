@@ -76,7 +76,7 @@ router.get('/admin/reservation_manage/search', (req, res) => {
   router.post('/admin/reservation_manage/confirm_reserv', (req, res) => {
     const id = req.body.id;
 
-    db.query("update reservations set reservation_status = '예약완료'  where id = ?", [id], (error, results, fields) => {
+    db.query("update reservations set reservation_status = '예약확정'  where id = ?", [id], (error, results, fields) => {
       if (error) {
         console.error('데이터 수정 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });
@@ -89,7 +89,7 @@ router.get('/admin/reservation_manage/search', (req, res) => {
   router.post('/admin/reservation_manage/cancel_reserv', (req, res) => {
     const id = req.body.id;
 
-    db.query("update reservations set reservation_status = '예약취소'  where id = ?", [id], (error, results, fields) => {
+    db.query("update reservations set reservation_status = '취소완료'  where id = ?", [id], (error, results, fields) => {
       if (error) {
         console.error('데이터 수정 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });

@@ -15,17 +15,17 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // GET 요청: 로그인 페이지 표시
-router.get('/admin/login', (req, res) => {
+router.get('/admin', (req, res) => {
     res.render('login');
 });
 
 // POST 요청: 로그인 데이터 처리
 router.post('/admin/login', (req, res) => {
-    const ID = req.body.ID;
+    const ID = req.body.username;
     const password = req.body.password;
 
     db.query(
-        "SELECT * FROM admin WHERE ID = ? AND passwd = ?" ,
+        "SELECT * FROM admin WHERE id = ? AND passwd = ?" ,
         [ID, password],
         (err, results) => {
             if (err) {
@@ -59,7 +59,7 @@ router.get('/admin/dashboard', (req, res) => {
         res.render('dashborad');
     } else {
         // 로그인되지 않은 경우 로그인 페이지로 리디렉션
-        res.redirect('/admin/login');
+        res.redirect('/admin');
     }
 });
 

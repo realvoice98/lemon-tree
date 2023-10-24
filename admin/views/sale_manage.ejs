@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>매출관리</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="manage_main">
@@ -24,9 +23,9 @@
               </div>
               <div class="menu_box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 0C8.7 0 6 3.36 6 7.5C6 11.64 8.7 15 12 15C15.3 15 18 11.64 18 7.5C18 3.36 15.3 0 12 0ZM5.73 15C2.55 15.15 0 17.76 0 21V24H24V21C24 17.76 21.48 15.15 18.27 15C16.65 16.83 14.43 18 12 18C9.57 18 7.35 16.83 5.73 15Z" fill="#222222"/>
+                  <path d="M12 0C8.7 0 6 3.36 6 7.5C6 11.64 8.7 15 12 15C15.3 15 18 11.64 18 7.5C18 3.36 15.3 0 12 0ZM5.73 15C2.55 15.15 0 17.76 0 21V24H24V21C24 17.76 21.48 15.15 18.27 15C16.65 16.83 14.43 18 12 18C9.57 18 7.35 16.83 5.73 15Z" fill="#9A9A9A"/>
                 </svg>
-                <a href="/admin/client_list" class="menu_text focus">회원목록</a>
+                <a href="/admin/client_list" class="menu_text">회원목록</a>
               </div>
               <div class="menu_box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -44,20 +43,17 @@
                 </svg>
                   <a href="/admin/prog_manage" class="menu_text">프로그램 관리</a>
               </div>
+              <div class="menu_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M1.48022 0.680176C1.06022 0.680176 0.730225 1.12018 0.730225 1.68018V4.68018H24.7302V1.68018C24.7302 1.12018 24.4002 0.680176 23.9802 0.680176H1.48022ZM0.730225 8.68018V23.6802C0.730225 24.2402 1.06022 24.6802 1.48022 24.6802H23.9802C24.4002 24.6802 24.7302 24.2402 24.7302 23.6802V8.68018H0.730225ZM3.73022 16.6802H6.73022V20.6802H3.73022V16.6802ZM9.73022 16.6802H12.7302V20.6802H9.73022V16.6802Z" fill="#222222"/>
+                </svg>
+                  <a href="/admin/sale_manage" class="menu_text focus">매출 관리</a>
+              </div>
             </div>
           </div>
         </div>
         <div class="header">
-          <span class="header_text">Lemon Tree</span>
-          <div class="search-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <form action="/admin/client_list/client_search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;">
-              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="tablet_searchOnEnter(event)">
-              <input type="submit" value="검색" class="searchBtn">
-            </form>
-        </div>        
+          <span class="header_text">Lemon Tree</span>       
         </div>
         <div class="menu_bar">
           <div class="main_page"><a href="/admin/main" class="menu_text">메인</a></div>
@@ -74,8 +70,13 @@
           <div class="sale_table">
             <div class="sale_search">
               <span class="sale_search_text">기간조회</span>
-              <input type="date" class="startDate" id="startDateInput" required>~
-              <input type="date" class="endDate" id="endDateInput" required>
+              <form action="/admin/sale_manage/search" method="get" id="searchForm">
+                <input type="date" name="startDate" id="startDateInput" required> ~
+                <input type="date" name="endDate" id="endDateInput" required>
+              </form>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" id="searchIcon">
+                <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
             <table class="table a">
               <thead class="table_content a" style="background: #E9EAEC;">   
@@ -109,7 +110,7 @@
                   <td class="row_text name_client"><%= sale.id %></td>
                   <td class="row_text number_client"><%= formatDateString(sale.sale_date) %></td>
                   <td class="row_text dob"><%= sale.prog_name %></td>
-                  <td class="row_text sex_client"><%= sale.price %></td>
+                  <td class="row_text sex_client"><%= sale.price %>원</td>
                 </tr>
               <% }); %>
               
@@ -141,6 +142,6 @@
           </div>
         </div>
     </div>
-    <script src=""></script>
+    <script src="/sale_manage_script.js"></script>
 </body>
 </html>
