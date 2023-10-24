@@ -29,7 +29,7 @@ router.get('/admin/main', (req, res) => {
   let todayReservations, tomorrowReservations;
 
   // 오늘 예약 정보 조회
-  db.query("SELECT * FROM reservations WHERE reservation_date = ? and reservation_status != '예약취소'" , [formattedToday],(error, results, fields) => {
+  db.query("SELECT * FROM reservations WHERE reservation_date = ? and reservation_status != '취소완료'" , [formattedToday],(error, results, fields) => {
     if (error) {
       console.error('오늘 예약 조회 오류: ' + error);
       res.status(500).send('서버 오류');
@@ -42,7 +42,7 @@ router.get('/admin/main', (req, res) => {
     }));
 
     // 내일 예약 정보 조회
-    db.query("SELECT * FROM reservations WHERE reservation_date = ? and reservation_status != '예약취소'", [formattedTomorrow], (error, results, fields) => {
+    db.query("SELECT * FROM reservations WHERE reservation_date = ? and reservation_status != '취소완료'", [formattedTomorrow], (error, results, fields) => {
       if (error) {
         console.error('내일 예약 조회 오류: ' + error);
         res.status(500).send('서버 오류');

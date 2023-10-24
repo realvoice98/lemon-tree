@@ -40,7 +40,7 @@ router.get('/admin/client_list', (req, res) => {
     });
 });
 
-router.get('/admin/client_list/client_search', (req, res) => {
+router.get('/admin/client_list/search', (req, res) => {
   const currentPage = req.query.page || 1; // 현재 페이지 번호
   const startIndex = (currentPage - 1) * itemsPerPage; // 데이터베이스에서 가져올 항목의 시작 인덱스
 
