@@ -489,6 +489,9 @@ tbody{
         line-height: normal;
         letter-spacing: -0.165px;
       }
+      .confirm_btn{
+        height: 50px;
+      }
       .confirm_btn_text{
         color: #FFF;
         font-size: 20px;
@@ -1629,7 +1632,7 @@ tbody{
       display: flex;
       padding: 12px 16px;
       align-items: center;
-      gap: 10px;
+      gap: 10 px;
       align-self: stretch;
       background: #E9EAEC;
     }

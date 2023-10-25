@@ -26,7 +26,8 @@ router.post('/login', (req, res) => {
         res.json({ success: true, userInfo: results[0]});
       } else {
         // 인증 실패
-        res.status(401).json({ success: false, message: '인증 실패' });
+        res.status(401).json({ success: false, message: '아이디 또는 비밀번호가 일치하지 않습니다.' });
+        console.log("인증 실패");
       }
     }
   );

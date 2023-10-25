@@ -28,17 +28,14 @@ function Login() {
   };
 
   const confirmButtonValid = () =>{
-    return (
-      phoneNum !== "" &&
-      password !== ""
-    );
+    return phoneNum !== "" && password !== "";
   }
 
   const loginSubmit = async() => {
     const SERVER_URL = 'http://localhost:8001/login'
     try {
       const response = await axios.post(SERVER_URL, { phoneNum, password });
-  
+
       if (response.data.success) {
         // 로그인 성공
         const userInfo = response.data.userInfo;
@@ -74,7 +71,7 @@ function Login() {
             <input
               className={'login-input'}
               id="phoneInput"
-              pattern=".{8}"
+              pattern=".{8,}"
               title="8자리 이상 입력하세요"
               type="password"
               value={password}

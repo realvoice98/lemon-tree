@@ -83,6 +83,27 @@ rows.forEach(row => {
     // 클릭된 로우의 데이터를 저장
     clickedRowData = rowData;
 
+    const confirm_btn = document.querySelector('.confirm_btn');
+    const modify_btn = document.querySelector('.btn.modify');
+    const pay_btn = document.querySelector('.btn.pay');
+    const cancel_btn = document.querySelector('.btn.cancel');
+    if (status == '결제완료'){
+      confirm_btn.style.display = 'none';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'none';
+      cancel_btn.style.display = 'none';
+    }else if(status == '취소완료'){
+      confirm_btn.style.display = 'none';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'none';
+      cancel_btn.style.display = 'none';
+    }else{
+      confirm_btn.style.display = 'flex';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'flex';
+      cancel_btn.style.display = 'flex';
+    }
+
     // 백그라운드 활성화
     modalBack.style.display = 'block';
   });
@@ -311,6 +332,11 @@ function paymentBtn(){
     
 
 }
+document.getElementById('confirm_btn').addEventListener('click', confirmBtn);
+document.getElementById('cancel_btn').addEventListener('click', cancelBtn);
+document.getElementById('modify_btn').addEventListener('click', modifyBtn);
+document.getElementById('pay_btn').addEventListener('click', paymentBtn);
+
 
 // SVG 아이콘을 클릭할 때 form을 제출하는 함수
 document.getElementById('searchIcon').addEventListener('click', function() {

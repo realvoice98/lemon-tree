@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../component/header';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -10,51 +10,50 @@ import { useUser } from '../../userContext';
 function Main() {
 
     const navigate = useNavigate();
-    const [programs,setPrograms] = useState([]);
-    const [startDate,setStartDate] = useState("");
-    const [endDate,setEndDate] = useState("");
-    const { user }  = useUser();
+    const [programs, setPrograms] = useState([]);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const { user } = useUser();
 
-    useEffect (()=>{
+    useEffect(() => {
         getPrograms();
         getOperaingDate();
-    },[])
+    }, [])
 
     // 2023-10-23 -> 23.10.23 바꿔주는 함수
     const formatDate = (inputDate) => {
         const parts = inputDate.split('-');
         if (parts.length === 3) {
-            const year = parts[0].slice(-2); 
+            const year = parts[0].slice(-2);
             const month = parts[1];
             const day = parts[2];
             return `${year}.${month}.${day}`;
         }
         return inputDate;
-}
+    }
 
-    const getOperaingDate = async() => {
+    const getOperaingDate = async () => {
         const SERVER_URL = 'http://localhost:8001/operatingdate'
         await axios.get(SERVER_URL)
-        .then(res => {
-            setEndDate(formatDate(res.data[0].end_date))
-            setStartDate(formatDate(res.data[0].start_date))
-          })
-          .catch(error => console.log(error));
-        
-      }
+            .then(res => {
+                setEndDate(formatDate(res.data[0].end_date))
+                setStartDate(formatDate(res.data[0].start_date))
+            })
+            .catch(error => console.log(error));
+    }
 
-    const getPrograms = async() => {
+    const getPrograms = async () => {
         const SERVER_URL = 'http://localhost:8001/programs'
         await axios.get(SERVER_URL)
-        .then(res => {
-            setPrograms(res.data)
-          })
-          .catch(error => console.log(error));
-        
-      }
+            .then(res => {
+                setPrograms(res.data)
+            })
+            .catch(error => console.log(error));
+    }
+
     const moveReservation = () => {
         navigate('/reservation');
-      };
+    };
 
     return (
         <>
@@ -70,13 +69,13 @@ function Main() {
                 <div className='program-container'>
                     {programs.map((program, index) => (
                         program.prog_name !== programs[index - 1]?.prog_name && (
-                        <div className='program-content' key={index}>
-                            <div className='program-info-container'>
+                            <div className='program-content' key={index}>
+                                <div className='program-info-container'>
                                     <div className='program-name'>{program.prog_name}</div>
-                                <div className='program-time'>({program.prog_time}min)</div>
-                            </div>
-                            <div className='solid' />
-                            <div>
+                                    <div className='program-time'>({program.prog_time}min)</div>
+                                </div>
+                                <div className='solid' />
+                                <div>
                                     <div className='program-price-container' key={index}>
                                         <div className='program-number'>{program.prog_count}권</div>
 
@@ -95,30 +94,30 @@ function Main() {
                                             </div>
                                         </div>
                                     </div>
-                            </div>
-                            {programs[index + 1] &&
-                            <div>
-                                    <div className='program-price-container' key={index}>
-                                    <div className='program-number'>{programs[index + 1]?.prog_count}권</div>
+                                </div>
+                                {programs[index + 1] &&
+                                    <div>
+                                        <div className='program-price-container' key={index}>
+                                            <div className='program-number'>{programs[index + 1]?.prog_count}권</div>
 
-                                        <div className='program-price-content'>
-                                            <div className='program-price-content col-6'>
-                                                <div className='program-price-ko'>정상가</div>
-                                                <div className='program-price-num'>
-                                                    {programs[index + 1]?.price}원
+                                            <div className='program-price-content'>
+                                                <div className='program-price-content col-6'>
+                                                    <div className='program-price-ko'>정상가</div>
+                                                    <div className='program-price-num'>
+                                                        {programs[index + 1]?.price}원
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className='program-price-content col-6'>
-                                                <div className='program-price-ko'>할인가</div>
-                                                <div className='program-price-num'>
-                                                    {programs[index + 1]?.discount}원
+                                                <div className='program-price-content col-6'>
+                                                    <div className='program-price-ko'>할인가</div>
+                                                    <div className='program-price-num'>
+                                                        {programs[index + 1]?.discount}원
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                }
                             </div>
-                            }
-                        </div>
                         )
                     ))}
                 </div>

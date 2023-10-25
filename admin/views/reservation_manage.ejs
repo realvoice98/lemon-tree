@@ -135,7 +135,7 @@
           <div class="modal_header">
             <span class="modal_header_title">예약 상세정보</span>
             <div class="confirm_btn" data-action="">
-              <span class="confirm_btn_text" onclick="confirmBtn()">확정</span>
+              <span class="confirm_btn_text" id="confirm_btn">확정</span>
             </div>
           </div>
           <div class="modal_main">
@@ -193,9 +193,9 @@
             </div>
           </div>
           <div class="modal_footer">
-            <span class="btn modify" onclick="modifyBtn()" style="display: none;">수정</span>
-            <span class="btn pay" onclick="paymentBtn()">결제</span>
-            <span class="btn cancel" onclick="cancelBtn()">예약취소</span>
+            <span class="btn modify" id="modify_btn" style="display: none;">수정</span>
+            <span class="btn pay" id="pay_btn">결제</span>
+            <span class="btn cancel" id="cancel_btn">예약취소</span>
           </div>
         </div>
       </div>
