@@ -15,7 +15,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // GET 요청: 로그인 페이지 표시
-router.get('/admin', (req, res) => {
+router.get('/admin/login', (req, res) => {
     res.render('login');
 });
 

@@ -20,12 +20,17 @@ function MyTree(props) {
     const [cancleModal, setCancleModal] = useState(false);
     const [reservModal, setReservModal] = useState(false);
 
-    const getCancleModal = () => {
+    const [cancleData, setCancleData] = useState([])
+    const [moreData, setMoreData] = useState([])
+
+    const getCancleModal = (myReservation) => {
         setCancleModal(true)
+        setCancleData(myReservation)
     }
 
-    const getReservModal = () => {
+    const getReservModal = (myTree) => {
         setReservModal(true)
+        setMoreData(myTree)
     }
 
     // 잔여횟수
@@ -87,12 +92,12 @@ function MyTree(props) {
                                 <>
                                     <div key={index} className='myTree-inner-container'>
                                         <div className='myTree-program'>
-                                            <div className='myTree-program-name'>{myTree.prog_name} 관리</div>
+                                            <div className='myTree-program-name'>{myTree.prog_name}</div>
                                             <div className='myTree-program-time'>({myTree.prog_time}min)</div>
                                         </div>
                                         <div className='myTree-right-content'>
                                             <div className='myTree-count'>{myTree.remain_count}회 / {myTree.total_count}회</div>
-                                            <button className='myTree-btn-reserv' onClick={getReservModal}>예약하기</button>
+                                            <button className='myTree-btn-reserv' onClick={() => getReservModal(myTree)}>예약하기</button>
                                         </div>
                                     </div>
                                     {(array.length > 1 && index < array.length - 1) && <div className='dash-g' />}
@@ -116,13 +121,13 @@ function MyTree(props) {
                                             </div>
                                             <div className='myTree-right-content'>
                                                 <div className='myTree-status myTree-status-list'>{myReservation.reservation_status}</div>
-                                                <button className='myTree-btn-cancle' onClick={getCancleModal}>예약취소</button>
+                                                <button className='myTree-btn-cancle' onClick={() => getCancleModal(myReservation)}>예약취소</button>
                                             </div>
                                         </div>
                                         <div className='dash-g' />
                                         <div className='myTree-inner-container'>
                                             <div className='myTree-program'>
-                                                <div className='myTree-program-name'>{myReservation.prog_name} 관리</div>
+                                                <div className='myTree-program-name'>{myReservation.prog_name}</div>
                                                 <div className='myTree-program-time'>({myReservation.prog_time}min)</div>
                                             </div>
                                             <div className='myTree-count'>{myReservation.remain_count}회 / {myReservation.total_count}회</div>
@@ -145,15 +150,15 @@ function MyTree(props) {
                                                 <div className='myTree-program-date'>{formattedDate}</div>
                                                 <div className='myTree-program-date-time'>{reservation_time}</div>
                                             </div>
-                                            <div className={`myTree-status${getReservationStatus(reservationList.reservation_status)}`}>{reservationList.reservation_status}</div>
+                                            <div className={`myTree-status${getReservationStatus(reservationList.reservation_status)} myTree-status-list`}>{reservationList.reservation_status}</div>
                                         </div>
                                         <div className='dash-g' />
                                         <div className='myTree-inner-container'>
                                             <div className='myTree-program'>
-                                                <div className='myTree-program-name'>{reservationList.prog_name} 관리</div>
+                                                <div className='myTree-program-name'>{reservationList.prog_name}</div>
                                                 <div className='myTree-program-time'>({reservationList.prog_time}min)</div>
                                             </div>
-                                            <div className='myTree-count'>{reservationList.remain_count}회 / {myTree.total_count}회</div>
+                                            <div className='myTree-count'>{reservationList.remain_count}회 / {reservationList.total_count}회</div>
                                         </div>
                                     </div>
                             )
@@ -161,8 +166,8 @@ function MyTree(props) {
                     </div>
                 </div>
             </div>
-            {cancleModal === true && <MyTreeCancleModal cancleModal={cancleModal} setCancleModal={setCancleModal} />}
-            {reservModal && <MyTreeReservModal reservModal={reservModal} setReservModal={setReservModal} />}
+            {cancleModal === true && <MyTreeCancleModal setCancleModal={setCancleModal} cancleData={cancleData} />}
+            {reservModal === true && <MyTreeReservModal setReservModal={setReservModal} moreData={moreData} />}
         </>
     );
 }
