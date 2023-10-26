@@ -55,8 +55,9 @@
         <div class="header">
           <span class="header_text">Lemon Tree</span>
           <div class="search-box" >
-            <form action="/admin/reservation_manage/search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;" id="searchForm2">
-              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnterTablet(event)">                    
+            <form action="/admin/reservation_manage/search?reserv_status=<%= reserv_status %>" method="get" style="display: flex;justify-content: space-between; min-width: 50px;" id="searchForm2">
+              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnterTablet(event)">
+              <input type="hidden" name="reserv_status" value="<%= reserv_status %>" class="reserv_status">                    
             </form>
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20" fill="none" id="searchIcon2">
               <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -70,11 +71,17 @@
           <div class="prog_manage"><a href="/admin/prog_manage" class="menu_text">프로그램관리</a></div>
         </div>
         <div class="main">
+          <div class="sale_search">
+            <a href="/admin/reservation_manage?reserv_status=예약대기" class="top_btn <%= reserv_status === '예약대기' ? 'active' : '' %>">예약대기</a>
+            <a href="/admin/reservation_manage?reserv_status=예약확정" class="top_btn <%= reserv_status === '예약확정' ? 'active' : '' %>">예약확정</a>
+            <a href="/admin/reservation_manage?reserv_status=취소완료" class="top_btn <%= reserv_status === '취소완료' ? 'active' : '' %>">예약취소</a>
+          </div>
           <div class="table_title">
             <span class="table_title_text">예약관리</span>
             <div class="search-box" >
               <form action="/admin/reservation_manage/search" method="get" style="display: flex;justify-content: space-between; min-width: 380px;" id="searchForm">
-                <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">                    
+                <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">
+                <input type="hidden" name="reserv_status" value="<%= reserv_status %>" class="reserv_status">                    
               </form>
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20" fill="none" id="searchIcon">
                 <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -119,7 +126,7 @@
                 <ul class="pagination-list">
                     <% for (let page = 1; page <= totalPages; page++) { %>
                         <li class="pagination-item">
-                            <a href="/admin/reservation_manage/search?page=<%= page %>&searchData=<%= encodeURIComponent(searchData) %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
+                            <a href="/admin/reservation_manage/search?page=<%= page %>&searchData=<%= encodeURIComponent(searchData) %>&reserv_status=<%= reserv_status %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
                         </li>
                     <% } %>
                 </ul>                
