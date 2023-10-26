@@ -39,7 +39,7 @@ tbody{
   padding: 12px 8px;
   align-items: center;
   align-self: stretch;
-  background: #FFF;
+  background: #E9EAEC;
 
   border-right: 2px solid #E9EAEC;
   border-left: 2px solid #E9EAEC;
@@ -98,8 +98,7 @@ tbody{
 @media all and (min-width:1024px) { 
     .manage_main{
         display: flex;
-        height: 100%;
-        min-height: 1024px;        
+        height: 100%;     
         align-items: center;
       }
       .header{
@@ -180,6 +179,31 @@ tbody{
         padding-bottom: 10px;
         padding-top: 10px;
       }
+      .main_col{
+        flex-direction: column;
+        display: flex;
+        width: 100%;
+      }
+      .reserv_main{
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1 0 0;
+        align-self: stretch;
+        background: #F8F8FA;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+      }
+      .table_main{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+      }
       .manage_main .main .table{
         display: flex;
         width: 100%;
@@ -187,17 +211,16 @@ tbody{
         align-items: flex-start;
         flex: 1 0 0;
         align-self: stretch;
-        min-width: 804px;
         padding-bottom: 10px;
       }
       .table_title{
         display: flex;
-        width: 100%;
         height: 50px;
         align-items: center;
         align-self: stretch;
         background: #fff;
-        
+        padding: 5px 10px;
+        border: solid 2px #E9EAEC;
         border-bottom: none;
       }
       .table_title .table_title_text{
@@ -208,8 +231,6 @@ tbody{
         font-weight: 700;
         line-height: 28px; /* 133.333% */
         letter-spacing: 2.1px;
-        text-transform: uppercase;
-        padding-left: 20px;
       }
       .search-box {
         display: flex;
@@ -232,47 +253,40 @@ tbody{
         height: 40px;
       }
       .row_top .row_text{
-        font-size: 16px;
+        font-size: 13px;
       }
       .row_top .row_text.name,  
       .row .row_text.name{
         flex: 1 0 0;
-        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.number, 
       .row .row_text.number{
         flex: 1 0 0;
-        min-width: 90px;
         text-align: center;
       }
       .row_top .row_text.sex, 
       .row .row_text.sex{
         flex: 1 0 0;
-        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.std, 
       .row .row_text.std{
         flex: 1 0 0;
-        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.prog, 
       .row .row_text.prog{
-        min-width: 105px;
         flex: 1 0 0;
         text-align: center;
       }
       .row_top .row_text.count, 
       .row .row_text.count{
         flex: 1 0 0;
-        max-width: 100px;
         text-align: center;
       }
       .row_top .row_text.note,
       .row .row_text.note{
-        min-width: 100px;
         flex: 1 0 0;
         text-align: center;
       }
@@ -280,12 +294,10 @@ tbody{
       .row .row_text.date{
         flex: 1 0 0;
         text-align: center;
-        min-width: 100px;
       }
       .row_top .row_text.time, 
       .row .row_text.time{
         flex: 1 0 0;
-        min-width: 100px;
         text-align: center;
       }
       .name_client,.number_client,
@@ -305,19 +317,16 @@ tbody{
       }
       .row_top.prog .count,
       .row.prog .count{
-        min-width: 75px;
         flex: 1 0 0;
       }
       .row_top.prog .row_text.prog, 
       .row.prog .row_text.prog{
-        min-width: 150px;
         flex: 1 0 0;
       }
       .row_top.prog .row_text.price, 
       .row.prog .row_text.price,
       .row_top.prog .row_text.discount, 
       .row.prog .row_text.discount{
-        min-width: 75px;
         flex: 1 0 0;
         text-align: center;
       }
@@ -354,6 +363,9 @@ tbody{
         flex: 1 0 0;
         align-self: stretch;
         border: 2px solid #E9EAEC;
+      }
+      .row.b{
+        border-top: none;
       }
       .row .row_text{
         color: #000;
@@ -561,7 +573,7 @@ tbody{
         display: flex;
         align-items: center;
         align-self: stretch;
-        height: 30px; 
+        height: 40px; 
       }
       .box_name{
         display: flex;
@@ -581,7 +593,7 @@ tbody{
         display: flex;
         font-size: 10px;
         background: #B5B5B5;
-        height: 30px;
+        height: 40px;
         align-items: center;
         width: 60px;
         justify-content: center;
@@ -647,6 +659,7 @@ tbody{
         gap: 16px;
         align-self: stretch;
         background: #E9EAEC;
+        border-radius: 10px 10px 0px 0px;
       }
       .sale_search_text{
         color: #000;
@@ -658,6 +671,20 @@ tbody{
         font-weight: 400;
         line-height: 140%; /* 22.4px */
         text-transform: capitalize;
+      }
+      .top_btn{
+        display: flex;
+        width: 80px;
+        height: 25px;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        border-radius: 5px;
+        background: #fff;
+      }
+      .top_btn.active{
+        color: #fff;
+        background: #222;
       }
   }
   /*-----------------------------PC end------------------------------*/
