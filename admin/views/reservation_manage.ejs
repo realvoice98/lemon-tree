@@ -36,7 +36,7 @@
                     <path d="M16 17H8" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M10 9H9H8" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <a href="/admin/reservation_manage" class="menu_text focus">예약관리</a>
+                <a href="/admin/reservation_manage?reserv_status=예약대기" class="menu_text focus">예약관리</a>
               </div>
               <div class="menu_box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -57,7 +57,8 @@
           <span class="header_text">Lemon Tree</span>
           <div class="search-box" >
             <form action="/admin/reservation_manage/search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;" id="searchForm2">
-              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnterTablet(event)">                    
+              <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnterTablet(event)">
+              <input type="hidden" name="reserv_status" value="<%= reserv_status %>" class="reserv_status">                    
             </form>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" id="searchIcon2">
               <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -67,15 +68,22 @@
         <div class="menu_bar">
           <div class="main_page"><a href="/admin/main" class="menu_text">메인</a></div>
           <div class="client_list"><a href="/admin/client_list" class="menu_text">회원목록</a></div>
-          <div class="reserv_manage"><a href="/admin/reservation_manage" class="menu_text focus">예약관리</a></div>
+          <div class="reserv_manage"><a href="/admin/reservation_manage?reserv_status=예약대기" class="menu_text focus">예약관리</a></div>
           <div class="prog_manage"><a href="/admin/prog_manage" class="menu_text">프로그램관리</a></div>
+          <div class="sale_manage"><a href="/admin/sale_manage" class="menu_text focus">매출관리</a></div>
         </div>
         <div class="main">
+          <div class="sale_search">
+            <a href="/admin/reservation_manage?reserv_status=예약대기" class="top_btn <%= reserv_status === '예약대기' ? 'active' : '' %>">예약대기</a>
+            <a href="/admin/reservation_manage?reserv_status=예약확정" class="top_btn <%= reserv_status === '예약확정' ? 'active' : '' %>">예약확정</a>
+            <a href="/admin/reservation_manage?reserv_status=취소완료" class="top_btn <%= reserv_status === '취소완료' ? 'active' : '' %>">예약취소</a>
+          </div>
           <div class="table_title">
             <span class="table_title_text">예약관리</span>
             <div class="search-box">
                 <form action="/admin/reservation_manage/search" method="get" style="display: flex;justify-content: space-between; min-width: 380px;" id="searchForm">
-                  <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">                    
+                  <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnter(event)">
+                  <input type="hidden" name="reserv_status" value="<%= reserv_status %>" class="reserv_status">                    
                 </form>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" id="searchIcon">
                   <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -104,12 +112,13 @@
                     <td  class="row_text sex"><%=reservation.gender %></td>
                     <td  class="row_text std"><%=reservation.std %></td>
                     <td  class="row_text prog"><%=reservation.prog_name %></td>
+                    <td  class="row_text prog_time" style="display: none;"><%=reservation.prog_time %></td>
                     <td  class="row_text count"><%=reservation.remain_count %></td>
+                    <td  class="row_text total_count" style="display: none;"><%=reservation.total_count %></td>
                     <td  class="row_text note"><%=reservation.note %></td>
                     <td  class="row_text date"><%=reservation.reservation_date %>/<%=reservation.reservation_time %></td>
                     <td  class="row_text time"><%=reservation.reservation_status %></td>
                     <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
-                    <td class="row_text discount" style="display: none;"><%= reservation.discount %></td>
                     <td  class="row_text id" style="display: none;"><%=reservation.id %></td>
                     <td  class="row_text client_id" style="display: none;"><%=reservation.client_id %></td>
                 </tr>
@@ -120,7 +129,7 @@
               <ul class="pagination-list">
                   <% for (let page = 1; page <= totalPages; page++) { %>
                       <li class="pagination-item">
-                          <a href="/admin/reservation_manage?page=<%= page %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
+                          <a href="/admin/reservation_manage?page=<%= page %>&reserv_status=<%= reserv_status %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
                       </li>
                   <% } %>
               </ul>
@@ -135,12 +144,13 @@
           <div class="modal_header">
             <span class="modal_header_title">예약 상세정보</span>
             <div class="confirm_btn" data-action="">
-              <span class="confirm_btn_text" onclick="confirmBtn()">확정</span>
+              <span class="confirm_btn_text" id="confirm_btn">확정</span>
             </div>
           </div>
           <div class="modal_main">
             <input type="hidden" name="id" class="inputbox id">
             <input type="hidden" name="client_id" class="inputbox client_id">
+            <input type="hidden" name="reservation_status" class="inputbox reservation_status">
             <div class="client info">
               <span class="client info_title">예약자 정보</span>
               <div class="info_box name">
@@ -170,32 +180,30 @@
               <div class="info_box prog">
                 <span class="box_name">프로그램</span>
                 <input type="text" name="prog_name" class="inputbox prog" readonly>
+                <input type="hidden" name="prog_time" class="inputbox prog_time">
               </div>
               <span class="fare info_title">요금 정보</span>
               <div class="info_box fare">
                 <div class="fare_content">
                   <span class="fare_box">횟수</span>
                   <input type="text" name="remain_count" class="inputbox count" readonly>
+                  <input type="hidden" name="total_count" class="inputbox total_count" readonly>
                 </div>
                 <div class="fare_content">
                   <span class="fare_box">재학생</span>
                   <input type="text" name="std" class="inputbox std">
                 </div>
                 <div class="fare_content">
-                  <span class="fare_box">정상가</span>
-                  <input type="text" name="price" class="inputbox price" readonly>
-                </div>
-                <div class="fare_content">
-                  <span class="fare_box">할인가</span>
-                  <input type="text" name="discount" class="inputbox discount">
+                  <span class="fare_box">금액</span>
+                  <input type="text" name="price" class="inputbox price">
                 </div>
               </div>
             </div>
           </div>
           <div class="modal_footer">
-            <span class="btn modify" onclick="modifyBtn()" style="display: none;">수정</span>
-            <span class="btn pay" onclick="paymentBtn()">결제</span>
-            <span class="btn cancel" onclick="cancelBtn()">예약취소</span>
+            <span class="btn modify" id="modify_btn" style="display: none;">수정</span>
+            <span class="btn pay" id="pay_btn">결제</span>
+            <span class="btn cancel" id="cancel_btn">예약취소</span>
           </div>
         </div>
       </div>

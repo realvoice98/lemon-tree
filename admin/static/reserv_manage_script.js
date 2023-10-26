@@ -19,12 +19,13 @@ rows.forEach(row => {
     const sex = row.querySelector('.sex').textContent;
     const std = row.querySelector('.std').textContent;
     const prog = row.querySelector('.prog').textContent;
+    const prog_time = row.querySelector('.prog_time').textContent;
     const count = row.querySelector('.count').textContent;
+    const total_count = row.querySelector('.total_count').textContent;
     const note = row.querySelector('.note').textContent;
     const datetime = row.querySelector('.date').textContent;
     const status = row.querySelector('.time').textContent;
     const price = row.querySelector('.price').textContent;
-    const discount = row.querySelector('.discount').textContent;
     const id = row.querySelector('.id').textContent;
     const client_id = row.querySelector('.client_id').textContent;
 
@@ -45,7 +46,6 @@ rows.forEach(row => {
       date: date,
       reservation_status: status,
       price: price,
-      discount: discount,
       prog_time : time,
       id : id
     };
@@ -58,12 +58,14 @@ rows.forEach(row => {
     const dateInput = modal.querySelector('.inputbox.date');
     const timeInput = modal.querySelector('.inputbox.time');
     const progInput = modal.querySelector('.inputbox.prog');
+    const prog_timeInput = modal.querySelector('.inputbox.prog_time');
     const countInput = modal.querySelector('.inputbox.count');
+    const total_countInput = modal.querySelector('.inputbox.total_count');
     const stdInput = modal.querySelector('.inputbox.std');
     const priceInput = modal.querySelector('.inputbox.price');
-    const discountInput = modal.querySelector('.inputbox.discount');
     const idInput = modal.querySelector('.inputbox.id');
     const client_idInput = modal.querySelector('.inputbox.client_id');
+    const reservation_statusInput = modal.querySelector('.inputbox.reservation_status');
 
     // 추출한 데이터를 인풋 태그에 설정
     nameInput.value = name;
@@ -71,17 +73,44 @@ rows.forEach(row => {
     sexInput.value = sex;
     noteInput.value = note;
     countInput.value = count;
+    total_countInput.value = total_count;
     stdInput.value =std;
     progInput.value = prog;
+    prog_timeInput.value = prog_time;
     dateInput.value = date;
     priceInput.value = price;
-    discountInput.value = discount;
     timeInput.value = time;
     idInput.value = id;
     client_idInput.value = client_id;
-
+    reservation_statusInput.value = status;
     // 클릭된 로우의 데이터를 저장
     clickedRowData = rowData;
+
+    const confirm_btn = document.querySelector('.confirm_btn');
+    const modify_btn = document.querySelector('.btn.modify');
+    const pay_btn = document.querySelector('.btn.pay');
+    const cancel_btn = document.querySelector('.btn.cancel');
+    if (status == '결제완료'){
+      confirm_btn.style.display = 'none';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'none';
+      cancel_btn.style.display = 'none';
+    }else if(status == '취소완료'){
+      confirm_btn.style.display = 'none';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'none';
+      cancel_btn.style.display = 'none';
+    }else if(status == '예약대기'){
+      confirm_btn.style.display = 'flex';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'none';
+      cancel_btn.style.display = 'flex';
+    }else{
+      confirm_btn.style.display = 'none';
+      modify_btn.style.display = 'none';
+      pay_btn.style.display = 'flex';
+      cancel_btn.style.display = 'flex';
+    }
 
     // 백그라운드 활성화
     modalBack.style.display = 'block';
@@ -99,6 +128,19 @@ modalBack.addEventListener('click', function () {
 
 function confirmBtn(){
   const idInput = document.querySelector('input[name="id"]').value;
+  const client_idInput = document.querySelector('input[name="client_id"]').value;
+  const nameInput = document.querySelector('input[name="name"]').value;
+  const phoneInput = document.querySelector('input[name="phone"]').value;
+  const genderInput = document.querySelector('input[name="gender"]').value;
+  const noteInput = document.querySelector('textarea[name="note"]').value;
+  const reservation_dateInput = document.querySelector('input[name="reservation_date"]').value;
+  const reservation_timeInput = document.querySelector('input[name="reservation_time"]').value;
+  const prog_nameInput = document.querySelector('input[name="prog_name"]').value;
+  const prog_timeInput = document.querySelector('input[name="prog_time"]').value;
+  const remain_countInput = document.querySelector('input[name="remain_count"]').value;
+  const total_countInput = document.querySelector('input[name="total_count"]').value;
+  const stdInput = document.querySelector('input[name="std"]').value;
+  const priceInput = document.querySelector('input[name="price"]').value;
 
   const result = confirm('예약을 확정하시겠습니까?');
 
@@ -106,8 +148,21 @@ function confirmBtn(){
       // Ajax 요청을 보낼 URL 및 데이터
       const url = './reservation_manage/confirm_reserv'; // 서버의 API 엔드포인트
       const data = {
-          id: idInput
-      };
+        id: idInput,
+        client_id: client_idInput,
+        name: nameInput,
+        phone: phoneInput,
+        gender: genderInput,
+        note: noteInput,
+        reservation_date: reservation_dateInput,
+        reservation_time: reservation_timeInput,
+        prog_name: prog_nameInput,
+        prog_time: prog_timeInput,
+        remain_count: remain_countInput, 
+        total_count: total_countInput,
+        std: stdInput,
+        price: priceInput
+    };
 
       // Ajax 요청을 보내고 응답을 처리
       fetch(url, {
@@ -132,6 +187,20 @@ function confirmBtn(){
 
 function cancelBtn(){
   const idInput = document.querySelector('input[name="id"]').value;
+  const client_idInput = document.querySelector('input[name="client_id"]').value;
+  const nameInput = document.querySelector('input[name="name"]').value;
+  const phoneInput = document.querySelector('input[name="phone"]').value;
+  const genderInput = document.querySelector('input[name="gender"]').value;
+  const noteInput = document.querySelector('textarea[name="note"]').value;
+  const reservation_dateInput = document.querySelector('input[name="reservation_date"]').value;
+  const reservation_timeInput = document.querySelector('input[name="reservation_time"]').value;
+  const prog_nameInput = document.querySelector('input[name="prog_name"]').value;
+  const prog_timeInput = document.querySelector('input[name="prog_time"]').value;
+  const remain_countInput = document.querySelector('input[name="remain_count"]').value;
+  const total_countInput = document.querySelector('input[name="total_count"]').value;
+  const stdInput = document.querySelector('input[name="std"]').value;
+  const priceInput = document.querySelector('input[name="price"]').value;
+  const reservation_statusInput = document.querySelector('input[name="reservation_status"]').value;
 
   const result = confirm('예약을 취소하시겠습니까?');
 
@@ -139,7 +208,21 @@ function cancelBtn(){
       // Ajax 요청을 보낼 URL 및 데이터
       const url = './reservation_manage/cancel_reserv'; // 서버의 API 엔드포인트
       const data = {
-          id: idInput
+        id: idInput,
+        client_id: client_idInput,
+        name: nameInput,
+        phone: phoneInput,
+        gender: genderInput,
+        note: noteInput,
+        reservation_date: reservation_dateInput,
+        reservation_time: reservation_timeInput,
+        prog_name: prog_nameInput,
+        prog_time: prog_timeInput,
+        remain_count: remain_countInput, 
+        total_count: total_countInput,
+        std: stdInput,
+        price: priceInput,
+        reservation_status: reservation_statusInput
       };
 
       // Ajax 요청을 보내고 응답을 처리
@@ -174,8 +257,8 @@ function modifyBtn(){
   const reservation_timeInput = document.querySelector('input[name="reservation_time"]').value;
   const prog_nameInput = document.querySelector('input[name="prog_name"]').value;
   const remain_countInput = document.querySelector('input[name="remain_count"]').value;
+  const total_countInput = document.querySelector('input[name="total_count"]').value;
   const stdInput = document.querySelector('input[name="std"]').value;
-  const discountInput = document.querySelector('input[name="discount"]').value;
 
   const result = confirm('수정하시겠습니까?');
 
@@ -193,8 +276,7 @@ function modifyBtn(){
           reservation_time: reservation_timeInput,
           prog_name: prog_nameInput,
           remain_count: remain_countInput, 
-          std: stdInput,
-          discount: discountInput
+          std: stdInput
       };
 
       // Ajax 요청을 보내고 응답을 처리
@@ -238,79 +320,44 @@ function paymentBtn(){
 
   console.log(formattedDate); // 예를 들어, '2023-10-23'
 
+  if(result){
+    // Ajax 요청을 보낼 URL 및 데이터
+    const url = './reservation_manage/payment_reserv'; // 서버의 API 엔드포인트
+    const data = {
+        id: idInput,
+        client_id: client_idInput,
+        std: stdInput,
+        price: priceInput,
+        prog_name: prog_nameInput,
+        sale_date: formattedDate
+    };
 
-  if(stdInput != '재학생'){
-    const result = confirm(priceInput + '원을 결제하시겠습니까?');
-
-    if(result){
-      // Ajax 요청을 보낼 URL 및 데이터
-      const url = './reservation_manage/payment_reserv'; // 서버의 API 엔드포인트
-      const data = {
-          id: idInput,
-          client_id: client_idInput,
-          std: stdInput,
-          price: priceInput,
-          prog_name: prog_nameInput,
-          sale_date: formattedDate
-      };
-
-      // Ajax 요청을 보내고 응답을 처리
-      fetch(url, {
-          method: 'POST', // 또는 'GET' 등
-          body: JSON.stringify(data),
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log('서버 응답:', data);
-          location.reload();
-      })
-      .catch(error => {
-          console.error('Ajax 오류:', error);
-      });
-    }else{
-        alert('취소하였습니다.')
-    } 
+    // Ajax 요청을 보내고 응답을 처리
+    fetch(url, {
+        method: 'POST', // 또는 'GET' 등
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('서버 응답:', data);
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Ajax 오류:', error);
+    });
   }else{
-    const result = confirm(discountInput + '원을 결제하시겠습니까?');
-
-    if(result){
-      // Ajax 요청을 보낼 URL 및 데이터
-      const url = './reservation_manage/payment_reserv'; // 서버의 API 엔드포인트
-      const data = {
-          id: idInput,
-          client_id: client_idInput,
-          std: stdInput,
-          price: discountInput,
-          prog_name: prog_nameInput,
-          sale_date: formattedDate
-      };
-
-      // Ajax 요청을 보내고 응답을 처리
-      fetch(url, {
-          method: 'POST', // 또는 'GET' 등
-          body: JSON.stringify(data),
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log('서버 응답:', data);
-          location.reload();
-      })
-      .catch(error => {
-          console.error('Ajax 오류:', error);
-      });
-    }else{
-        alert('취소하였습니다.')
-    } 
-  }
+      alert('취소하였습니다.')
+  } 
     
-
 }
+document.getElementById('confirm_btn').addEventListener('click', confirmBtn);
+document.getElementById('cancel_btn').addEventListener('click', cancelBtn);
+document.getElementById('modify_btn').addEventListener('click', modifyBtn);
+document.getElementById('pay_btn').addEventListener('click', paymentBtn);
+
 
 // SVG 아이콘을 클릭할 때 form을 제출하는 함수
 document.getElementById('searchIcon').addEventListener('click', function() {
@@ -324,7 +371,8 @@ document.getElementById('searchIcon2').addEventListener('click', function() {
 function searchOnEnter(event){
   if (event.key === 'Enter') {
     const searchData = document.querySelector('.searchInput').value;
-    const url = `/admin/reservation_manage/search?searchData=${encodeURIComponent(searchData)}`;
+    const reserv_status = document.querySelector('.reserv_status').value;
+    const url = `/admin/reservation_manage/search?searchData=${encodeURIComponent(searchData)}&reserv_status=${encodeURIComponent(reserv_status)}`;
     window.location.href = url;
     return false; // 폼 제출을 중단
   }
@@ -332,7 +380,8 @@ function searchOnEnter(event){
 function searchOnEnterTablet(event){
   if (event.key === 'Enter') {
     const searchData = document.querySelector('.searchInput').value;
-    const url = `/admin/reservation_manage/search?searchData=${encodeURIComponent(searchData)}`;
+    const reserv_status = document.querySelector('.reserv_status').value;
+    const url = `/admin/reservation_manage/search?searchData=${encodeURIComponent(searchData)}&reserv_status=${encodeURIComponent(reserv_status)}`;
     window.location.href = url;
     return false; // 폼 제출을 중단
   }
