@@ -290,7 +290,7 @@
     border: 1px solid #FFEB54;
     border-radius: 15px;
     background: #FFEB54;
-    color: #000000;
+    color: #111;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -644,8 +644,8 @@
 
 .myTree-btn-reserv {
     border-radius: 20px;
-    border: 1px solid #2EC807;
-    background: #2EC807;
+    border: 1px solid #0d6efd;
+    background: #0d6efd;
     box-shadow: 0px 4px 4px 0px rgba(217, 217, 217, 0.25);
     color: #FFF;
     font-family: 'DM Sans';
@@ -675,6 +675,13 @@
 
 .myTree-status-cancle {
     color: #EE4C69;
+    font-family: 'DM Sans';
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.myTree-status-reserv {
+    color: #4646469c;
     font-family: 'DM Sans';
     font-size: 12px;
     font-weight: 700;
@@ -808,6 +815,9 @@
 .myTree-modal-link {
     text-decoration: none;
     color: #515151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-right {
@@ -835,6 +845,21 @@
 }
 .line2 {
     border-bottom: 1px solid #D9D9D9;
+}
+
+.myTree-empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 30px 0;
+}
+
+.myTree-empty-txt {
+    color: #1C1C1C;
+    font-family: 'DM Sans';
+    font-size: 14px;
+    font-weight: 700;
 }
 
 
@@ -978,8 +1003,8 @@
     border: 1px solid #FFFDAC;
     border-radius: 15px;
     background: #FFFDAC;
-    color: #000000;
-    font-size: 20px;
+    color: #111;
+    font-size: 18px;
     font-style: normal;
     font-weight: 700;
     width: 85vw;
@@ -994,7 +1019,7 @@
     border-radius: 15px;
     background: #E9EAEC;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 700;
     width: 85vw;

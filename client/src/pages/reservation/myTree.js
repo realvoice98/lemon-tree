@@ -33,11 +33,11 @@ function MyTree(props) {
         setMoreData(myTree)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getMyTree()
         getMyReservation()
         getReservationList()
-    },[cancleModal]) // 예약취소되면 
+    }, [cancleModal]) // 예약취소되면 
 
     // 잔여횟수
     const getMyTree = async () => {
@@ -82,7 +82,7 @@ function MyTree(props) {
     }
 
     function getReservationStatus(status) {
-        return status === '취소완료' ? '-cancle' : '';
+        return status === '취소완료' ? '-cancle' : status === '예약대기' ? '-reserv' : '';
     }
 
     return (
@@ -93,34 +93,44 @@ function MyTree(props) {
                 <div className='myTree-main-content'>
                     <div className='myTree-container'>
                         <div className='myTree-title'>잔여 횟수</div>
-                        
-                            {myTree.map((myTree, index, array) => (
+                        {myTree.length === 0 ? (
+                            <div className='myTree-empty-container'>
+                                <div className='myTree-empty-txt'>현재 예약된 프로그램이 없습니다.</div>
+                            </div>
+                        ) : (
+                            myTree.map((myTree, index, array) => (
                                 <>
-                                <div className='myTree-content'>
-                                    <div key={index} className='myTree-inner-container'>
-                                        <div className='myTree-program'>
-                                            <div className='myTree-program-name'>{myTree.prog_name}</div>
-                                            <div className='myTree-program-time'>({myTree.prog_time}min)</div>
+                                    <div className='myTree-content'>
+                                        <div key={index} className='myTree-inner-container'>
+                                            <div className='myTree-program'>
+                                                <div className='myTree-program-name'>{myTree.prog_name}</div>
+                                                <div className='myTree-program-time'>({myTree.prog_time}min)</div>
+                                            </div>
+                                            <div className='myTree-right-content'>
+                                                <div className='myTree-count'>{myTree.remain_count}회 / {myTree.total_count}회</div>
+                                                <button className='myTree-btn-reserv' onClick={() => getReservModal(myTree)}>예약하기</button>
+                                            </div>
                                         </div>
-                                        <div className='myTree-right-content'>
-                                            <div className='myTree-count'>{myTree.remain_count}회 / {myTree.total_count}회</div>
-                                            <button className='myTree-btn-reserv' onClick={() => getReservModal(myTree)}>예약하기</button>
-                                        </div>
-                                    </div>
-                                    {/* {(array.length > 1 && index < array.length - 1) && <div className='dash-g' />} */}
+                                        {/* {(array.length > 1 && index < array.length - 1) && <div className='dash-g' />} */}
                                     </div>
                                 </>
-                            ))}
-                        
+                            ))
+                        )}
+
                     </div>
                     <div className='dash-b' />
                     <div className='myTree-container'>
                         <div className='myTree-title'>예약 내역</div>
-                        {myReservation.map((myReservation, index2) => {
-                            const parts = myReservation.reservation_date.split('.');
-                            const formattedDate = `20${parts[0]}.${parts[1]}.${parts[2]}`;
-                            const reservation_time = myReservation.reservation_time.split(' ').join('');
-                            return (
+                        {myReservation.length === 0 ? (
+                            <div className='myTree-empty-container'>
+                                <div className='myTree-empty-txt'>현재 예약된 프로그램이 없습니다.</div>
+                            </div>
+                        ) : (
+                            myReservation.map((myReservation, index2) => {
+                                const parts = myReservation.reservation_date.split('.');
+                                const formattedDate = `20${parts[0]}.${parts[1]}.${parts[2]}`;
+                                const reservation_time = myReservation.reservation_time.split(' ').join('');
+                                return (
                                     <div key={index2} className='myTree-content'>
                                         <div className='myTree-inner-container'>
                                             <div className='myTree-program'>
@@ -128,7 +138,7 @@ function MyTree(props) {
                                                 <div className='myTree-program-date-time'>{reservation_time}</div>
                                             </div>
                                             <div className='myTree-right-content'>
-                                                <div className='myTree-status myTree-status-list'>{myReservation.reservation_status}</div>
+                                                <div className={`myTree-status${getReservationStatus(myReservation.reservation_status)} myTree-status-list`}>{myReservation.reservation_status}</div>
                                                 <button className='myTree-btn-cancle' onClick={() => getCancleModal(myReservation)}>예약취소</button>
                                             </div>
                                         </div>
@@ -141,17 +151,23 @@ function MyTree(props) {
                                             <div className='myTree-count'>{myReservation.remain_count}회 / {myReservation.total_count}회</div>
                                         </div>
                                     </div>
-                            );
-                        })}
+                                );
+                            })
+                        )}
                     </div>
                     <div className='dash-b' />
                     <div className='myTree-container'>
                         <div className='myTree-title'>예약 목록</div>
-                        {reservationList.map((reservationList, index3) => {
-                            const parts = reservationList.reservation_date.split('.');
-                            const formattedDate = `20${parts[0]}.${parts[1]}.${parts[2]}`;
-                            const reservation_time = reservationList.reservation_time.split(' ').join('');
-                            return (
+                        {reservationList.length === 0 ? (
+                            <div className='myTree-empty-container'>
+                                <div className='myTree-empty-txt'>현재 예약된 프로그램이 없습니다.</div>
+                            </div>
+                        ) : (
+                            reservationList.map((reservationList, index3) => {
+                                const parts = reservationList.reservation_date.split('.');
+                                const formattedDate = `20${parts[0]}.${parts[1]}.${parts[2]}`;
+                                const reservation_time = reservationList.reservation_time.split(' ').join('');
+                                return (
                                     <div key={index3} className='myTree-content'>
                                         <div className='myTree-inner-container'>
                                             <div className='myTree-program'>
@@ -169,8 +185,9 @@ function MyTree(props) {
                                             <div className='myTree-count'>{reservationList.remain_count}회 / {reservationList.total_count}회</div>
                                         </div>
                                     </div>
-                            )
-                        })}
+                                )
+                            })
+                        )}
                     </div>
                 </div>
             </div>

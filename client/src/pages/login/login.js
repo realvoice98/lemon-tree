@@ -52,6 +52,18 @@ function Login() {
     }
   }
 
+  const enterNext = (e) => {
+    if (e.key === 'Enter') {
+      document.getElementById('pwdInput').focus();
+    }
+  }
+
+  const enterLogin = e => {
+    if (e.key === 'Enter') {
+      loginSubmit()
+    }
+  }
+
   return (
     <div className='login-back-img'>
       <div className='login-container'>
@@ -65,17 +77,19 @@ function Login() {
               title="전화번호를 바르게 입력하세요"
               value={phoneNum}
               onChange={onPhoneNumHandler}
+              onKeyDown={enterNext}
               placeholder={'휴대폰 번호를 입력해주세요'} />
           </div>
           <div className='login-input-content'>
             <input
               className={'login-input'}
-              id="phoneInput"
+              id="pwdInput"
               pattern=".{8,}"
               title="8자리 이상 입력하세요"
               type="password"
               value={password}
               onChange={onPasswordHandler}
+              onKeyDown={enterLogin}
               placeholder={'비밀번호를 입력해주세요'} />
           </div>
           <button
