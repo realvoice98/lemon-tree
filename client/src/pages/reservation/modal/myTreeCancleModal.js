@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function MyTreeCancleModal({ setCancleModal, cancleData }) {
   
@@ -20,6 +21,8 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
       setConfirmModal('2')
     } else {
       getCancle()
+      getCancle1()
+      getCancle2()
       setCancleModal(false)
     }
   }
@@ -29,12 +32,50 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
     try {
         await axios.post(SERVER_URL, {
           id: cancleData.id
-        });
+        })
+    } catch (error) {
+        console.log("error : ", error);
+    }
+  }
+    
+
+  const getCancle1 = async () => {
+    try {
+      const SERVER_URL = 'http://localhost:8001/reservationCancle1'
+      axios.post(SERVER_URL, {
+        client_id : cancleData.client_id,
+        prog_name : cancleData.prog_name,
+        prog_time : cancleData.prog_time
+      })
     } catch (error) {
         console.log("error : ", error);
     }
   }
 
+  const getCancle2 = async () => {
+    try {
+      const SERVER_URL = 'http://localhost:8001/reservationCancle2'
+      axios.post(SERVER_URL, {
+        client_id: cancleData.client_id,
+        name: cancleData.name,
+        phone: cancleData.phone,
+        gender: cancleData.gender,
+        std: cancleData.std,
+        prog_name: cancleData.prog_name,
+        prog_time: cancleData.prog_time,
+        remain_count: cancleData.remain_count,
+        total_count: cancleData.total_count,
+        note: cancleData.note,
+        reservation_date: cancleData.reservation_date,
+        reservation_time: cancleData.reservation_time,
+        price: cancleData.price,
+        reservation_status: '취소완료'
+      })
+    } catch (error) {
+        console.log("error : ", error);
+    }
+  }
+  
 
   return (
     <Overlay onClick={() => setCancleModal(false)}>

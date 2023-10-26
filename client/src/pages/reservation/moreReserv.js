@@ -13,7 +13,6 @@ function MoreReserv() {
 
   const [dateValue, changeDate] = useState(new Date());
   const [chooseDay, setChooseDay] = useState(false);
-  const [selectedProgram, setSelectedProgram] = useState('선택한 프로그램');
   const [selectedTime, setSelectedTime] = useState('');
   const [timeList, setTimeList] = useState(['17 : 00', '17 : 30', '18 : 00', '18 : 30']);
   const [unableTimeList, setUnableTimeList] = useState([]);
@@ -26,6 +25,7 @@ function MoreReserv() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const progName = searchParams.get("prog_name");
+  const progTime = searchParams.get("prog_time");
 
 
 
@@ -116,7 +116,7 @@ function MoreReserv() {
     axios.post(SERVER_URL, { trimmedDate })
       .then(res => {
         const timelist = res.data;
-        const setData = timelist.map(item => item.progName);
+        const setData = timelist.map(item => item.reservation_time);
         setUnableTimeList(setData);
         const updatedTimeList = timeList.map(time => !unableTimeList.includes(time));
         setUnableTimeIdx(updatedTimeList);
@@ -131,7 +131,7 @@ function MoreReserv() {
     <>
       <Header></Header>
       <div class="reservation-category-container">
-        <div class="reservation-category title-view">{progName}</div>
+        <div class="reservation-category title-view">{progName}{" "+progTime + "min"}</div>
       </div>
       <div class="reservation-category-container">
         <img src='assets/icon_reservation_calendar.png' alt="" class="reservation-category-icon" />
@@ -166,7 +166,7 @@ function MoreReserv() {
             return (
               <button
                 key={idx}
-                className={`reservation-time-content ${selectedTime === item ? 'reservation-time-selected' : ''}`}
+                className={`reservation-time-content ${selectedTime === item ? 'reservation-time-selected' : ''} ${isDisabled ? 'reservation-time-disabled' : ''} `}
                 disabled={isDisabled}
                 onClick={() => setSelectedTime(item)}>
                 {item}
@@ -187,7 +187,6 @@ function MoreReserv() {
       {confirmModal === true &&
         <MoreModal
           dateValue={trimmedDate}
-          selectedProgram={selectedProgram}
           selectedTime={selectedTime}
           setConfirmModal={setConfirmModal}
         />}

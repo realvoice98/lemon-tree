@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import { useLocation, useNavigate } from "react-router-dom";
 
-function MoreModal({ dateValue, selectedTime, setConfirmModal }) {
+function MoreModal({dateValue, selectedTime, setConfirmModal }) {
 
   const navigate = useNavigate();
 
@@ -12,8 +12,17 @@ function MoreModal({ dateValue, selectedTime, setConfirmModal }) {
   const reservId = searchParams.get("id");
   const progName = searchParams.get("prog_name");
   const progTime = searchParams.get("prog_time");
-  const remainCount = searchParams.get("remain_count");
-  const totalCount = searchParams.get("total_count");
+  const remain_count = searchParams.get("remain_count");
+  const total_count = searchParams.get("total_count");
+  const price = searchParams.get("price");
+
+  // 예약테이블에 보낼 회원 정보 sessionStorage에서 추출
+  const sessionStorageKeys = Object.keys(sessionStorage);
+  const sessionStorageData = {};
+  sessionStorageKeys.forEach(key => {
+    sessionStorageData[key] = sessionStorage.getItem(key);
+  });
+  const { consent, gender, id, name, passwd, phone, std } = sessionStorageData;
 
   const [clickYesNo, setClickYesNo] = useState('');
   const [inputText, setInputText] = useState('');
@@ -33,6 +42,24 @@ function MoreModal({ dateValue, selectedTime, setConfirmModal }) {
     })
       .then(res => {
         setClickYesNo('yes')
+        const SERVER_URL = 'http://localhost:8001/reservationMore1'
+        axios.post(SERVER_URL, {
+          client_id: id,
+          name: name,
+          phone: phone,
+          gender: gender,
+          std: std,
+          prog_name: progName,
+          prog_time: progTime,
+          remain_count: remain_count,
+          total_count: total_count,
+          note: inputText,
+          reservation_date: dateValue,
+          reservation_time: selectedTime,
+          price: price,
+          discount: price,
+          reservation_status: '예약대기'
+        })
       })
       .catch(error => console.log(error));
   }
@@ -88,7 +115,7 @@ function MoreModal({ dateValue, selectedTime, setConfirmModal }) {
                       <div className="small-txt">(잔여/총)</div>
                     </div>
                   </div>
-                  <div className="myTree-modal-inner-data">{remainCount}회 / {totalCount} 회</div>
+                  <div className="myTree-modal-inner-data">{remain_count}회 / {total_count} 회</div>
                 </div>
                 <div class="myTree-modal-inner-content">
                   <div class="myTree-modal-inner-txt">요청사항</div>

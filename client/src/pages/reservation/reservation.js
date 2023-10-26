@@ -158,7 +158,7 @@ function Reservation() {
       dateValue !== '' &&
       selectedProgram !== '' && // 프로그램 선택
       selectedCount !== '' && // 횟수 선택
-      selectedTime !== ''// 시간 선택
+      selectedReservTime !== ''// 시간 선택
     );
   };
 
@@ -175,7 +175,7 @@ function Reservation() {
     axios.post(SERVER_URL, { trimmedDate })
       .then(res => {
         const timelist = res.data;
-        const setData = timelist.map(item => item.prog_time);
+        const setData = timelist.map(item => item.reservation_time);
         setUnableTimeList(setData);
         const updatedTimeList = timeList.map(time => !unableTimeList.includes(time));
         setUnableTimeIdx(updatedTimeList);
@@ -270,7 +270,7 @@ function Reservation() {
             return (
               <button
                 key={idx}
-                className={`reservation-time-content ${selectedReservTime === item ? 'reservation-time-selected' : ''}`}
+                className={`reservation-time-content ${selectedReservTime === item ? 'reservation-time-selected' : ''} ${isDisabled ? 'reservation-time-disabled' : ''}`}
                 disabled={isDisabled}
                 onClick={() => setSelectedReservTime(item)}>
                 {item}

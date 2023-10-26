@@ -33,6 +33,12 @@ function MyTree(props) {
         setMoreData(myTree)
     }
 
+    useEffect(()=>{
+        getMyTree()
+        getMyReservation()
+        getReservationList()
+    },[cancleModal]) // 예약취소되면 
+
     // 잔여횟수
     const getMyTree = async () => {
         const client_id = sessionStorage.getItem('id');
@@ -87,9 +93,10 @@ function MyTree(props) {
                 <div className='myTree-main-content'>
                     <div className='myTree-container'>
                         <div className='myTree-title'>잔여 횟수</div>
-                        <div className='myTree-content'>
+                        
                             {myTree.map((myTree, index, array) => (
                                 <>
+                                <div className='myTree-content'>
                                     <div key={index} className='myTree-inner-container'>
                                         <div className='myTree-program'>
                                             <div className='myTree-program-name'>{myTree.prog_name}</div>
@@ -100,10 +107,11 @@ function MyTree(props) {
                                             <button className='myTree-btn-reserv' onClick={() => getReservModal(myTree)}>예약하기</button>
                                         </div>
                                     </div>
-                                    {(array.length > 1 && index < array.length - 1) && <div className='dash-g' />}
+                                    {/* {(array.length > 1 && index < array.length - 1) && <div className='dash-g' />} */}
+                                    </div>
                                 </>
                             ))}
-                        </div>
+                        
                     </div>
                     <div className='dash-b' />
                     <div className='myTree-container'>

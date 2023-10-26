@@ -52,7 +52,7 @@ function MyTreeReservModal({ setReservModal, moreData }) {
           <button className="myTree-modal-btn btn-wrong" onClick={() => setReservModal(false)}>닫기</button>
           <button className="myTree-modal-btn btn-right" onClick={() => getModalStatus(moreData)}>
             <Link
-              to={`/moreReserv?prog_name=${encodeURIComponent(moreData.prog_name)}&prog_time=${moreData.prog_time}&remain_count=${moreData.remain_count}&total_count=${moreData.total_count}&id=${moreData.id}`}
+              to={`/moreReserv?prog_name=${encodeURIComponent(moreData.prog_name)}&prog_time=${moreData.prog_time}&remain_count=${moreData.remain_count}&total_count=${moreData.total_count}&id=${moreData.id}&price=${moreData.price}`}
               className="myTree-modal-link"
             >
               추가예약
