@@ -44,10 +44,39 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
       reservation_status: '예약대기'
     })
       .then(res => {
+        console.log(res.data);
+        if (res.data === 1){
+          alert('이미 해당 프로그램이 존재합니다.')
+          navigate('/myTree');
+          return false;
+        }
         setClickYesNo('yes')
-      })
+        const SERVER_URL1 = 'http://localhost:8001/reservations_details'
+        axios.post(SERVER_URL1, {
+          client_id: id,
+          name: name,
+          phone: phone,
+          gender: gender,
+          std: std,
+          prog_name: selectedProgram,
+          prog_time: selectedTime,
+          prog_count: selectedCount,
+          note: inputText,
+          reservation_date: dateValue,
+          reservation_time: selectedReservTime,
+          price: totalPrice,
+          discount: totalPrice,
+          reservation_status: '예약대기'
+        })
+        .then(res => {
+        })
       .catch(error => console.log(error));
+      })
+    
+      .catch(error => console.log(error));
+    
   }
+  
 
   const onClickNo = () => {
     setClickYesNo('no')

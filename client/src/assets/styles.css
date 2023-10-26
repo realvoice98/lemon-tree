@@ -1110,6 +1110,10 @@
     border: 1px solid #E9EAEC;
 }
 
+.reservation-time-disabled{
+    color: #e7e7e7;
+    border: 1px solid #e7e7e7;
+}
 .reservation-pay-active{
     padding: 15px;
     border: 1px solid #FFEB54;
