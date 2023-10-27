@@ -19,10 +19,11 @@ router.get('/admin/reservation_manage', (req, res) => {
   let totalQueryParameters;
   let dataQueryParameters;
 
-  if (reserv_status == '예약대기') {
-    totalQuery = 'SELECT COUNT(*) AS total FROM reservations_details';
-    dataQuery = 'SELECT * FROM reservations_details ORDER BY id DESC LIMIT ? OFFSET ?';
-    dataQueryParameters = [itemsPerPage, startIndex];
+  if (reserv_status == '예약대기' || reserv_status == '예약확정') {
+    totalQuery = 'SELECT COUNT(*) AS total FROM reservations_details WHERE reservation_status = ?';
+    dataQuery = 'SELECT * FROM reservations_details WHERE reservation_status = ? ORDER BY id DESC LIMIT ? OFFSET ?';
+    totalQueryParameters = [reserv_status];
+    dataQueryParameters = [reserv_status, itemsPerPage, startIndex];
   } else {
     totalQuery = 'SELECT COUNT(*) AS total FROM reservations_list WHERE reservation_status = ?';
     dataQuery = 'SELECT * FROM reservations_list WHERE reservation_status = ? ORDER BY id DESC LIMIT ? OFFSET ?';
@@ -66,11 +67,11 @@ router.get('/admin/reservation_manage/search', (req, res) => {
   let totalQueryParameters;
   let dataQueryParameters;
 
-  if (reserv_status == '예약대기') {
-    totalQuery = 'SELECT COUNT(*) AS total FROM reservations_details where name like ? or phone like ?';
-    dataQuery = 'SELECT * FROM reservations_details where name like ? or phone like ? ORDER BY id DESC LIMIT ? OFFSET ?';
-    totalQueryParameters = ['%' + searchData + '%', '%' + searchData + '%'];
-    dataQueryParameters = ['%' + searchData + '%', '%' + searchData + '%', itemsPerPage, startIndex];
+  if (reserv_status == '예약대기' || reserv_status == '예약확정') {
+    totalQuery = 'SELECT COUNT(*) AS total FROM reservations_details where reservation_status = ? and (name like ? or phone like ?)';
+    dataQuery = 'SELECT * FROM reservations_details where reservation_status = ? and (name like ? or phone like ?) ORDER BY id DESC LIMIT ? OFFSET ?';
+    totalQueryParameters = [reserv_status, '%' + searchData + '%', '%' + searchData + '%'];
+    dataQueryParameters = [reserv_status, '%' + searchData + '%', '%' + searchData + '%', itemsPerPage, startIndex];
   } else {
     totalQuery = 'SELECT COUNT(*) AS total FROM reservations_list WHERE reservation_status = ? and (name like ? or phone like ?)';
     dataQuery = 'SELECT * FROM reservations_list WHERE reservation_status = ? and (name like ? or phone like ?) ORDER BY id DESC LIMIT ? OFFSET ?';
@@ -118,21 +119,12 @@ router.get('/admin/reservation_manage/search', (req, res) => {
     const reservation_time = req.body.reservation_time;
     const price = req.body.price;
     
-    db.query("insert into reservations_list(client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, reservation_status) "+
-             "values(?,?,?,?,?,?,?,?,?,?,?,?,?,'예약확정')",
-              [client_id,name,phone,gender,std,prog_name,prog_time,remain_count,total_count,note,reservation_date,reservation_time,price], (error, results, fields) => {
+    db.query("update reservations_details set reservation_status = '예약확정' where id = ?", [id], (error, results, fields) => {
       if (error) {
-        console.error('데이터 삽입 오류: ' + error);
+        console.error('데이터 수정 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });
       } else {
-        db.query("delete from reservations_details where id = ? ", [id], (error) => {
-          if (error) {
-            console.error('데이터 삭제 오류: ' + error);
-            res.status(500).json({ message: '오류 발생' });
-          } else {
-            res.json({ message: '예약 확정되었습니다.' });
-          }
-        });
+        res.json({ message: '예약 확정되었습니다.' });
       }
     });
   });
@@ -154,23 +146,6 @@ router.get('/admin/reservation_manage/search', (req, res) => {
     const price = req.body.price;
     const reservation_status = req.body.reservation_status;
 
-    if(reservation_status == '예약확정'){
-        db.query("update reservations_list set reservation_status = '취소완료' where id = ? ", [id], (error) => {
-          if (error) {
-            console.error('데이터 수정 오류: ' + error);
-            res.status(500).json({ message: '오류 발생' });
-          } else {
-            db.query("update reservations set remain_count = remain_count + 1 where client_id = ? and prog_name = ? and prog_time = ? ", [client_id, prog_name, prog_time], (error) => {
-              if (error) {
-                console.error('데이터 삭제 오류: ' + error);
-                res.status(500).json({ message: '오류 발생' });
-              } else {
-                res.json({ message: '결제되었습니다.' });
-              }
-            });
-          }
-        });
-    }else{
       db.query("insert into reservations_list(client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, reservation_status) "+
              "values(?,?,?,?,?,?,?,?,?,?,?,?,?,'취소완료')",
               [client_id,name,phone,gender,std,prog_name,prog_time,remain_count,total_count,note,reservation_date,reservation_time,price], (error, results, fields) => {
@@ -180,48 +155,80 @@ router.get('/admin/reservation_manage/search', (req, res) => {
       } else {
         db.query("delete from reservations_details where id = ? ", [id], (error) => {
           if (error) {
-            console.error('데이터 수정 오류: ' + error);
+            console.error('데이터 삭제 오류: ' + error);
             res.status(500).json({ message: '오류 발생' });
           } else {
             db.query("update reservations set remain_count = remain_count + 1 where client_id = ? and prog_name = ? and prog_time = ? ", [client_id, prog_name, prog_time], (error) => {
               if (error) {
-                console.error('데이터 삭제 오류: ' + error);
+                console.error('데이터 수정 오류: ' + error);
                 res.status(500).json({ message: '오류 발생' });
               } else {
-                res.json({ message: '결제되었습니다.' });
+                res.json({ message: '취소되었습니다.' });
               }
             });
           }
         });
       }
     });
-    } 
   });
 
   router.post('/admin/reservation_manage/payment_reserv', (req, res) => {
     const id = req.body.id;
-    const price = req.body.price;
-    const prog_name = req.body.prog_name;
-    const sale_date = req.body.sale_date;
     const client_id = req.body.client_id;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const gender = req.body.gender;
     const std = req.body.std;
+    const prog_name = req.body.prog_name;
+    const prog_time = req.body.prog_time;
+    const remain_count = req.body.remain_count;
+    const total_count = req.body.total_count;
+    const note = req.body.note;
+    const reservation_date = req.body.reservation_date;
+    const reservation_time = req.body.reservation_time;
+    const price = req.body.price;
+    const reservation_status = req.body.reservation_status;
+    const sale_date = req.body.sale_date;
   
-    db.query("update reservations set reservation_status = '결제완료', discount = ?, std = ? where client_id = ?", [price, std, client_id], (error, results, fields) => {
+    db.query("insert into reservations_list(client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, reservation_status) "+
+             "values(?,?,?,?,?,?,?,?,?,?,?,?,?,'결제완료')",
+              [client_id,name,phone,gender,std,prog_name,prog_time,remain_count,total_count,note,reservation_date,reservation_time,price], (error, results, fields) => {
       if (error) {
-        console.error('데이터 수정 오류: ' + error);
+        console.error('데이터 삽입 오류: ' + error);
         res.status(500).json({ message: '오류 발생' });
       } else {
         db.query("update client set std = ? where id = ?", [std, client_id], (error, results, fields) => {
           if (error) {
-            console.error('데이터 삽입 오류: ' + error);
+            console.error('데이터 수정 오류: ' + error);
             res.status(500).json({ message: '오류 발생' });
           } else {
-            db.query("insert into sales (sale_date, prog_name, price) values(?, ?, REPLACE(?, ',', ''))", [sale_date, prog_name, price], (error, results, fields) => {
+            db.query("delete from reservations_details where id = ? ", [id], (error, results, fields) => {
               if (error) {
-                console.error('데이터 삽입 오류: ' + error);
+                console.error('데이터 삭제 오류: ' + error);
                 res.status(500).json({ message: '오류 발생' });
               } else {
-                res.json({ message: '결제되었습니다.' });
+                db.query("update reservations set price = 0, discount = 0, reservation_status ='결제완료'  where client_id = ? and prog_name = ? and prog_time = ?", [client_id, prog_name, prog_time], (error, results, fields) => {
+                  if (error) {
+                    console.error('데이터 삽입 오류: ' + error);
+                    res.status(500).json({ message: '오류 발생' });
+                  } else {
+                    db.query("insert into sales (sale_date, prog_name, price) values(?, ?, ?)", [sale_date, prog_name, price], (error, results, fields) => {
+                      if (error) {
+                        console.error('데이터 삽입 오류: ' + error);
+                        res.status(500).json({ message: '오류 발생' });
+                      } else {
+                        db.query("DELETE FROM reservations_details WHERE remain_count = 0 and reservation_status = '결제완료'", (error, results, fields) => {
+                          if (error) {
+                            console.error('데이터 삭제 오류: ' + error);
+                            res.status(500).json({ message: '오류 발생' });
+                          } else {
+                            res.json({ message: '결제되었습니다.' });
+                          }
+                        });
+                      }
+                    });                        
+                  }
+                });
               }
             });
           }

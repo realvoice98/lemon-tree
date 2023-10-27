@@ -389,7 +389,7 @@ tbody{
       }
       .row_top .row_text.del,
       .row_top .row_text.modify{
-        background: #FFF;
+        background: #E9EAEC;
         display: flex;
         padding: 1px 9px;
         align-items: center;
@@ -763,7 +763,7 @@ tbody{
       background: #E9EAEC;
     }
     .main_page, .client_list, 
-    .reserv_manage, .prog_manage{
+    .reserv_manage, .prog_manage, .sale_manage{
       display: flex;
       padding: 5px 10px;
       align-items: center;
@@ -868,13 +868,13 @@ tbody{
       justify-content: center;
       align-items: center;
       gap: 10px;
-      color: #FFF;
+      color: #E9EAEC;
       cursor: pointer;
       width: 140px;
     }
     .row_top .row_text.del,
     .row_top .row_text.modify{
-      background: #FFF;
+      background: #E9EAEC;
       display: flex;
       padding: 1px 9px;
       align-items: center;
@@ -1167,6 +1167,40 @@ tbody{
       line-height: 140%; /* 22.4px */
       text-transform: capitalize;
     }
+    .top_btn{
+      display: flex;
+      width: 80px;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      border-radius: 5px;
+      background: #fff;
+    }
+    .top_btn.active{
+      color: #fff;
+      background: #222;
+    }
+    .main_col{
+      flex-direction: column;
+      display: flex;
+      width: 100%;
+    }
+    .reserv_main{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      flex: 1 0 0;
+      align-self: stretch;
+      background: #F8F8FA;
+    }
+    .table_main{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+    }
   }
   /*-----------------------------테블릿 end------------------------------*/
   /*------------------------------모바일------------------------------*/
@@ -1357,7 +1391,7 @@ tbody{
     }
     .row_top .row_text.del,
     .row_top .row_text.modify{
-      background: #FFF;
+      background: #E9EAEC;
       display: flex;
       padding: 1px 9px;
       align-items: center;
@@ -1617,6 +1651,66 @@ tbody{
       height: 20px;
       width: 300px;
       font-size: 13px;      
+    }
+    .sale_table{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: stretch;
+    }
+    .sale_search{
+      display: flex;
+      padding: 12px 16px;
+      align-items: center;
+      gap: 16px;
+      align-self: stretch;
+      background: #E9EAEC;
+      border-radius: 10px 10px 0px 0px;
+    }
+    .sale_search_text{
+      color: #000;
+      text-align: center;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-family: DM Sans;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%; /* 22.4px */
+      text-transform: capitalize;
+    }
+    .top_btn{
+      display: flex;
+      width: 80px;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      border-radius: 5px;
+      background: #fff;
+    }
+    .top_btn.active{
+      color: #fff;
+      background: #222;
+    }
+    .main_col{
+      flex-direction: column;
+      display: flex;
+      width: 100%;
+    }
+    .reserv_main{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      flex: 1 0 0;
+      align-self: stretch;
+      background: #F8F8FA;
+    }
+    .table_main{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
     }
     /* 320px 모바일 화면에서 크기 조정 */
 @media (max-width: 320px) {

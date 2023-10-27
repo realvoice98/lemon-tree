@@ -29,6 +29,8 @@ rows.forEach(row => {
     const id = row.querySelector('.id').textContent;
     const client_id = row.querySelector('.client_id').textContent;
 
+    const priceWithoutComma = price.replace(/,/g, '');
+
     const dateSlice = datetime.split('/');
     const date = dateSlice[0];
     let time = dateSlice[1];
@@ -78,7 +80,7 @@ rows.forEach(row => {
     progInput.value = prog;
     prog_timeInput.value = prog_time;
     dateInput.value = date;
-    priceInput.value = price;
+    priceInput.value = priceWithoutComma;
     timeInput.value = time;
     idInput.value = id;
     client_idInput.value = client_id;
@@ -303,10 +305,19 @@ function modifyBtn(){
 function paymentBtn(){
   const idInput = document.querySelector('input[name="id"]').value;
   const client_idInput = document.querySelector('input[name="client_id"]').value;
-  const stdInput = document.querySelector('input[name="std"]').value;
+  const nameInput = document.querySelector('input[name="name"]').value;
+  const phoneInput = document.querySelector('input[name="phone"]').value;
+  const genderInput = document.querySelector('input[name="gender"]').value;
+  const noteInput = document.querySelector('textarea[name="note"]').value;
+  const reservation_dateInput = document.querySelector('input[name="reservation_date"]').value;
+  const reservation_timeInput = document.querySelector('input[name="reservation_time"]').value;
   const prog_nameInput = document.querySelector('input[name="prog_name"]').value;
+  const prog_timeInput = document.querySelector('input[name="prog_time"]').value;
+  const remain_countInput = document.querySelector('input[name="remain_count"]').value;
+  const total_countInput = document.querySelector('input[name="total_count"]').value;
+  const stdInput = document.querySelector('input[name="std"]').value;
   const priceInput = document.querySelector('input[name="price"]').value;
-  const discountInput = document.querySelector('input[name="discount"]').value;
+  const reservation_statusInput = document.querySelector('input[name="reservation_status"]').value;
 
   // 현재 날짜 객체 생성
   var currentDate = new Date();
@@ -320,16 +331,28 @@ function paymentBtn(){
 
   console.log(formattedDate); // 예를 들어, '2023-10-23'
 
+  const result = confirm('결제하시겠습니까?');
+
   if(result){
     // Ajax 요청을 보낼 URL 및 데이터
     const url = './reservation_manage/payment_reserv'; // 서버의 API 엔드포인트
     const data = {
-        id: idInput,
-        client_id: client_idInput,
-        std: stdInput,
-        price: priceInput,
-        prog_name: prog_nameInput,
-        sale_date: formattedDate
+      id: idInput,
+      client_id: client_idInput,
+      name: nameInput,
+      phone: phoneInput,
+      gender: genderInput,
+      note: noteInput,
+      reservation_date: reservation_dateInput,
+      reservation_time: reservation_timeInput,
+      prog_name: prog_nameInput,
+      prog_time: prog_timeInput,
+      remain_count: remain_countInput, 
+      total_count: total_countInput,
+      std: stdInput,
+      price: priceInput,
+      reservation_status: reservation_statusInput,
+      sale_date: formattedDate
     };
 
     // Ajax 요청을 보내고 응답을 처리
