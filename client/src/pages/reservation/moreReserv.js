@@ -71,6 +71,16 @@ function MoreReserv() {
   const onClickConfirmModal = () => {
     setConfirmModal(true)
   }
+  
+  const onClickSelectTime = (item) => {
+    if (chooseDay === false) {
+      alert('날짜를 선택해주세요');
+      return null;
+    }else{
+      setSelectedTime(item)
+    }
+    
+  }
 
   // 월요일과 수요일만 활성화 또는 비활성화하는 함수
   const tileDisabled = ({ date, view }) => {
@@ -104,6 +114,7 @@ function MoreReserv() {
     );
   };
 
+  
 
   useEffect(() => {
     getOperaingDate();
@@ -168,7 +179,7 @@ function MoreReserv() {
                 key={idx}
                 className={`reservation-time-content ${selectedTime === item ? 'reservation-time-selected' : ''} ${isDisabled ? 'reservation-time-disabled' : ''} `}
                 disabled={isDisabled}
-                onClick={() => setSelectedTime(item)}>
+                onClick={() => onClickSelectTime(item)}>
                 {item}
               </button>
             )

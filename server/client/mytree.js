@@ -7,7 +7,7 @@ router.use(cors());
 router.use(bodyParser.json()) // for parsing application/json
 router.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-router.get('/client/myTree', (req, res) => {
+router.get('/myTree', (req, res) => {
   const client_id = req.query.client_id;
 
   db.query(

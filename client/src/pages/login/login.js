@@ -48,7 +48,12 @@ function Login() {
       } 
     } catch (error) {
       console.error('로그인 요청 오류:', error);
-      alert('전화번호 혹은 비밀번호를 확인해주세요');
+      if(error.code === "ERR_BAD_REQUEST"){
+        alert('전화번호 혹은 비밀번호를 확인해주세요');  
+      }else{
+        alert('서버 이상 문제 발생');
+      }
+      
     }
   }
 

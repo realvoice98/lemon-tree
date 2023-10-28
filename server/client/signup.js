@@ -32,7 +32,6 @@ router.post('/signup', (req, res) => {
 
 router.post('/phoneNumCheck', (req, res) => {
     const phone = req.body.phoneNum;
-    console.log(phone)
   
     db.query(
         "SELECT * FROM client WHERE phone = ?",
@@ -41,7 +40,6 @@ router.post('/phoneNumCheck', (req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log(result)
                 if (result.length > 0) {
                     res.send("1"); // 결과가 존재하는 경우
                 } else {

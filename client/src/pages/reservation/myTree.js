@@ -42,7 +42,7 @@ function MyTree(props) {
     // 잔여횟수
     const getMyTree = async () => {
         const client_id = sessionStorage.getItem('id');
-        const SERVER_URL = 'http://localhost:8001/client/myTree';
+        const SERVER_URL = 'http://localhost:8001/myTree';
         try {
             const response = await axios.get(SERVER_URL, {
                 params: { client_id }
