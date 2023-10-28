@@ -7,19 +7,34 @@ import axios from 'axios';
 function PhoneNumChange() {
 
     const [newPhoneNum,setNewPhoneNum] = useState("");
+    const [phoneNunCheck, setPhoneNumCheck] = useState("");
     const { user, setUser }  = useUser();
     const originalPhoneNum = sessionStorage.getItem("phone");
     const userId = sessionStorage.getItem('id');
 
     const onPhoneNumHandler = (event) => {
       setNewPhoneNum(event.currentTarget.value);
+      if(event.currentTarget.value.length===11){
+        const SERVER_URL = 'http://localhost:8001/phoneNumCheck'
+        axios.post(SERVER_URL,{
+          phoneNum : event.currentTarget.value
+        })
+        .then(res => {
+          setPhoneNumCheck(res.data)
+          if(res.data === 1){
+            alert('이미 존재하는 전화번호입니다.')
+          }
+          
+        })
+        .catch(error => console.log(error));
+      }
       };
 
     // 전화번호 유효성 검사 함수
   const validatePhoneNum = (newPhoneNum) => {
     const phoneNumberPattern = /^010\d{4}\d{4}$/
 
-    if (phoneNumberPattern.test(newPhoneNum)) {
+    if (phoneNumberPattern.test(newPhoneNum) && phoneNunCheck !== 1) {
       return true
     } else {
       return false
@@ -78,7 +93,7 @@ function PhoneNumChange() {
                         </img>
                     )}
                     {newPhoneNum && !validatePhoneNum(newPhoneNum) ? (
-                        <div class="signup-input-errorMessage">ex) 01012345678</div>
+                        <div class="signup-input-errorMessage">`-`제외한 휴대폰 번호</div>
                     ) : (
                         ''
                     )}

@@ -26,7 +26,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
       setCancleModal(false)
     }
   }
-
+  //취소하면 reservation_details 테이블에서 데이터 삭제
   const getCancle = async () => {
     const SERVER_URL = 'http://localhost:8001/reservationCancle';
     try {
@@ -38,7 +38,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
     }
   }
     
-
+  //취소하면 reservations 테이블 remain_count + 1
   const getCancle1 = async () => {
     try {
       const SERVER_URL = 'http://localhost:8001/reservationCancle1'
@@ -52,6 +52,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
     }
   }
 
+  //취소하면 reservation_list 테이블에 값넣기
   const getCancle2 = async () => {
     try {
       const SERVER_URL = 'http://localhost:8001/reservationCancle2'

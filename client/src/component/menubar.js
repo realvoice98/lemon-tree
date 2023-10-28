@@ -60,10 +60,10 @@ export default function Menubar(props) {
             <div>비밀번호 변경</div>
             <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
           </div>
-          <div class="menubar-menu-content">
+          {/* <div class="menubar-menu-content">
             <div>재학생인증</div>
             <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>
-          </div>
+          </div> */}
           <div class="menubar-menu-content" onClick={logOut}>
             <div>로그아웃</div>
             <img class="menubar-menu-icon" alt="" src='assets/icon_menubar_right_arrow.png'/>

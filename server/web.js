@@ -15,9 +15,6 @@ const passwordChange = require('./client/mypage/passwordChange');
 // react를 빌드한 결과물이 담긴 디렉토리 /build 에 접근하여 미들웨어를 생성해준다.
 app.use(express.static(path.join(__dirname, '../client/build')));
 
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-})
 
 app.use('/',login);
 app.use('/',main);
@@ -52,4 +49,18 @@ app.use('/', saleManageRoutes);
 
 app.listen(PORT, function () {
   console.log(`listening on ${PORT}`)
+});
+
+
+// 젤 밑에 놔야하는 코드 건들 노노
+// admin페이지를 제외한 페이지 가져오기
+app.get('*', function(req, res) {
+  // 요청 URL이 '/admin'으로 시작하는지 확인
+  if (req.url.startsWith('/admin')) {
+    // '/admin'으로 시작하는 경로는 처리하지 않고 넘어갑니다.
+    return;
+  }
+
+  // client 모든 요청을 여기에서 처리
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

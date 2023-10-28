@@ -42,7 +42,7 @@ function MyTree(props) {
     // 잔여횟수
     const getMyTree = async () => {
         const client_id = sessionStorage.getItem('id');
-        const SERVER_URL = 'http://localhost:8001/myTree';
+        const SERVER_URL = 'http://localhost:8001/client/myTree';
         try {
             const response = await axios.get(SERVER_URL, {
                 params: { client_id }
@@ -118,7 +118,7 @@ function MyTree(props) {
                         )}
 
                     </div>
-                    <div className='dash-b' />
+                    {/* <div className='dash-b' /> */}
                     <div className='myTree-container'>
                         <div className='myTree-title'>예약 내역</div>
                         {myReservation.length === 0 ? (
@@ -139,7 +139,10 @@ function MyTree(props) {
                                             </div>
                                             <div className='myTree-right-content'>
                                                 <div className={`myTree-status${getReservationStatus(myReservation.reservation_status)} myTree-status-list`}>{myReservation.reservation_status}</div>
+                                                {myReservation.reservation_status === '예약대기' ?
                                                 <button className='myTree-btn-cancle' onClick={() => getCancleModal(myReservation)}>예약취소</button>
+                                                :null}
+                                                
                                             </div>
                                         </div>
                                         <div className='dash-g' />
@@ -155,7 +158,7 @@ function MyTree(props) {
                             })
                         )}
                     </div>
-                    <div className='dash-b' />
+                    {/* <div className='dash-b' /> */}
                     <div className='myTree-container'>
                         <div className='myTree-title'>예약 목록</div>
                         {reservationList.length === 0 ? (

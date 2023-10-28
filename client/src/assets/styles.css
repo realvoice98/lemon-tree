@@ -552,6 +552,7 @@
 
 .myTree-container {
     padding: 0 15px;
+    margin-bottom: 55px;
 }
 
 .myTree-title {
@@ -568,7 +569,7 @@
     background: #FFF;
     box-shadow: 2px 2px 4px 0px rgba(217, 217, 217, 0.25);
     padding: 15px;
-    margin: 15px 0;
+    margin: 7px 0;
 }
 
 .myTree-inner-container {
@@ -657,11 +658,11 @@
 
 .myTree-status-list {
     border-radius: 20px;
-    border: 1px solid rgba(217, 217, 217, 0.5);
-    box-shadow: 0px 4px 4px 0px rgba(217, 217, 217, 0.2);
+    /* border: 1px solid rgba(217, 217, 217, 0.5); */
+    /* box-shadow: 0px 4px 4px 0px rgba(217, 217, 217, 0.2); */
     color: #FFF;
     font-family: 'DM Sans';
-    font-size: 10px !important;
+    font-size: 12px !important;
     font-weight: 700;
     padding: 3px 7px;
 }

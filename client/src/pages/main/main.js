@@ -46,6 +46,7 @@ function Main() {
         const SERVER_URL = 'http://localhost:8001/programs'
         await axios.get(SERVER_URL)
             .then(res => {
+                
                 setPrograms(res.data)
             })
             .catch(error => console.log(error));
@@ -89,7 +90,7 @@ function Main() {
                                             <div className='program-price-content col-6'>
                                                 <div className='program-price-ko'>할인가</div>
                                                 <div className='program-price-num'>
-                                                    {program.price}원
+                                                    {program.discount}원
                                                 </div>
                                             </div>
                                         </div>

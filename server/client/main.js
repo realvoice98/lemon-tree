@@ -10,7 +10,7 @@ router.use(bodyParser.urlencoded({ extended: true })) // for parsing application
 
 router.get('/programs', (req,res) => {
   db.query(
-    'SELECT * FROM programs',
+    'SELECT * FROM programs ORDER BY id ASC',
     (error, rows) => {
         if (error) throw error;
         res.send(rows);

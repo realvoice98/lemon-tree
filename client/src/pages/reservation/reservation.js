@@ -26,6 +26,7 @@ function Reservation() {
   const [totalPrice, setTotalPrice] = useState(0); // 총 가격 나타내기
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const userType = sessionStorage.getItem("std");
 
   // 오늘 이전 날짜는 클릭할 수 없게하는 함수
   const today = new Date();
@@ -132,8 +133,6 @@ function Reservation() {
 
   // 가격 계산 함수
   const calculatePrice = (program, count) => {
-    // const filteredProgram = programList.filter(item => item.prog_name === program);
-    // const filteredCount = programList.filter(item => item.prog_name === count);
 
     const selectedData = programList.filter(item => item.prog_name === program && item.prog_count === count);
 
@@ -141,14 +140,14 @@ function Reservation() {
     const prices = selectedData.map(item => item.price);
     const discounts = selectedData.map(item => item.discount);
 
-    return prices;
+    // return prices;
 
     //로그인한 사람의 역할에따라 다른값 보내기 
-    // if(userType==='STUDENT'){
-    //   return prices;
-    // }else{
-    //   return discounts;
-    // }
+    if(userType==='재학생'){
+      return discounts;
+    }else{
+      return prices;
+    }
   };
 
   // 모든 내용 클릭해야 예약하기 클릭할 수 있게하는 함수
@@ -281,7 +280,9 @@ function Reservation() {
       </div>
       <div class="reservation-category-container pay">
         <img src='assets/icon_reservation_pay.png' alt="" class="reservation-category-icon" />
-        <div class="reservation-category">결제 금액 <span>{totalPrice}원</span> </div>
+        <div class="reservation-category">결제 금액 <span>{totalPrice}원</span> 
+          {userType==="재학생" && selectedCount && selectedReservTime ? <span style={{fontSize:'10px',color:'red',marginLeft:'10px'}}>할인가 적용</span>: null}
+        </div>
       </div>
       <div class="reservation-content-container">
         <button className={`${reservationConfirm() ? 'reservation-pay-active' : 'reservation-pay-inactive'}`}

@@ -30,4 +30,26 @@ router.post('/signup', (req, res) => {
   )
 })
 
+router.post('/phoneNumCheck', (req, res) => {
+    const phone = req.body.phoneNum;
+    console.log(phone)
+  
+    db.query(
+        "SELECT * FROM client WHERE phone = ?",
+        [phone],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result)
+                if (result.length > 0) {
+                    res.send("1"); // 결과가 존재하는 경우
+                } else {
+                    res.send("0"); // 결과가 없는 경우
+                }
+            }
+        }
+    )
+})
+
 module.exports = router;

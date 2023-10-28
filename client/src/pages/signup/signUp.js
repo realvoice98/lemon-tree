@@ -9,6 +9,7 @@ function SignUp() {
   const navigate = useNavigate();
 
   const [phoneNum, setPhoneNum] = useState("");
+  const [phonNumCheck, setPhoneNumCheck] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
@@ -60,6 +61,20 @@ function SignUp() {
 
   const onPhoneNumHandler = (event) => {
     setPhoneNum(event.currentTarget.value);
+    if(event.currentTarget.value.length===11){
+      const SERVER_URL = 'http://localhost:8001/phoneNumCheck'
+      axios.post(SERVER_URL,{
+        phoneNum : event.currentTarget.value
+      })
+      .then(res => {
+        setPhoneNumCheck(res.data)
+        if(res.data === 1){
+          alert('이미 존재하는 전화번호입니다.')
+        }
+        
+      })
+      .catch(error => console.log(error));
+    }
   };
 
   const onPasswordHandler = (event) => {
@@ -101,11 +116,11 @@ function SignUp() {
     }
   };
 
-  // 비밀번호 유효성 검사 함수
+  // 전화번호 유효성 검사 함수
   const validatePhoneNum = (phoneNumber) => {
     const phoneNumberPattern = /^010\d{4}\d{4}$/
-
-    if (phoneNumberPattern.test(phoneNumber)) {
+    
+    if (phoneNumberPattern.test(phoneNumber) && phonNumCheck !== 1) {
       return true
     } else {
       return false
@@ -140,8 +155,9 @@ function SignUp() {
       validateDateOfBirth(birthday) &&
       gender !== null &&
       studentsConfirm !== null &&
-      (individualChecks.agree1 && individualChecks.agree2)
-    );
+      (individualChecks.agree1 && individualChecks.agree2) 
+      
+    )
   };
 
   const signupSubmit = async() => {
@@ -155,7 +171,7 @@ function SignUp() {
   return (
     <>
       <div class="signup-container">
-        <div class="signup-title" onClick={() => console.log("test")}>
+        <div class="signup-title" >
           회원가입
         </div>
 
