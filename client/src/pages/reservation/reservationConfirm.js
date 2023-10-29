@@ -3,11 +3,12 @@ import styled from "styled-components";
 import axios from 'axios';
 import { useUser } from '../../userContext';
 import { useNavigate } from "react-router-dom";
+import { useServer } from '../../serverContext';
 
 function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount, selectedTime, totalPrice, selectedReservTime, setConfirmModal }) {
 
   const navigate = useNavigate();
-
+  const { server } = useServer();
   const [clickYesNo, setClickYesNo] = useState('');
   const [inputText, setInputText] = useState('');
   const { user } = useUser();
@@ -26,7 +27,7 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
   }
 
   const onClickYes = async () => {
-    const SERVER_URL = 'http://localhost:8001/reservation'
+    const SERVER_URL = server+'/reservation'
     await axios.post(SERVER_URL, {
       client_id: id,
       name: name,
@@ -51,7 +52,7 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
           return false;
         }
         setClickYesNo('yes')
-        const SERVER_URL1 = 'http://localhost:8001/reservations_details'
+        const SERVER_URL1 = server+'/reservations_details'
         axios.post(SERVER_URL1, {
           client_id: id,
           name: name,

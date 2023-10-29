@@ -3,11 +3,13 @@ import styled from "styled-components";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useServer } from '../../../serverContext';
 
 function MyTreeCancleModal({ setCancleModal, cancleData }) {
   
   const navigate = useNavigate();
   
+  const server = useServer();
   const parts = cancleData.reservation_date.split('.');
   const formattedDate = `20${parts[0]}.${parts[1]}.${parts[2]}`;
   const reservation_time = cancleData.reservation_time.split(' ').join('');
@@ -28,7 +30,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
   }
   //취소하면 reservation_details 테이블에서 데이터 삭제
   const getCancle = async () => {
-    const SERVER_URL = 'http://localhost:8001/reservationCancle';
+    const SERVER_URL = server+'/reservationCancle';
     try {
         await axios.post(SERVER_URL, {
           id: cancleData.id
@@ -41,7 +43,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
   //취소하면 reservations 테이블 remain_count + 1
   const getCancle1 = async () => {
     try {
-      const SERVER_URL = 'http://localhost:8001/reservationCancle1'
+      const SERVER_URL = server+'/reservationCancle1'
       axios.post(SERVER_URL, {
         client_id : cancleData.client_id,
         prog_name : cancleData.prog_name,
@@ -55,7 +57,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
   //취소하면 reservation_list 테이블에 값넣기
   const getCancle2 = async () => {
     try {
-      const SERVER_URL = 'http://localhost:8001/reservationCancle2'
+      const SERVER_URL = server+'/reservationCancle2'
       axios.post(SERVER_URL, {
         client_id: cancleData.client_id,
         name: cancleData.name,

@@ -3,9 +3,11 @@ import Header from '../../component/header';
 import { useState } from 'react';
 import { useUser } from '../../userContext';
 import axios from 'axios';
-
+import { useServer } from '../../serverContext';
 function PasswordChange() {
 
+
+    const { server } = useServer();
     const [showExistingPassword, setShowExistingPassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showReEnterPassword, setShowReEnterPassword] = useState(false);
@@ -51,7 +53,7 @@ function PasswordChange() {
     const changePasswordSubmit = async() => {
         // 디비에 보내고 홈으로 이동시킬지, 모달창을 띄울지는 추후 상의 필요
         // 폰넘버 변경 
-        const SERVER_URL = 'http://localhost:8001/passwdchange'
+        const SERVER_URL = server+ '/passwdchange'
 
         await axios.post(SERVER_URL, { originPasswd, password,userId })
             .then(res => {

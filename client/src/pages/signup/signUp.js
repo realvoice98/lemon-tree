@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import '../../assets/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { useServer } from '../../serverContext';
 
 function SignUp() {
 
   const navigate = useNavigate();
 
+  const server = useServer();
   const [phoneNum, setPhoneNum] = useState("");
   const [phonNumCheck, setPhoneNumCheck] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +63,7 @@ function SignUp() {
   const onPhoneNumHandler = (event) => {
     setPhoneNum(event.currentTarget.value);
     if(event.currentTarget.value.length===11){
-      const SERVER_URL = 'http://localhost:8001/phoneNumCheck'
+      const SERVER_URL = server+'/phoneNumCheck'
       axios.post(SERVER_URL,{
         phoneNum : event.currentTarget.value
       })
@@ -161,7 +162,7 @@ function SignUp() {
   };
 
   const signupSubmit = async() => {
-    const SERVER_URL = 'http://localhost:8001/signup'
+    const SERVER_URL = server+'/signup'
     await axios.post(SERVER_URL,{phoneNum,password,name,birthday,gender,studentsConfirm,marketing})
 
     alert('회원가입이 성공적으로 완료되었습니다.')

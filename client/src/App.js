@@ -10,9 +10,11 @@ import MyTree from './pages/reservation/myTree';
 import Reservation from './pages/reservation/reservation';
 import { UserProvider } from './userContext';
 import MoreReserv from './pages/reservation/moreReserv';
+import { ServerProvider } from './serverContext';
 
 function App() {
   return (
+    <ServerProvider>
     <UserProvider>
     <div className="MainContainer">
       <Routes>
@@ -30,6 +32,7 @@ function App() {
       </Routes>
     </div>
     </UserProvider>
+    </ServerProvider>
   );
 }
 

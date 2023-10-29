@@ -3,6 +3,7 @@ import Header from '../../component/header';
 import axios from 'axios';
 import MyTreeCancleModal from './modal/myTreeCancleModal';
 import MyTreeReservModal from './modal/myTreeReservModal';
+import { useServer } from '../../serverContext';
 
 
 function MyTree(props) {
@@ -12,6 +13,8 @@ function MyTree(props) {
         getMyReservation()
         getReservationList()
     }, [])
+
+    const { server } = useServer();
 
     const [myTree, setMyTree] = useState([]);
     const [myReservation, setMyReservation] = useState([]);
@@ -42,7 +45,7 @@ function MyTree(props) {
     // 잔여횟수
     const getMyTree = async () => {
         const client_id = sessionStorage.getItem('id');
-        const SERVER_URL = 'http://localhost:8001/myTree';
+        const SERVER_URL = server+'/myTree';
         try {
             const response = await axios.get(SERVER_URL, {
                 params: { client_id }
@@ -56,7 +59,7 @@ function MyTree(props) {
     // 예약내역
     const getMyReservation = async () => {
         const client_id = sessionStorage.getItem('id');
-        const SERVER_URL = 'http://localhost:8001/myReservation';
+        const SERVER_URL = server+'/myReservation';
         try {
             const response = await axios.get(SERVER_URL, {
                 params: { client_id }
@@ -70,7 +73,7 @@ function MyTree(props) {
     // 예약목록
     const getReservationList = async () => {
         const client_id = sessionStorage.getItem('id');
-        const SERVER_URL = 'http://localhost:8001/reservationList';
+        const SERVER_URL = server+'/reservationList';
         try {
             const response = await axios.get(SERVER_URL, {
                 params: { client_id }

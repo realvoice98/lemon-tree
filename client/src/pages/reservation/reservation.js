@@ -7,9 +7,11 @@ import { useState } from 'react';
 import ReservationConfirm from './reservationConfirm';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useServer } from '../../serverContext';
 
 function Reservation() {
 
+  const { server } = useServer();
   const [dateValue, changeDate] = useState(new Date());
   const [chooseDay, setChooseDay] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState('선택한 프로그램');
@@ -48,7 +50,7 @@ function Reservation() {
 
 
   const getOperaingDate = async () => {
-    const SERVER_URL = 'http://localhost:8001/operatingdate'
+    const SERVER_URL = server+'/operatingdate'
     await axios.get(SERVER_URL)
       .then(res => {
         setEndDate(res.data[0].end_date)
@@ -58,7 +60,7 @@ function Reservation() {
   }
 
   const getPrograms = async () => {
-    const SERVER_URL = 'http://localhost:8001/programs'
+    const SERVER_URL = server+'/programs'
     await axios.get(SERVER_URL)
       .then(res => {
         setProgramList(res.data)
@@ -170,7 +172,7 @@ function Reservation() {
   //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
   useEffect(() => {
 
-    const SERVER_URL = 'http://localhost:8001/ableTime'
+    const SERVER_URL = server+'/ableTime'
     axios.post(SERVER_URL, { trimmedDate })
       .then(res => {
         const timelist = res.data;

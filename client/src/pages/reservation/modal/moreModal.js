@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { useLocation, useNavigate } from "react-router-dom";
+import { useServer } from '../../../serverContext';
 
 function MoreModal({dateValue, selectedTime, setConfirmModal }) {
 
   const navigate = useNavigate();
 
+  const server = useServer();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const reservId = searchParams.get("id");
@@ -33,7 +35,7 @@ function MoreModal({dateValue, selectedTime, setConfirmModal }) {
   }
 
   const onClickYes = async () => {
-    const SERVER_URL = 'http://localhost:8001/reservationMore'
+    const SERVER_URL = server+'/reservationMore'
     await axios.post(SERVER_URL, {
       id: reservId,
       note: inputText,
@@ -42,7 +44,7 @@ function MoreModal({dateValue, selectedTime, setConfirmModal }) {
     })
       .then(res => {
         setClickYesNo('yes')
-        const SERVER_URL = 'http://localhost:8001/reservationMore1'
+        const SERVER_URL =  server+'/reservationMore1'
         axios.post(SERVER_URL, {
           client_id: id,
           name: name,

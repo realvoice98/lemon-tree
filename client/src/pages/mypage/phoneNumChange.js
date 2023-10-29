@@ -3,9 +3,11 @@ import Header from '../../component/header';
 import { useState } from 'react';
 import { useUser } from '../../userContext';
 import axios from 'axios';
+import { useServer } from '../../serverContext';
 
 function PhoneNumChange() {
 
+    const { server } = useServer();
     const [newPhoneNum,setNewPhoneNum] = useState("");
     const [phoneNunCheck, setPhoneNumCheck] = useState("");
     const { user, setUser }  = useUser();
@@ -15,7 +17,7 @@ function PhoneNumChange() {
     const onPhoneNumHandler = (event) => {
       setNewPhoneNum(event.currentTarget.value);
       if(event.currentTarget.value.length===11){
-        const SERVER_URL = 'http://localhost:8001/phoneNumCheck'
+        const SERVER_URL = server+'/phoneNumCheck'
         axios.post(SERVER_URL,{
           phoneNum : event.currentTarget.value
         })
@@ -60,7 +62,7 @@ function PhoneNumChange() {
 
   const changePhoneNumSubmit = async() => {
     // 폰넘버 변경 
-    const SERVER_URL = 'http://localhost:8001/phonenumchange'
+    const SERVER_URL = server + '/phonenumchange'
 
       await axios.post(SERVER_URL, { originalPhoneNum, newPhoneNum, userId })
       .then(res => {

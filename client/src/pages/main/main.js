@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useUser } from '../../userContext';
+import { useServer } from '../../serverContext';
 
 function Main() {
 
@@ -14,6 +15,8 @@ function Main() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const { user } = useUser();
+    const { server } = useServer();
+
 
     useEffect(() => {
         getPrograms();
@@ -33,7 +36,7 @@ function Main() {
     }
 
     const getOperaingDate = async () => {
-        const SERVER_URL = 'http://localhost:8001/operatingdate'
+        const SERVER_URL = server+'/operatingdate'
         await axios.get(SERVER_URL)
             .then(res => {
                 setEndDate(formatDate(res.data[0].end_date))
@@ -43,7 +46,7 @@ function Main() {
     }
 
     const getPrograms = async () => {
-        const SERVER_URL = 'http://localhost:8001/programs'
+        const SERVER_URL = server+'/programs'
         await axios.get(SERVER_URL)
             .then(res => {
                 

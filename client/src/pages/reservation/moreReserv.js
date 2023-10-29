@@ -8,9 +8,12 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import MoreModal from './modal/moreModal';
 import { useLocation } from 'react-router-dom';
+import { useServer } from '../../serverContext';
 
 function MoreReserv() {
 
+
+  const { server } = useServer();
   const [dateValue, changeDate] = useState(new Date());
   const [chooseDay, setChooseDay] = useState(false);
   const [selectedTime, setSelectedTime] = useState('');
@@ -49,7 +52,7 @@ function MoreReserv() {
 
 
   const getOperaingDate = async () => {
-    const SERVER_URL = 'http://localhost:8001/operatingdate'
+    const SERVER_URL = server+'/operatingdate'
     await axios.get(SERVER_URL)
       .then(res => {
         setEndDate(res.data[0].end_date)
@@ -123,7 +126,7 @@ function MoreReserv() {
   //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
   useEffect(() => {
 
-    const SERVER_URL = 'http://localhost:8001/ableTime'
+    const SERVER_URL = server+ '/ableTime'
     axios.post(SERVER_URL, { trimmedDate })
       .then(res => {
         const timelist = res.data;

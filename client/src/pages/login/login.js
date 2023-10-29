@@ -4,14 +4,17 @@ import axios from 'axios';
 import { useNavigate} from 'react-router-dom';
 import { useUser } from '../../userContext';
 import { useEffect } from 'react';
+import { useServer } from '../../serverContext';
 
 function Login() {
 
   const { setUser } = useUser();
+  const { server } = useServer();
 
   const [phoneNum, setPhoneNum] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if(sessionStorage.getItem('phone')){
@@ -32,7 +35,7 @@ function Login() {
   }
 
   const loginSubmit = async() => {
-    const SERVER_URL = 'http://localhost:8001/login'
+    const SERVER_URL = server+'/login'
     try {
       const response = await axios.post(SERVER_URL, { phoneNum, password });
 

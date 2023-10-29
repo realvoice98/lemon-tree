@@ -23,7 +23,7 @@ router.get('/myReservation', (req, res) => {
   const client_id = req.query.client_id;
 
   db.query(
-    'SELECT * FROM reservations_details WHERE client_id = ? AND reservation_status = "예약대기" OR reservation_status = "예약확정"',
+    'SELECT * FROM reservations_details WHERE client_id = ? AND (reservation_status = "예약대기" OR reservation_status = "예약확정")',
     [client_id],
     (error, rows) => {
         if (error) throw error;
