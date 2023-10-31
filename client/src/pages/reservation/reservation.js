@@ -109,6 +109,23 @@ function Reservation() {
     setTotalPrice(price);
   }
 
+  const onClickDay = () =>{
+    //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
+    setChooseDay(true)
+    const SERVER_URL = server+'/ableTime'
+    axios.post(SERVER_URL, { trimmedDate })
+      .then(res => {
+        const timelist = res.data;
+        const setData = timelist.map(item => item.reservation_time);
+        setUnableTimeList(setData);
+        const updatedTimeList = timeList.map(time => !setData.includes(time));
+        setUnableTimeIdx(updatedTimeList);
+      })
+      .catch(error => console.log(error));
+  
+
+  }
+
   // 월요일과 수요일만 활성화 또는 비활성화하는 함수
   const tileDisabled = ({ date, view }) => {
     const startDate = new Date(openDate[0], openDate[1], openDate[2]); // 10월 1일
@@ -167,25 +184,7 @@ function Reservation() {
   useEffect(() => {
     getOperaingDate();
     getPrograms();
-  }, [])
-
-  //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
-  useEffect(() => {
-
-    const SERVER_URL = server+'/ableTime'
-    axios.post(SERVER_URL, { trimmedDate })
-      .then(res => {
-        const timelist = res.data;
-        const setData = timelist.map(item => item.reservation_time);
-        setUnableTimeList(setData);
-        const updatedTimeList = timeList.map(time => !unableTimeList.includes(time));
-        setUnableTimeIdx(updatedTimeList);
-      })
-      .catch(error => console.log(error));
-    // };
-
-
-  }, [tileContent])
+  }, []);
 
   return (
     <>
@@ -199,7 +198,7 @@ function Reservation() {
       <div class="reservation-content-container">
         <Calendar
           onChange={changeDate}
-          onClickDay={() => setChooseDay(true)}
+          onClickDay={() => onClickDay()}
           formatDay={(locale, date) =>
             date.toLocaleString('en', { day: 'numeric' })
           }
@@ -267,7 +266,6 @@ function Reservation() {
           {timeList.map((item, idx) => {
 
             const isDisabled = !unableTimeIdx[idx]; // updatedTimeList가 false이면 disabled
-
             return (
               <button
                 key={idx}

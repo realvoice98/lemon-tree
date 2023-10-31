@@ -9,7 +9,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
   
   const navigate = useNavigate();
   
-  const server = useServer();
+  const { server } = useServer();
   const parts = cancleData.reservation_date.split('.');
   const formattedDate = `20${parts[0]}.${parts[1]}.${parts[2]}`;
   const reservation_time = cancleData.reservation_time.split(' ').join('');

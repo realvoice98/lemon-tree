@@ -7,8 +7,8 @@ router.use(cors());
 router.use(bodyParser.json()) // for parsing application/json
 router.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-router.get('/myTree', (req, res) => {
-  const client_id = req.query.client_id;
+router.post('/myTree', (req, res) => {
+  const client_id = req.body.client_id;
 
   db.query(
     'SELECT * FROM reservations WHERE client_id = ? AND total_count > 1 AND remain_count > 0',
@@ -60,11 +60,18 @@ router.post('/reservationCancle1', (req, res) => {
     const prog_time = req.body.prog_time;
 
     db.query(
-      'UPDATE reservations SET remain_count = remain_count + 1 WHERE client_id = ? AND prog_name = ? AND prog_time = ?',
+      'UPDATE reservations SET remain_count = remain_count + 1 WHERE client_id = ? AND prog_name = ? AND prog_time = ? AND remain_count <= total_count',
       [client_id,prog_name,prog_time],
       (error, rows) => {
           if (error) throw error;
       });
+    db.query(
+      'DELETE FROM reservations WHERE client_id = ? AND prog_name = ? AND prog_time = ? AND remain_count = total_count',
+      [client_id, prog_name, prog_time],
+      (deleteError, deleteResult) => {
+        if (deleteError) throw deleteError;
+      }
+    );
   });
 
   // 예약취소할경우 예약목록에 값넣기

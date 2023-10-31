@@ -9,7 +9,7 @@ router.use(bodyParser.urlencoded({ extended: true })) // for parsing application
 
 router.get('/operatingdate', (req,res) => {
   db.query(
-    'SELECT * FROM operating_date',
+    'SELECT * FROM operating_date ORDER BY id DESC LIMIT 1',
     (error, rows) => {
         if (error) throw error;
         res.send(rows);
@@ -20,8 +20,9 @@ router.post('/ableTime', (req,res) => {
     const date = req.body.trimmedDate;
     const reservation_status = '예약확정';
     const reservation_status1 = '결제완료';
+    
     db.query(
-      'SELECT reservation_time FROM reservations_list WHERE reservation_date = ? AND (reservation_status = ? OR reservation_status = ?)GROUP BY prog_time HAVING COUNT(*) >= 2',
+      'SELECT reservation_time FROM reservations_details WHERE reservation_date = ? AND (reservation_status = ? OR reservation_status = ?) GROUP BY reservation_time HAVING COUNT(*) >= 2',
       [date, reservation_status,reservation_status1],
       (error, rows) => {
           if (error) throw error;

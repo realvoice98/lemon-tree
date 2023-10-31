@@ -8,11 +8,11 @@ import { useServer } from '../../serverContext';
 
 function MyTree(props) {
 
-    useEffect(() => {
-        getMyTree()
-        getMyReservation()
-        getReservationList()
-    }, [])
+    // useEffect(() => {
+    //     getMyTree()
+    //     getMyReservation()
+    //     getReservationList()
+    // }, [])
 
     const { server } = useServer();
 
@@ -47,8 +47,8 @@ function MyTree(props) {
         const client_id = sessionStorage.getItem('id');
         const SERVER_URL = server+'/myTree';
         try {
-            const response = await axios.get(SERVER_URL, {
-                params: { client_id }
+            const response = await axios.post(SERVER_URL, {
+                client_id,
             });
             setMyTree(response.data)
         } catch (error) {

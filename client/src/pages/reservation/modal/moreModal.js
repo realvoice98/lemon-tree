@@ -8,7 +8,7 @@ function MoreModal({dateValue, selectedTime, setConfirmModal }) {
 
   const navigate = useNavigate();
 
-  const server = useServer();
+  const {server} = useServer();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const reservId = searchParams.get("id");

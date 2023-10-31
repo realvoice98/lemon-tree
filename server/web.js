@@ -24,6 +24,10 @@ app.use('/',count);
 app.use('/',phoneNumChange);
 app.use('/',passwordChange);
 
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
+
 // Client End
 
 //관리자 start

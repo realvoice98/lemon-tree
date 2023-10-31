@@ -21,14 +21,14 @@ function App() {
         <Route path='/main' element={<Main />} />
         <Route path='/' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
-          {/* 내 정보 관리 */}
-          <Route path='/phoneNumChange' element={<PhoneNumChange />} />
-          <Route path='/passwordChange' element={<PasswordChange />} />
-          <Route path='/studentConfirm' element={<StudentConfirm />} />
-          {/* 예약 관리 */}
-          <Route path='/myTree' element={<MyTree />} />
-          <Route path='/reservation' element={<Reservation />} />
-          <Route path='/moreReserv' element={<MoreReserv />} />
+        {/* 내 정보 관리 */}
+        <Route path='/phoneNumChange' element={<PhoneNumChange />} />
+        <Route path='/passwordChange' element={<PasswordChange />} />
+        <Route path='/studentConfirm' element={<StudentConfirm />} />
+        {/* 예약 관리 */}
+        <Route path='/myTree' element={<MyTree />} />
+        <Route path='/reservation' element={<Reservation />} />
+        <Route path='/moreReserv' element={<MoreReserv />} />
       </Routes>
     </div>
     </UserProvider>

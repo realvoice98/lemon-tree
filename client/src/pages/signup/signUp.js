@@ -8,7 +8,7 @@ function SignUp() {
 
   const navigate = useNavigate();
 
-  const server = useServer();
+  const {server} = useServer();
   const [phoneNum, setPhoneNum] = useState("");
   const [phonNumCheck, setPhoneNumCheck] = useState("");
   const [password, setPassword] = useState("");
