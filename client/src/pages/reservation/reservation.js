@@ -81,10 +81,10 @@ function Reservation() {
   const lastIndex = formattedDate.lastIndexOf('.');
   const trimmedDate = formattedDate.substring(0, lastIndex); // 맨 뒤의 점 제거
 
-  const toggleProgram = () => {
+  const plzChooseDate = () => {
     if (chooseDay === false) {
       alert('날짜를 선택해주세요');
-      return null;
+      return false;
     } else {
       setToggleStatus(!toggleStatus);
     }
@@ -112,6 +112,9 @@ function Reservation() {
   const onClickDay = () =>{
     //클릭한 날짜의 예약가능 시간대 데이터 가져오기 
     setChooseDay(true)
+  }
+
+  useEffect(()=>{
     const SERVER_URL = server+'/ableTime'
     axios.post(SERVER_URL, { trimmedDate })
       .then(res => {
@@ -122,9 +125,7 @@ function Reservation() {
         setUnableTimeIdx(updatedTimeList);
       })
       .catch(error => console.log(error));
-  
-
-  }
+  },[trimmedDate])
 
   // 월요일과 수요일만 활성화 또는 비활성화하는 함수
   const tileDisabled = ({ date, view }) => {
@@ -180,6 +181,16 @@ function Reservation() {
     );
   };
 
+  const onSelectReservTime = (item) => {
+    if (chooseDay === false) {
+      alert('날짜를 선택해주세요');
+      return false;
+    }else{
+      setSelectedReservTime(item)
+    }
+    
+  }
+
 
   useEffect(() => {
     getOperaingDate();
@@ -220,7 +231,7 @@ function Reservation() {
       </div>
       <div class="reservation-content-container">
         <div class="reservation-program-container">
-          <div class="reservation-program-selected" onClick={toggleProgram} >
+          <div class="reservation-program-selected" onClick={()=>plzChooseDate()} >
             <div>{viewProgram}</div>
             <img src="/assets/icon_programlist_toggle.png" alt="" />
           </div>
@@ -271,7 +282,7 @@ function Reservation() {
                 key={idx}
                 className={`reservation-time-content ${selectedReservTime === item ? 'reservation-time-selected' : ''} ${isDisabled ? 'reservation-time-disabled' : ''}`}
                 disabled={isDisabled}
-                onClick={() => setSelectedReservTime(item)}>
+                onClick={() => onSelectReservTime(item)}>
                 {item}
               </button>
             )

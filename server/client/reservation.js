@@ -18,11 +18,11 @@ router.get('/operatingdate', (req,res) => {
 
 router.post('/ableTime', (req,res) => {
     const date = req.body.trimmedDate;
-    const reservation_status = '예약확정';
-    const reservation_status1 = '결제완료';
+    const reservation_status = '예약대기';
+    const reservation_status1 = '예약확정';
     
     db.query(
-      'SELECT reservation_time FROM reservations_details WHERE reservation_date = ? AND (reservation_status = ? OR reservation_status = ?) GROUP BY reservation_time HAVING COUNT(*) >= 2',
+      'SELECT reservation_time FROM reservations_details WHERE reservation_date = ? AND (reservation_status = ? OR reservation_status = ?) GROUP BY reservation_time HAVING (COUNT(*) >= 2 OR (reservation_time = "18 : 30" AND COUNT(*) >= 1))',
       [date, reservation_status,reservation_status1],
       (error, rows) => {
           if (error) throw error;
@@ -75,7 +75,7 @@ db.query(
         }
       }
     }
-  );
+  );  
 })
 
 

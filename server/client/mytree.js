@@ -11,7 +11,7 @@ router.post('/myTree', (req, res) => {
   const client_id = req.body.client_id;
 
   db.query(
-    'SELECT * FROM reservations WHERE client_id = ? AND total_count > 1 AND remain_count > 0',
+    'SELECT * FROM reservations WHERE client_id = ? AND total_count > 1 AND remain_count > 0 AND reservation_status = "결제완료"',
     [client_id],
     (error, rows) => {
         if (error) throw error;
