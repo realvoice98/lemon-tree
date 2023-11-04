@@ -21,6 +21,9 @@ function Main() {
     useEffect(() => {
         getPrograms();
         getOperaingDate();
+        if(sessionStorage.getItem('phone') === null){
+            navigate('/');
+          }
     }, [])
 
     // 2023-10-23 -> 23.10.23 바꿔주는 함수

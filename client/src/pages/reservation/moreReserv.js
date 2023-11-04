@@ -7,13 +7,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import MoreModal from './modal/moreModal';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useServer } from '../../serverContext';
 
 function MoreReserv() {
 
 
   const { server } = useServer();
+  const navigate = useNavigate();
   const [dateValue, changeDate] = useState(new Date());
   const [chooseDay, setChooseDay] = useState(false);
   const [selectedTime, setSelectedTime] = useState('');
@@ -121,6 +122,11 @@ function MoreReserv() {
 
   useEffect(() => {
     getOperaingDate();
+    if(sessionStorage.getItem('phone') === null){
+      navigate('/');
+    }
+        
+
   }, [])
 
   //클릭한 날짜의 예약가능 시간대 데이터 가져오기 

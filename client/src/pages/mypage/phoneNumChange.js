@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useUser } from '../../userContext';
 import axios from 'axios';
 import { useServer } from '../../serverContext';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function PhoneNumChange() {
 
@@ -13,6 +15,14 @@ function PhoneNumChange() {
     const { user, setUser }  = useUser();
     const originalPhoneNum = sessionStorage.getItem("phone");
     const userId = sessionStorage.getItem('id');
+
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if(sessionStorage.getItem('phone') === null){
+            navigate('/');
+          }
+    }, [])
 
     const onPhoneNumHandler = (event) => {
       setNewPhoneNum(event.currentTarget.value);

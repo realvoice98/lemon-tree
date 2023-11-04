@@ -4,15 +4,18 @@ import axios from 'axios';
 import MyTreeCancleModal from './modal/myTreeCancleModal';
 import MyTreeReservModal from './modal/myTreeReservModal';
 import { useServer } from '../../serverContext';
+import { useNavigate } from 'react-router-dom';
 
 
 function MyTree(props) {
 
-    // useEffect(() => {
-    //     getMyTree()
-    //     getMyReservation()
-    //     getReservationList()
-    // }, [])
+    useEffect(() => {
+        if(sessionStorage.getItem('phone') === null){
+            navigate('/');
+          }
+    }, [])
+
+    const navigate = useNavigate();
 
     const { server } = useServer();
 
