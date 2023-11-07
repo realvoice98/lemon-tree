@@ -9,11 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 function MyTree(props) {
 
-    useEffect(() => {
-        if(sessionStorage.getItem('phone') === null){
-            navigate('/');
-          }
-    }, [])
+    
 
     const navigate = useNavigate();
 
@@ -38,6 +34,12 @@ function MyTree(props) {
         setReservModal(true)
         setMoreData(myTree)
     }
+
+    useEffect(() => {
+        if(sessionStorage.getItem('phone') === null){
+            navigate('/');
+          }
+    }, [])
 
     useEffect(() => {
         getMyTree()

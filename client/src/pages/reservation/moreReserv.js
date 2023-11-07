@@ -125,8 +125,6 @@ function MoreReserv() {
     if(sessionStorage.getItem('phone') === null){
       navigate('/');
     }
-        
-
   }, [])
 
   //클릭한 날짜의 예약가능 시간대 데이터 가져오기 

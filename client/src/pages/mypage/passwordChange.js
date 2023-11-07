@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useUser } from '../../userContext';
 import axios from 'axios';
 import { useServer } from '../../serverContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 function PasswordChange() {
 
 
@@ -17,6 +19,13 @@ function PasswordChange() {
     const { user, setUser }  = useUser();
     const originPasswd = sessionStorage.getItem('passwd');
     const userId = sessionStorage.getItem('id');
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if(sessionStorage.getItem('phone') === null){
+            navigate('/');
+          }
+    }, [])
 
     const onExistingPasswordHandler = (event) => {
         setExistingPassword(event.currentTarget.value);

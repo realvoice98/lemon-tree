@@ -47,6 +47,7 @@ function MoreModal({dateValue, selectedTime, setConfirmModal }) {
         const SERVER_URL =  server+'/reservationMore1'
         axios.post(SERVER_URL, {
           client_id: id,
+          reservation_id : reservId,
           name: name,
           phone: phone,
           gender: gender,

@@ -46,8 +46,10 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
       const SERVER_URL = server+'/reservationCancle1'
       axios.post(SERVER_URL, {
         client_id : cancleData.client_id,
+        reservation_id : cancleData.reservation_id,
         prog_name : cancleData.prog_name,
-        prog_time : cancleData.prog_time
+        prog_time : cancleData.prog_time,
+        
       })
     } catch (error) {
         console.log("error : ", error);

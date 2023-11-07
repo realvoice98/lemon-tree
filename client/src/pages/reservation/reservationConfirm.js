@@ -45,16 +45,17 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
       reservation_status: '예약대기'
     })
       .then(res => {
-        console.log(res.data);
-        if (res.data === 1){
-          alert('이미 해당 프로그램이 존재합니다.')
-          navigate('/myTree');
-          return false;
-        }
+        // if (res.data === 1){
+        //   alert('이미 해당 프로그램이 존재합니다.')
+        //   navigate('/myTree');
+        //   return false;
+        // }
+        const reservation_id = res.data;
         setClickYesNo('yes')
         const SERVER_URL1 = server+'/reservations_details'
         axios.post(SERVER_URL1, {
           client_id: id,
+          reservation_id : reservation_id,
           name: name,
           phone: phone,
           gender: gender,

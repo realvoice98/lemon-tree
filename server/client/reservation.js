@@ -50,15 +50,15 @@ router.post('/ableTime', (req,res) => {
      const reservation_status = req.body.reservation_status;
    
      // 먼저 이미 해당 조건을 만족하는 데이터가 있는지 확인
-db.query(
-    "SELECT 1 FROM reservations WHERE client_id = ? AND prog_name = ? AND prog_time = ?",
-    [client_id, prog_name, prog_time],
-    (err, result) => {
-      if (err) {
-        res.status(500).send("데이터베이스 오류");
-      } else {
-        if (result.length === 0) {
-          // 해당 조건을 만족하는 데이터가 없을 경우에만 INSERT 실행
+// db.query(
+//     "SELECT 1 FROM reservations WHERE client_id = ? AND prog_name = ? AND prog_time = ?",
+//     [client_id, prog_name, prog_time],
+//     (err, result) => {
+//       if (err) {
+//         res.status(500).send("데이터베이스 오류");
+//       } else {
+//         if (result.length === 0) {
+//           // 해당 조건을 만족하는 데이터가 없을 경우에만 INSERT 실행
           db.query(
             "INSERT INTO reservations (client_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
             [client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
@@ -66,17 +66,18 @@ db.query(
                 if (err) {
                     console.log(err);
                 } else {
-                  res.send("성공")
+                  const insertedId = result.insertId;
+                  res.send(insertedId.toString());
                 }
             }
         );
-        } else {
-          res.send("1");
-        }
-      }
-    }
-  );  
-})
+    //     } else {
+    //       res.send("1");
+    //     }
+    //   }
+    // }
+  // );  
+});
 
 
 
@@ -84,6 +85,7 @@ db.query(
 router.post('/reservations_details', (req, res) => {
      const remain_data = parseInt(req.body.prog_count,10);
      const client_id = req.body.client_id;
+     const reservation_id = req.body.reservation_id;
      const name = req.body.name;
      const phone = req.body.phone;
      const gender = req.body.gender;
@@ -101,8 +103,8 @@ router.post('/reservations_details', (req, res) => {
    
    
      db.query(
-         "INSERT INTO reservations_details (client_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
-         [client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
+         "INSERT INTO reservations_details (client_id, reservation_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
+         [client_id, reservation_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
          (err, result) => {
              if (err) {
                  console.log(err);

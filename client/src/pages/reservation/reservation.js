@@ -8,10 +8,12 @@ import ReservationConfirm from './reservationConfirm';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useServer } from '../../serverContext';
+import { useNavigate } from 'react-router-dom';
 
 function Reservation() {
 
   const { server } = useServer();
+  const navigate = useNavigate();
   const [dateValue, changeDate] = useState(new Date());
   const [chooseDay, setChooseDay] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState('선택한 프로그램');
@@ -195,6 +197,10 @@ function Reservation() {
   useEffect(() => {
     getOperaingDate();
     getPrograms();
+   
+    if (sessionStorage.getItem('phone') === null) {
+      navigate('/');
+    }
   }, []);
 
   return (
