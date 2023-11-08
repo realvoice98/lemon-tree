@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 function MyTreeReservModal({ setReservModal, moreData }) {
 
   return (
-    <Overlay onClick={() => setReservModal(false)}>
+    <Overlay>
       <ModalWrap onClick={(e) => e.stopPropagation()}>
       <div className="myTree-modal-header">
           <div className="myTree-modal-title">

@@ -35,33 +35,37 @@ function MoreModal({dateValue, selectedTime, setConfirmModal }) {
   }
 
   const onClickYes = async () => {
-    const SERVER_URL = server+'/reservationMore'
+    const SERVER_URL = server+'/reservationMore1'
     await axios.post(SERVER_URL, {
-      id: reservId,
+      client_id: id,
+      reservation_id: reservId,
+      name: name,
+      phone: phone,
+      gender: gender,
+      std: std,
+      prog_name: progName,
+      prog_time: progTime,
+      remain_count: remain_count,
+      total_count: total_count,
       note: inputText,
       reservation_date: dateValue,
       reservation_time: selectedTime,
+      price: price,
+      discount: price,
+      reservation_status: '예약대기'
     })
       .then(res => {
+        if (res.data === 1){
+          alert('선택하신 시간의 예약 가능한 인원수를 초과했습니다.')
+          return false;
+        }
         setClickYesNo('yes')
-        const SERVER_URL =  server+'/reservationMore1'
+        const SERVER_URL =  server+'/reservationMore'
         axios.post(SERVER_URL, {
-          client_id: id,
-          reservation_id : reservId,
-          name: name,
-          phone: phone,
-          gender: gender,
-          std: std,
-          prog_name: progName,
-          prog_time: progTime,
-          remain_count: remain_count,
-          total_count: total_count,
+          id: reservId,
           note: inputText,
           reservation_date: dateValue,
           reservation_time: selectedTime,
-          price: price,
-          discount: price,
-          reservation_status: '예약대기'
         })
       })
       .catch(error => console.log(error));
@@ -76,7 +80,7 @@ function MoreModal({dateValue, selectedTime, setConfirmModal }) {
   }
 
   return (
-    <Overlay onClick={() => setConfirmModal(false)}>
+    <Overlay>
       <ModalWrap onClick={(e) => e.stopPropagation()}>
         {clickYesNo === 'yes' ?
           <>
@@ -154,7 +158,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrap = styled.div`
-  width: 350px;
+  width: 370px;
   height: fit-content;
   border-radius: 15px;
   background-color: #fff;

@@ -83,7 +83,7 @@ function MyTreeCancleModal({ setCancleModal, cancleData }) {
   
 
   return (
-    <Overlay onClick={() => setCancleModal(false)}>
+    <Overlay>
       <ModalWrap onClick={(e) => e.stopPropagation()}>
         {
           confirmModal === '1' ?

@@ -30,89 +30,125 @@ router.post('/ableTime', (req,res) => {
       });
   });
 
-  router.post('/reservation', (req, res) => {
-    const remain_data = parseInt(req.body.prog_count,10);
-   
-     const client_id = req.body.client_id;
-     const name = req.body.name;
-     const phone = req.body.phone;
-     const gender = req.body.gender;
-     const std = req.body.std;
-     const prog_name = req.body.prog_name;
-     const prog_time  = req.body.prog_time;
-     const remain_count = remain_data - 1;
-     const total_count = req.body.prog_count;
-     const note = req.body.note;
-     const reservation_date = req.body.reservation_date;
-     const reservation_time = req.body.reservation_time;
-     const price = req.body.price;
-     const discount = req.body.discount;
-     const reservation_status = req.body.reservation_status;
-   
-     // 먼저 이미 해당 조건을 만족하는 데이터가 있는지 확인
-// db.query(
-//     "SELECT 1 FROM reservations WHERE client_id = ? AND prog_name = ? AND prog_time = ?",
-//     [client_id, prog_name, prog_time],
-//     (err, result) => {
-//       if (err) {
-//         res.status(500).send("데이터베이스 오류");
-//       } else {
-//         if (result.length === 0) {
-//           // 해당 조건을 만족하는 데이터가 없을 경우에만 INSERT 실행
-          db.query(
-            "INSERT INTO reservations (client_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
-            [client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
-            (err, result) => {
-                if (err) {
-                    console.log(err);
+router.post('/reservation', (req, res) => {
+    const remain_data = parseInt(req.body.prog_count, 10);
+
+    const client_id = req.body.client_id;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const gender = req.body.gender;
+    const std = req.body.std;
+    const prog_name = req.body.prog_name;
+    const prog_time = req.body.prog_time;
+    const remain_count = remain_data - 1;
+    const total_count = req.body.prog_count;
+    const note = req.body.note;
+    const reservation_date = req.body.reservation_date;
+    const reservation_time = req.body.reservation_time;
+    const price = req.body.price;
+    const discount = req.body.discount;
+    const reservation_status = req.body.reservation_status;
+
+    let maxRowCount = 2; // 기본값
+
+    // reservation_time이 "18 : 30"인 경우 최대 수용 인원을 1로 설정
+    if (reservation_time === "18 : 30") {
+        maxRowCount = 1;
+    }
+    db.query(
+        "SELECT COUNT(*) as rowCount FROM reservations_details WHERE reservation_date = ? AND reservation_time = ?",
+        [reservation_date, reservation_time],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                // 에러 처리
+            } else {
+                const rowCount = result[0].rowCount;
+
+                if (rowCount < maxRowCount) {
+                    db.query(
+                        "INSERT INTO reservations (client_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
+                        [client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
+                        (err, result) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                const insertedId = result.insertId;
+                                res.send(insertedId.toString());
+                            }
+                        }
+                    );
                 } else {
-                  const insertedId = result.insertId;
-                  res.send(insertedId.toString());
+                    // 예약한 기간, 시간에 2명이 있을경우 1 반환 
+                    res.send("1")
+
                 }
             }
-        );
-    //     } else {
-    //       res.send("1");
-    //     }
-    //   }
-    // }
-  // );  
+        }
+    );
 });
 
 
 
 
 router.post('/reservations_details', (req, res) => {
-     const remain_data = parseInt(req.body.prog_count,10);
-     const client_id = req.body.client_id;
-     const reservation_id = req.body.reservation_id;
-     const name = req.body.name;
-     const phone = req.body.phone;
-     const gender = req.body.gender;
-     const std = req.body.std;
-     const prog_name = req.body.prog_name;
-     const prog_time  = req.body.prog_time;
-     const remain_count = remain_data;
-     const total_count = req.body.prog_count;
-     const note = req.body.note;
-     const reservation_date = req.body.reservation_date;
-     const reservation_time = req.body.reservation_time;
-     const price = req.body.price;
-     const discount = req.body.discount;
-     const reservation_status = req.body.reservation_status;
-   
-   
-     db.query(
-         "INSERT INTO reservations_details (client_id, reservation_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
-         [client_id, reservation_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
-         (err, result) => {
-             if (err) {
-                 console.log(err);
-             } else {
-                 res.send("reservation 성공")
-             }
-         }
-     )
-   })
+    const remain_data = parseInt(req.body.prog_count, 10);
+    const client_id = req.body.client_id;
+    const reservation_id = req.body.reservation_id;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const gender = req.body.gender;
+    const std = req.body.std;
+    const prog_name = req.body.prog_name;
+    const prog_time = req.body.prog_time;
+    const remain_count = remain_data;
+    const total_count = req.body.prog_count;
+    const note = req.body.note;
+    const reservation_date = req.body.reservation_date;
+    const reservation_time = req.body.reservation_time;
+    const price = req.body.price;
+    const discount = req.body.discount;
+    const reservation_status = req.body.reservation_status;
+
+    let maxRowCount = 2; // 기본값
+
+    // reservation_time이 "18 : 30"인 경우 최대 수용 인원을 1로 설정
+    if (reservation_time === "18 : 30") {
+        maxRowCount = 1;
+    }
+    db.query(
+        "SELECT COUNT(*) as rowCount FROM reservations_details WHERE reservation_date = ? AND reservation_time = ?",
+        [reservation_date, reservation_time],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                // 에러 처리
+            } else {
+                const rowCount = result[0].rowCount;
+                if (rowCount < maxRowCount) {
+                    console.log(result[0])
+                    console.log(result[0].rowCount);
+                    // 조건 충족 시에만 데이터를 추가
+                    db.query(
+                        "INSERT INTO reservations_details (client_id, reservation_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
+                        [client_id, reservation_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
+                        (err, result) => {
+                            if (err) {
+                                console.log(err);
+                                // 에러 처리
+                            } else {
+                                res.send("reservation 성공");
+                            }
+                        }
+                    );
+                } else {
+                    // 예약한 기간, 시간에 2명이 있을경우 1 반환 
+                    res.send("1")
+                    console.log("error다 임마")
+                }
+            }
+        }
+    );
+})
 
 module.exports = router;

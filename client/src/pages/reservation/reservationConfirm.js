@@ -45,11 +45,10 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
       reservation_status: '예약대기'
     })
       .then(res => {
-        // if (res.data === 1){
-        //   alert('이미 해당 프로그램이 존재합니다.')
-        //   navigate('/myTree');
-        //   return false;
-        // }
+        if (res.data === 1){
+          alert('선택하신 시간의 예약 가능한 인원수를 초과했습니다.')
+          return false;
+        }
         const reservation_id = res.data;
         setClickYesNo('yes')
         const SERVER_URL1 = server+'/reservations_details'
@@ -89,7 +88,7 @@ function ReservationConfirm({ onClose, dateValue, selectedProgram, selectedCount
   }
 
   return (
-    <Overlay onClick={() => setConfirmModal(false)}>
+    <Overlay>
       <ModalWrap onClick={(e) => e.stopPropagation()}>
         {clickYesNo === 'yes' ?
           <>
@@ -171,7 +170,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrap = styled.div`
-  width: 350px;
+  width: 370px;
   height: fit-content;
   border-radius: 15px;
   background-color: #fff;
