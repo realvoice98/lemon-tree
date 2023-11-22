@@ -2,20 +2,29 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+const session = require('express-session');
+const Memory = require('memorystore')(session);
+router.use(session({ secret: 'tree', resave: false, saveUninitialized: true, store: new Memory({ checkPeriod: 60 * 1000 * 90}) }));
+
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 router.get('/admin/prog_manage', (req, res) => {
-  db.query('SELECT * FROM programs', (error, results, fields) => {
-    if (error) {
-      console.error('쿼리 실행 오류: ' + error);
-      res.status(500).send('서버 오류');
-      return;
-    }
-
-    // 프로그램 데이터를 렌더링할 EJS 템플릿에 전달
-    res.render('prog_manage', { programs: results });
-  });
+  const username = req.session.username;
+  if(!username){
+    res.redirect('/admin')
+  }else{
+    db.query('SELECT * FROM programs', (error, results, fields) => {
+      if (error) {
+        console.error('쿼리 실행 오류: ' + error);
+        res.status(500).send('서버 오류');
+        return;
+      }
+  
+      // 프로그램 데이터를 렌더링할 EJS 템플릿에 전달
+      res.render('prog_manage', { programs: results });
+    });
+  }
 });
 
 router.post('/admin/prog_manage/add_date', (req, res) => {
@@ -41,9 +50,18 @@ router.post('/admin/prog_manage/add_prog_post', (req, res) => {
   const price = req.body.price;
   const discount = req.body.discount;
 
+  function numberComma(num){
+    const cleanNumber = num.toString().replace(/,/g, '');
+    
+    return cleanNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+
+  const commaPrice = numberComma(price);
+  const commaDiscount = numberComma(discount);
+
   db.query(
     'INSERT INTO programs (prog_name, prog_time, prog_count, price, discount) VALUES (?, ?, ?, ?, ?)',
-    [prog_name, prog_time, prog_count, price, discount], (error, results, fields) => {
+    [prog_name, prog_time, prog_count, commaPrice, commaDiscount], (error, results, fields) => {
     if (error) {
       console.error('데이터 추가 오류: ' + error);
       res.send("<script>alert('프로그램 추가 중 오류가 발생했습니다.');location.href='http://localhost:8001/admin/prog_manage';</script>");

@@ -10,6 +10,7 @@
     <div class="manage_main">
         <div class="sidebar">
           <div class="sidebar_box">
+            <a href="/admin/logout" class="logout_btn">로그아웃</a>
             <div class="sidebar_title">
               <span class="sidebar_title_text">Lemon Tree</span>
             </div>
@@ -53,7 +54,10 @@
           </div>
         </div>
         <div class="header">
-          <span class="header_text">Lemon Tree</span>        
+          <div class="header_box">
+            <a href="/admin/logout" class="logout_btn">로그아웃</a>
+            <span class="header_text">Lemon Tree</span> 
+          </div>       
         </div>
         <div class="menu_bar">
           <div class="main_page"><a href="/admin/main" class="menu_text">메인</a></div>
@@ -122,19 +126,19 @@
               </div>
               <div class="info_box time">
                 <span class="box_name prog">시간</span>
-                <input type="text" name="prog_time" class="inputbox time" placeholder="30 or 60">
+                <input type="text" name="prog_time" class="inputbox time" placeholder="2자리 이상 숫자만 입력">
               </div>
               <div class="info_box number">
                 <span class="box_name prog">횟수</span>
-                <input type="text" name="prog_count" class="inputbox number" placeholder="1회 or 3회">
+                <input type="text" name="prog_count" class="inputbox number" placeholder="횟수 입력 ex) 1회">
               </div>
               <div class="info_box price">
                 <span class="box_name prog">정상가</span>
-                <input type="text" name="price" class="inputbox price" placeholder="ex)10,000">
+                <input type="text" name="price" class="inputbox price" placeholder="숫자만 입력">
               </div>
               <div class="info_box discount">
                 <span class="box_name prog">할인가</span>
-                <input type="text" name="discount" class="inputbox discount" placeholder="ex)10,000">
+                <input type="text" name="discount" class="inputbox discount" placeholder="숫자만 입력">
               </div>
             </div>
           <div class="modal_footer">

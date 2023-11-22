@@ -28,6 +28,11 @@ rows.forEach(row => {
     const price = row.querySelector('.price').textContent;
     const id = row.querySelector('.id').textContent;
     const client_id = row.querySelector('.client_id').textContent;
+    const add_date = row.querySelector('.add_date').textContent;
+    const reservation_id = row.querySelector('.reservation_id').textContent;
+
+    const modalHeaderDate = document.querySelector('.modal_header_date'); // modal_header_date 요소 가져오기
+    modalHeaderDate.textContent = add_date;
 
     const priceWithoutComma = price.replace(/,/g, '');
 
@@ -68,7 +73,7 @@ rows.forEach(row => {
     const idInput = modal.querySelector('.inputbox.id');
     const client_idInput = modal.querySelector('.inputbox.client_id');
     const reservation_statusInput = modal.querySelector('.inputbox.reservation_status');
-
+    const reservation_idInput = modal.querySelector('.inputbox.reservation_id');
     // 추출한 데이터를 인풋 태그에 설정
     nameInput.value = name;
     numberInput.value = number;
@@ -85,6 +90,7 @@ rows.forEach(row => {
     idInput.value = id;
     client_idInput.value = client_id;
     reservation_statusInput.value = status;
+    reservation_idInput.value = reservation_id;
     // 클릭된 로우의 데이터를 저장
     clickedRowData = rowData;
 
@@ -143,6 +149,7 @@ function confirmBtn(){
   const total_countInput = document.querySelector('input[name="total_count"]').value;
   const stdInput = document.querySelector('input[name="std"]').value;
   const priceInput = document.querySelector('input[name="price"]').value;
+  const reservation_idInput = document.querySelector('input[name="reservation_id"]').value;
 
   const result = confirm('예약을 확정하시겠습니까?');
 
@@ -163,7 +170,8 @@ function confirmBtn(){
         remain_count: remain_countInput, 
         total_count: total_countInput,
         std: stdInput,
-        price: priceInput
+        price: priceInput,
+        reservation_id: reservation_idInput
     };
 
       // Ajax 요청을 보내고 응답을 처리
@@ -203,6 +211,7 @@ function cancelBtn(){
   const stdInput = document.querySelector('input[name="std"]').value;
   const priceInput = document.querySelector('input[name="price"]').value;
   const reservation_statusInput = document.querySelector('input[name="reservation_status"]').value;
+  const reservation_idInput = document.querySelector('input[name="reservation_id"]').value;
 
   const result = confirm('예약을 취소하시겠습니까?');
 
@@ -224,7 +233,8 @@ function cancelBtn(){
         total_count: total_countInput,
         std: stdInput,
         price: priceInput,
-        reservation_status: reservation_statusInput
+        reservation_status: reservation_statusInput,
+        reservation_id: reservation_idInput
       };
 
       // Ajax 요청을 보내고 응답을 처리
@@ -318,6 +328,7 @@ function paymentBtn(){
   const stdInput = document.querySelector('input[name="std"]').value;
   const priceInput = document.querySelector('input[name="price"]').value;
   const reservation_statusInput = document.querySelector('input[name="reservation_status"]').value;
+  const reservation_idInput = document.querySelector('input[name="reservation_id"]').value;
 
   // 현재 날짜 객체 생성
   var currentDate = new Date();
@@ -352,7 +363,8 @@ function paymentBtn(){
       std: stdInput,
       price: priceInput,
       reservation_status: reservation_statusInput,
-      sale_date: formattedDate
+      sale_date: formattedDate,
+      reservation_id: reservation_idInput
     };
 
     // Ajax 요청을 보내고 응답을 처리

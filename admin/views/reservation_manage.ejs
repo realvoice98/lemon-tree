@@ -11,6 +11,7 @@
     <div class="manage_main">
         <div class="sidebar">
           <div class="sidebar_box">
+            <a href="/admin/logout" class="logout_btn">로그아웃</a>
             <div class="sidebar_title">
               <span class="sidebar_title_text">Lemon Tree</span>
             </div>
@@ -54,7 +55,10 @@
           </div>
         </div>
         <div class="header">
-          <span class="header_text">Lemon Tree</span>
+          <div class="header_box">
+            <a href="/admin/logout" class="logout_btn">로그아웃</a>
+            <span class="header_text">Lemon Tree</span> 
+          </div>
           <div class="search-box" >
             <form action="/admin/reservation_manage/search" method="get" style="display: flex;justify-content: space-between; min-width: 50px;" id="searchForm2">
               <input type="text" placeholder="이름 또는 번호 검색" name="searchData" class="searchInput" onkeydown="searchOnEnterTablet(event)">
@@ -122,6 +126,8 @@
                     <td  class="row_text price" style="display: none;"><%=reservation.price %></td>
                     <td  class="row_text id" style="display: none;"><%=reservation.id %></td>
                     <td  class="row_text client_id" style="display: none;"><%=reservation.client_id %></td>
+                    <td  class="row_text add_date" style="display: none;"></td>
+                    <td  class="row_text reservation_id" style="display: none;"><%=reservation.reservation_id %></td>
                 </tr>
                 <% }); %>
               </tbody>
@@ -130,7 +136,7 @@
               <ul class="pagination-list">
                   <% for (let page = 1; page <= totalPages; page++) { %>
                       <li class="pagination-item">
-                          <a href="/admin/reservation_manage?page=<%= page %>&reserv_status=<%= reserv_status %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
+                          <a href="/admin/reservation_manage?page=<%= page %>&reserv_status=<%= encodeURIComponent(reserv_status) %>" class="pagination-link <%= encodeURIComponent(page) === currentPage ? 'active' : '' %>"><%= page %></a>
                       </li>
                   <% } %>
               </ul>
@@ -143,8 +149,11 @@
       <div class="modal">
         <div class="detail info_modal">
           <div class="modal_header">
-            <span class="modal_header_title">예약 상세정보</span>
-            <div class="confirm_btn" data-action="">
+            <div class="title_box">
+              <span class="modal_header_title">예약 상세정보</span>
+              <span class="modal_header_date"></span>
+            </div>
+            <div class="confirm_btn">
               <span class="confirm_btn_text" id="confirm_btn">확정</span>
             </div>
           </div>
@@ -152,6 +161,7 @@
             <input type="hidden" name="id" class="inputbox id">
             <input type="hidden" name="client_id" class="inputbox client_id">
             <input type="hidden" name="reservation_status" class="inputbox reservation_status">
+            <input type="hidden" name="reservation_id" class="inputbox reservation_id">
             <div class="client info">
               <span class="client info_title">예약자 정보</span>
               <div class="info_box name">

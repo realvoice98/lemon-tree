@@ -144,25 +144,25 @@ function submitForm() {
     const discountField = document.querySelector('.inputbox.discount');
 
     // 정규 표현식을 사용하여 형식 체크
-    const timePattern = /^(30|60)$/;
-    const numberPattern = /^(1회|3회)$/;
-    const pricePattern = /^\d{1,3}(,\d{3})*$/;
-    const discountPattern = /^\d{1,3}(,\d{3})*$/;
+    const timePattern = /^[0-9]{2,}$/;
+    const numberPattern = /^\d+회$/;
+    const pricePattern = /^[0-9]\d*$/;
+    const discountPattern = /^[0-9]\d*$/;
 
     if (!timePattern.test(timeField.value)) {
-        alert('시간 형식에 맞지 않습니다.');
+        alert('시간: 2자리이상 숫자만 입력하세요');
         return false;
     }
     if (!numberPattern.test(numberField.value)) {
-        alert('횟수 형식에 맞지 않습니다.');
+        alert('횟수: 숫자 + 회 형식으로 입력하세요');
         return false;
     }
     if (!pricePattern.test(priceField.value)) {
-        alert('정상가 형식에 맞지 않습니다.');
+        alert('정상가: 숫자만 입력하세요');
         return false;
     }
     if (!discountPattern.test(discountField.value)) {
-        alert('할인가 형식에 맞지 않습니다.');
+        alert('할인가: 숫자만 입력하세요');
         return false;
     }
 
