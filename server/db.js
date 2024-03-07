@@ -1,9 +1,9 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : '1234',
+    host : 'lemontree.cafe24app.com',
+    user : 'lemontree14',
+    password : 'lemon134@',
     database : 'lemontree14'
 });
 

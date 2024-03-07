@@ -22,7 +22,7 @@ function Reservation() {
   const [selectedCount, setSelectedCount] = useState('');
   const [viewProgram, setViewProgram] = useState("프로그램을 선택하세요");
   const [programList, setProgramList] = useState([]);
-  const [timeList, setTimeList] = useState(['17 : 00', '17 : 30', '18 : 00', '18 : 30']);
+  const [timeList, setTimeList] = useState([]);
   const [unableTimeList, setUnableTimeList] = useState([]);
   const [unableTimeIdx, setUnableTimeIdx] = useState([]);
   const [toggleStatus, setToggleStatus] = useState(false);
@@ -57,6 +57,16 @@ function Reservation() {
       .then(res => {
         setEndDate(res.data[0].end_date)
         setStartDate(res.data[0].start_date)
+      })
+      .catch(error => console.log(error));
+  }
+
+  const getTimeList = async () => {
+    const SERVER_URL = server+'/getTimeList'
+    await axios.get(SERVER_URL)
+      .then(res => {
+        console.log(res.data)
+        setTimeList(res.data)
       })
       .catch(error => console.log(error));
   }
@@ -197,6 +207,7 @@ function Reservation() {
   useEffect(() => {
     getOperaingDate();
     getPrograms();
+    getTimeList();
    
     if (sessionStorage.getItem('phone') === null) {
       navigate('/');

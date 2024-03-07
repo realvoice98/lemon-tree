@@ -16,16 +16,37 @@ router.get('/operatingdate', (req,res) => {
     });
 });
 
+router.get('/getTimeList', (req,res) => {
+    db.query(
+      `SELECT time 
+      FROM time_table 
+      WHERE time
+      ORDER BY time ASC`,
+      (error, rows) => {
+          if (error) throw error;
+          const times = rows.map(obj => obj.time);
+          console.log(times)
+          res.send(times);
+      });
+  });
+
 router.post('/ableTime', (req,res) => {
     const date = req.body.trimmedDate;
     const reservation_status = '예약대기';
     const reservation_status1 = '예약확정';
     
     db.query(
-      'SELECT reservation_time FROM reservations_details WHERE reservation_date = ? AND (reservation_status = ? OR reservation_status = ?) GROUP BY reservation_time HAVING (COUNT(*) >= 2 OR (reservation_time = "18 : 30" AND COUNT(*) >= 1))',
+      `SELECT rd.reservation_time
+        FROM reservations_details rd 
+        JOIN time_table tt ON rd.reservation_time = tt.time
+        WHERE rd.reservation_date = ?
+        AND (rd.reservation_status = ? OR rd.reservation_status = ?) 
+        GROUP BY rd.reservation_time, tt.limit_customer
+        HAVING COUNT(*) >= tt.limit_customer`,
       [date, reservation_status,reservation_status1],
       (error, rows) => {
           if (error) throw error;
+          console.log("ableTime",rows)
           res.send(rows);
       });
   });
@@ -48,24 +69,26 @@ router.post('/reservation', (req, res) => {
     const price = req.body.price;
     const discount = req.body.discount;
     const reservation_status = req.body.reservation_status;
-
-    let maxRowCount = 2; // 기본값
-
-    // reservation_time이 "18 : 30"인 경우 최대 수용 인원을 1로 설정
-    if (reservation_time === "18 : 30") {
-        maxRowCount = 1;
-    }
+    
     db.query(
-        "SELECT COUNT(*) as rowCount FROM reservations_details WHERE reservation_date = ? AND reservation_time = ?",
-        [reservation_date, reservation_time],
+        `SELECT tt.time, tt.limit_customer, COUNT(rd.reservation_time) as rowCount 
+        FROM time_table tt
+        LEFT JOIN reservations_details rd ON tt.time = rd.reservation_time AND rd.reservation_date = ?
+        GROUP BY tt.time, tt.limit_customer
+        HAVING rowCount <= tt.limit_customer`
+        ,
+        [reservation_date],
         (err, result) => {
             if (err) {
                 console.log(err);
                 // 에러 처리
             } else {
-                const rowCount = result[0].rowCount;
 
-                if (rowCount < maxRowCount) {
+                const rowCount = result[0].rowCount;
+                const limit_customer = result[0].limit_customer;
+                console.log("reservation rowCount :",rowCount,"limit_customer :",limit_customer)
+
+                if (rowCount < limit_customer) {
                     db.query(
                         "INSERT INTO reservations (client_id, name, phone, gender, std, prog_name, prog_time , remain_count,total_count, note, reservation_date,reservation_time, price, discount, reservation_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
                         [client_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status],
@@ -110,14 +133,12 @@ router.post('/reservations_details', (req, res) => {
     const discount = req.body.discount;
     const reservation_status = req.body.reservation_status;
 
-    let maxRowCount = 2; // 기본값
-
-    // reservation_time이 "18 : 30"인 경우 최대 수용 인원을 1로 설정
-    if (reservation_time === "18 : 30") {
-        maxRowCount = 1;
-    }
     db.query(
-        "SELECT COUNT(*) as rowCount FROM reservations_details WHERE reservation_date = ? AND reservation_time = ?",
+        `SELECT tt.time, tt.limit_customer, COUNT(rd.reservation_time) as rowCount 
+        FROM time_table tt
+        LEFT JOIN reservations_details rd ON tt.time = rd.reservation_time AND rd.reservation_date = ?
+        GROUP BY tt.time, tt.limit_customer
+        HAVING rowCount <= tt.limit_customer`,
         [reservation_date, reservation_time],
         (err, result) => {
             if (err) {
@@ -125,9 +146,9 @@ router.post('/reservations_details', (req, res) => {
                 // 에러 처리
             } else {
                 const rowCount = result[0].rowCount;
-                if (rowCount < maxRowCount) {
-                    console.log(result[0])
-                    console.log(result[0].rowCount);
+                const limit_customer = result[0].limit_customer;
+                console.log("reservation_details rowCount :",rowCount,"limit_customer :",limit_customer)
+                if (rowCount < limit_customer) {
                     // 조건 충족 시에만 데이터를 추가
                     db.query(
                         "INSERT INTO reservations_details (client_id, reservation_id, name, phone, gender, std, prog_name, prog_time, remain_count, total_count, note, reservation_date, reservation_time, price, discount, reservation_status) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
@@ -144,7 +165,6 @@ router.post('/reservations_details', (req, res) => {
                 } else {
                     // 예약한 기간, 시간에 2명이 있을경우 1 반환 
                     res.send("1")
-                    console.log("error다 임마")
                 }
             }
         }
