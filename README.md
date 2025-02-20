@@ -10,6 +10,12 @@
 <br>
 
 <div align=center>
+  <h3>🌏URL🌏</h3>
+  <a href="http://lemontree.cafe24app.com/">운영사이트 보러가기</p>
+</div>
+
+
+<div align=center>
   <h3>📛Member & Role📛</h3>
   <p>범진성 : 디자인 서브, 회원페이지 개발 (예약 화면 , 좌측 탭, 내정보 변경(비밀번호 / 전화번호)), 데이터베이스 설계</p>
   <p>신가연 : 디자인 메인, 회원페이지 개발 ( 메인페이지, MyTree ), 데이터베이스 설계</p>
