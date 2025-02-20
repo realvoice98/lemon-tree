@@ -52,5 +52,12 @@
 <br>
 
 <div align=center>
+  <h3>👉Comment👈</h3>
+  <p>레몬트리 프로젝트에 앞서 많은 프로젝트 경험이 있었지만 실제로 사용자들이 사용하는 프로젝트를 만드는건 이 프로젝트가 처음이었다.</p>
+  <p>클라이언트들과 제품회의를 진행한 경험도 처음이었으며, 제품이 사용자들에게 보여진 후 생기는 버그등에 대한 피드백과 유지보수를 통해 실전경험이 많이 늘어났다.</p>
+  <p>이 제품이 만들어진지 시간이 많이 흘렀음에도 아직까지 이용되는 모습을 보며 신기하기도하고 뿌듯하기도하다.</p>
+</div>
+
+<div align=center>
 	<img style="width:600px;height:550px" src="https://github.com/user-attachments/assets/fd918571-37d2-4978-ad4a-fdda2bff39f2" />
 </div>
